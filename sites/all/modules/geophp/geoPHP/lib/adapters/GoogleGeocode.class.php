@@ -89,13 +89,17 @@ class GoogleGeocode extends GeoAdapter
    *
    * @return string Does a reverse geocode of the geometry
    */
-  public function write(Geometry $geometry, $return_type = 'string') {
+  public function write(Geometry $geometry, $return_type = 'string', $lang = '') {
+      
     $centroid = $geometry->getCentroid();
     $lat = $centroid->getY();
     $lon = $centroid->getX();
     
     $url = "http://maps.googleapis.com/maps/api/geocode/json";
     $url .= '?latlng='.$lat.','.$lon;
+    if($lang) {
+        $url .= '&language='.$lang;
+    }
     $url .= '&sensor=false';
     $this->result = json_decode(@file_get_contents($url));
     
