@@ -153,8 +153,9 @@ function template_preprocess_realia_view_gmap(&$variables) {
         $coordinatesArray = json_decode($coordinates)->coordinates;
         $longitude = $coordinatesArray[0];
         $latitude = $coordinatesArray[1];
-
-        $locationName = geoPHP::load($coordinates, 'json')->out('google_geocode', 'array', $language->language)[5]->long_name;
+        //check if this view is for front page (results > 1) and do not check reverse geocode (there's a limit on requests)
+        $locationName = (count($result) == 1) ? 
+                geoPHP::load($coordinates, 'json')->out('google_geocode', 'array', $language->language)[5]->long_name : '';
 
 
         if (!empty($latitude) && !empty($longitude)) {
