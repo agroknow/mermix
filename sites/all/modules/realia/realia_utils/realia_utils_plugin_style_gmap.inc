@@ -82,7 +82,7 @@ class realia_utils_plugin_style_gmap extends views_plugin_style {
       '#title' => t('Longitude'),
       '#default_value' => $this->options['longitude']
     );
-
+    /*
     $form['latitude-field'] = array(
       '#type' => 'select',
       '#title' => t('Latitude field'),
@@ -96,6 +96,7 @@ class realia_utils_plugin_style_gmap extends views_plugin_style {
       '#options' => $field_names,
       '#default_value' => $this->options['longitude-field']
     );
+    */
 
     $form['image-field'] = array(
       '#type' => 'select',
