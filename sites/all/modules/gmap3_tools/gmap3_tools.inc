@@ -124,6 +124,7 @@ function gmap3_tools_add_map($options) {
     }
     drupal_add_js($lib_url, 'external', array('scope' => 'footer'));
 
+    drupal_add_js(drupal_get_path('module', 'gmap3_tools') . '/oms.min.js', array('scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'gmap3_tools') . '/gmap3_tools.js', array('scope' => 'footer'));
   }
 
