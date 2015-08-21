@@ -89,7 +89,7 @@ class GoogleGeocode extends GeoAdapter
    *
    * @return string Does a reverse geocode of the geometry
    */
-  public function write(Geometry $geometry, $return_type = 'string', $lang = '') {
+  public function write(Geometry $geometry, $return_type = 'string', $lang = '', $levels = array()) {
       
     $centroid = $geometry->getCentroid();
     $lat = $centroid->getY();
@@ -105,7 +105,15 @@ class GoogleGeocode extends GeoAdapter
     
     if ($this->result->status == 'OK') {
       if ($return_type == 'string') {
-        return $this->result->results[0]->formatted_address;
+        if(empty($levels))  {
+            return $this->result->results[0]->formatted_address;
+        } else {
+            $str = array();
+            foreach ($levels as $level) {
+                $str[] = $this->result->results[0]->address_components[$level]->long_name;
+            }
+            return implode(', ', $str);
+        }
       }
       if ($return_type == 'array') {
         return $this->result->results[0]->address_components;
