@@ -80,7 +80,7 @@
 
         mapOptions.center = new google.maps.LatLng(map.mapOptions.centerX, map.mapOptions.centerY);
         var gmap = new google.maps.Map(document.getElementById(map.mapId), mapOptions);
-
+        var oms = new OverlappingMarkerSpiderfier(gmap, {markersWontMove: true, keepSpiderfied: true, nearbyDistance:10, legWeight:2.5});
         // Array for storing all markers that are on this map.
         var gmapMarkers = [];
         var markersNum = 0;
@@ -93,7 +93,7 @@
                 position: position,
                 map: gmap
             });
-
+            oms.addMarker(marker); 
             // infobox
             var boxText = document.createElement("div");
             boxText.innerHTML = markerData.content;
@@ -108,7 +108,7 @@
                     width: "280px"
                 },
                 closeBoxMargin: "0px 0px 0px 0px",
-                closeBoxURL: '/sites/default/themes/properta/img/icons/cross.png',
+                closeBoxURL: '/sites/default/themes/realia/img/icons/cross.png',
                 infoBoxClearance: new google.maps.Size(1, 1),
                 isHidden: false,
                 pane: "floatPane",
@@ -208,12 +208,15 @@
         }
 
         var markerCluster = new MarkerClusterer(gmap, markers, {
+            //zoomOnClick:false,
+            maxZoom:17,
             gridSize: parseInt(map.clustering.gridSize),
             styles: [
             {
                 height   : 36,
                 width    : 36,
-                textColor: 'transparent'
+                textColor: 'transparent',
+                url:'/sites/default/themes/realia/img/icons/blank.png'
             }
         ]});
 
@@ -229,7 +232,7 @@
 
             $.each(availableClusters, function (index, cluster) {
 
-                if (cluster.getMarkers().length > 1) {
+                if (cluster.getMarkers().length > 1 && gmap.zoom < 17) {
                     var newCluster = new InfoBox({
                         draggable             : true,
                         content               : '<div class="clusterer"><div class="clusterer-inner">' + cluster.getMarkers().length + '</div></div>',
@@ -253,7 +256,7 @@
 
                 } else {
                     $.each(cluster.getMarkers(), function (index, currentMarker) {
-                        currentMarker.marker.open(gmap, currentMarker.marker);
+                        currentMarker.marker.open(gmap, currentMarker);
                         currentMarker.marker.isHidden_ = false;
                     });
                 }

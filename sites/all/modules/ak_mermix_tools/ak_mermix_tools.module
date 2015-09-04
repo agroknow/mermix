@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * Implements hook_field_access
+ */
+function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $account) {
+    if (($field['field_name'] == 'field_location') && $op == 'edit') {
+        // Only allow admins to edit field value
+        return user_access('administer nodes', $account);
+    }
+    return true;
+}
+
+/**
+ * Implements hook_node_presave
+ * @param type $node
+ */
+function ak_mermix_tools_node_presave($node) {
+    if ($node->type == 'apartment') {
+        //creating node
+        if (!$node->original) {
+            $node_wrapper = entity_metadata_wrapper('node', $node);
+            ak_mermix_tools_updateAddress($node_wrapper);
+        } else {
+            //updating node
+            $node_original = entity_metadata_wrapper('node', $node->original);
+            $node_wrapper = entity_metadata_wrapper('node', $node);
+            if (($node_original->field_address->value()['lat'] != $node_wrapper->field_address->value()['lat']) ||
+                    ($node_original->field_address->value()['lon'] != $node_wrapper->field_address->value()['lon'])) {
+                ak_mermix_tools_updateAddress($node_wrapper);
+            }
+        }
+    }
+}
+
+/**
+ * Helper function to update / populate address fields
+ * @param type $entWrapper
+ */
+function ak_mermix_tools_updateAddress($entWrapper) {
+
+    $lat = $entWrapper->field_address->value()['lat'];
+    $lon = $entWrapper->field_address->value()['lon'];
+    if ($lat && $lon) {
+        $json = '{
+    "type": "Point",
+    "coordinates": [' . $lon . ',' . $lat . ']
+    }';
+        geophp_load();
+        $addressEl = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'el');
+        $addressEn = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'en');
+        $tid = mtools_createTerms(mtools_getTerms($addressEl, $addressEn), 'location');
+        $entWrapper->field_location->set($tid);
+    }
+}
+
+function mtools_getTerms($addressEl, $addressEn) {
+    $acceptable = array('locality', 'administrative_area_level_5', 'administrative_area_level_4', 'administrative_area_level_3');
+    $terms = array();
+    foreach ($addressEl as $key => $addressElement) {
+        if (in_array($addressElement->types[0], $acceptable)) {
+            $terms[$addressElement->long_name] = $addressEn[$key]->long_name;
+        }
+    }
+    return $terms;
+}
+
+function mtools_createTerms($terms, $vocabulary_name) {
+
+    $voc = taxonomy_vocabulary_machine_name_load($vocabulary_name);
+    $parent = 0;
+
+    foreach (array_reverse($terms) as $elname => $enname) {
+        $found_terms = taxonomy_get_term_by_name($enname, $vocabulary_name);
+        if (empty($found_terms)) { //create term
+            $term = (object) array(
+                        'vid' => $voc->vid,
+                        'name' => $enname,
+                        'format' => 'filtered_html',
+                        'parent' => $parent
+            );
+            taxonomy_term_save($term);
+            $parent = $term->tid;
+            i18n_string_translation_update(
+                    array('taxonomy', 'term', $parent, 'name'), // Path where to store source and translation.
+                    $elname, 'el', $enname
+            );
+        } else {
+            $found = array_shift($found_terms);
+            $parent = $found->tid;
+        }
+    }
+    return $term ? $term->tid : $parent;
+}

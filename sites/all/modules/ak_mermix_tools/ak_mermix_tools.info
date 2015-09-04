@@ -1,0 +1,6 @@
+name = Mermix Tools
+description = Mermix Tools from AK
+core = 7.x
+package = Agro Know
+
+dependencies[] = geophp
