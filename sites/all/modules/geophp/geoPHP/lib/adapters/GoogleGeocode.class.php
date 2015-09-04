@@ -112,7 +112,6 @@ class GoogleGeocode extends GeoAdapter
       }
     }
     else {
-        watchdog('geoapi', $this->result->status . ' - ' . $this->result->error_message);
       if ($this->result->status) throw new Exception('Error in Google Reverse Geocoder: '.$this->result->status);
       else throw new Exception('Unknown error in Google Reverse Geocoder');
       return FALSE;
