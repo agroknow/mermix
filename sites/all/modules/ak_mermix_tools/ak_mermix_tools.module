@@ -92,3 +92,27 @@ function mtools_createTerms($terms, $vocabulary_name) {
     }
     return $term ? $term->tid : $parent;
 }
+
+/**
+ * Alter the outgoing response.
+ *
+ * @param mixed $response
+ *   The response data being returned by the REST service (not yet serialized).
+ * @param string $function
+ *   The function being called on the REST service.
+ * @param string $format
+ *   The name of the format serializing the response.
+ * @param RestWSResourceControllerInterface $resourceController
+ *   The resource controller.
+ */
+function ak_mermix_tools_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+  if ($function == 'queryResource' && $formatName == 'json') {
+    foreach ($response['list'] as $key => $listitem) {
+	$fid = $listitem['field_image']['file']['id'] ; //get the file id
+	$file = file_load($fid);
+	$uri = $file->uri; //create the uri
+	$mediumUrl = image_style_url('medium', $uri); // use a style from /admin/config/media/image-styles machine name
+	$response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
+    }
+  }
+}
