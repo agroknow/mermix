@@ -122,7 +122,7 @@
 
 
             var extendMarkerOptions = {
-                content: '<div class="marker ' + markerData.markerOptions.class + '"><div class="marker-inner"></div></div>',
+                content: '<div class="marker"><div class="marker-inner"></div></div>',
                 pixelOffset: new google.maps.Size(-21, -58),
                 disableAutoPan: true,
                 maxWidth: 0,
