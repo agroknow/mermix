@@ -4,7 +4,8 @@
  * Implements hook_field_access
  */
 function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $account) {
-    if (($field['field_name'] == 'field_location') && $op == 'edit') {
+    $hiddenFields = array('field_location');
+    if (in_array($field['field_name'], $hiddenFields)  && $op == 'edit') {
         // Only allow admins to edit field value
         return user_access('administer nodes', $account);
     }
