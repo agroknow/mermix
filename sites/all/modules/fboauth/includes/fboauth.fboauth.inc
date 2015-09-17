@@ -329,7 +329,7 @@ function fboauth_create_user($fbuser, $options = array()) {
   if ($account->uid && $options['picture'] === 'picture') {
     $picture_directory = file_default_scheme() . '://' . variable_get('user_picture_path', 'pictures');
     if (file_prepare_directory($picture_directory, FILE_CREATE_DIRECTORY)) {
-      $picture_result = drupal_http_request('https://graph.facebook.com/v2.3/' . $fbuser->id . '/picture?type=large');
+      $picture_result = drupal_http_request('https://graph.facebook.com/v2.4/' . $fbuser->id . '/picture?type=large');
       $picture_path = file_stream_wrapper_uri_normalize($picture_directory . '/picture-' . $account->uid . '-' . REQUEST_TIME . '.jpg');
       $picture_file = file_save_data($picture_result->data, $picture_path, FILE_EXISTS_REPLACE);
 
@@ -809,7 +809,7 @@ function fboauth_graph_query($id, $access_token = NULL, $parameters = array(), $
   }
 
   if ($method == 'GET' || $method == 'DELETE') {
-    $graph_url = url('https://graph.facebook.com/v2.3/' . $id,
+    $graph_url = url('https://graph.facebook.com/v2.4/' . $id,
       array(
         'absolute' => TRUE,
         'query'    => $parameters));
@@ -820,7 +820,7 @@ function fboauth_graph_query($id, $access_token = NULL, $parameters = array(), $
         'method'  => $method));
   }
   elseif ($method == 'POST') {
-    $graph_url = 'https://graph.facebook.com/v2.3/' . $id;
+    $graph_url = 'https://graph.facebook.com/v2.4/' . $id;
     $post_data = http_build_query($parameters, '', '&');
     $graph_result = drupal_http_request(
       $graph_url,
