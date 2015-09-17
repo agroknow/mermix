@@ -12,6 +12,28 @@ function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $accou
     return true;
 }
 
+function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
+    global $user;
+    $node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
+
+    if ($node_edit ) {
+        $form['language']['#access'] = user_access('administer nodes', $user);
+        //$form['language']['#disabled'] = TRUE;
+    }
+}
+
+function ak_mermix_tools_module_implements_alter(&$implementations, $hook) {
+    if ($hook == 'form_alter') {
+        $module = 'ak_mermix_tools';
+        // store
+        $group = array($module => $implementations[$module]);
+        // unset
+        unset($implementations[$module]);
+        // add to the end
+        $implementations = $implementations + $group;
+    }
+}
+
 /**
  * Implements hook_node_presave
  * @param type $node
@@ -19,7 +41,7 @@ function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $accou
 function ak_mermix_tools_node_presave($node) {
     if ($node->type == 'apartment') {
         //creating node
-        if (!$node->original) {
+        if (!isset($node->original)) {
             $node_wrapper = entity_metadata_wrapper('node', $node);
             ak_mermix_tools_updateAddress($node_wrapper);
         } else {
