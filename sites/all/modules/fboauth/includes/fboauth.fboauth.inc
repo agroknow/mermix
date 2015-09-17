@@ -137,6 +137,7 @@ function fboauth_action_connect($app_id, $access_token) {
   $apiFields[] = 'timezone';
   $apiFields[] = 'updated_time';
   $apiFields[] = 'verified';
+  $apiFields[] = 'email';
 
   //Add advanced properties if set
   if(is_array(variable_get('fboauth_user_properties'))) {
