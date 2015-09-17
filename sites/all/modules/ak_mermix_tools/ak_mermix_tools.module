@@ -127,3 +127,11 @@ function ak_mermix_tools_restws_response_alter(&$response, $function, $formatNam
         }
     }
 }
+/*
+ * Implement hook_js_alter
+ */
+function ak_mermix_tools_js_alter(&$javascript) {
+  if(isset($javascript['modules/user/user.js'])) {
+    $javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/user.js' ;
+  }
+} 
