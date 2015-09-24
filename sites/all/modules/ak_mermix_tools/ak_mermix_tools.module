@@ -4,33 +4,69 @@
  * Implements hook_field_access
  */
 function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $account) {
-    $hiddenFields = array('field_location');
-    if (in_array($field['field_name'], $hiddenFields)  && $op == 'edit') {
-        // Only allow admins to edit field value
-        return user_access('administer nodes', $account);
+    $hiddenFields = array('field_location','field_licence','field_featured');
+    if (in_array($field['field_name'], $hiddenFields) && $op == 'edit') {
+	// Only allow admins to edit field value
+	return user_access('administer nodes', $account);
     }
     return true;
 }
 
 function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     global $user;
-    $node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
 
-    if ($node_edit ) {
-        $form['language']['#access'] = user_access('administer nodes', $user);
-        //$form['language']['#disabled'] = TRUE;
+    if ($form_id == 'apartment_node_form') {
+	$add = !isset($form_state['node']->nid) || isset($form_state['node']->is_new);
+	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
+	if ($node_edit) {
+	    $user_data = user_load($user->uid);
+	    $lat = $user_data->field_place['und']['0']['lat'];
+	    $lon = $user_data->field_place['und']['0']['lon'];
+	    $defaultlat = $form['field_address']['und'][0]['geom']['#default_value']['lat'];
+	    $defaultlon = $form['field_address']['und'][0]['geom']['#default_value']['lon'];
+	    $userLocation = false;
+	    if (($lat == $defaultlat) && ($lon == $defaultlon)) {
+		$userLocation = true;
+	    }
+	    if(empty($lat) && empty($lon)) {
+		$user_message = t('Your address information is empty and you can configure it <a href="@here" target="_blank">here</a>' , array('@here' => url('user/'. $user->uid . '/edit')));
+	    }
+	    $form['language']['#access'] = user_access('administer nodes', $user);
+	    $form['field_address']['#prefix'] = '<div class="toggle-address-field">';
+	    $form['field_address']['#suffix'] = '</div>';
+	    $form['address_checkbox'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Use profile address'),
+		'#attributes' => array('class' => array('enable-user-address')),
+		'#weight' => 3,
+		'#default_value' => !isset($user_message) && ($add || $userLocation),
+		'#suffix' => isset($user_message) ? $user_message : '',
+		'#disabled' => isset($user_message),
+		'#attached' => array('js' => array(
+			drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools.js',
+			array(
+			    'data' => array(
+				'userPlace' => array(
+				    'lat' => $lat,
+				    'lon' => $lon,
+				)),
+			    'type' => 'setting',
+			),
+		    )),
+	    );
+	}
     }
 }
 
 function ak_mermix_tools_module_implements_alter(&$implementations, $hook) {
     if ($hook == 'form_alter') {
-        $module = 'ak_mermix_tools';
-        // store
-        $group = array($module => $implementations[$module]);
-        // unset
-        unset($implementations[$module]);
-        // add to the end
-        $implementations = $implementations + $group;
+	$module = 'ak_mermix_tools';
+	// store
+	$group = array($module => $implementations[$module]);
+	// unset
+	unset($implementations[$module]);
+	// add to the end
+	$implementations = $implementations + $group;
     }
 }
 
@@ -38,21 +74,19 @@ function ak_mermix_tools_module_implements_alter(&$implementations, $hook) {
  * Implements hook_node_presave
  * @param type $node
  */
-function ak_mermix_tools_node_presave($node) {
-    if ($node->type == 'apartment') {
-        //creating node
-        if (!isset($node->original)) {
-            $node_wrapper = entity_metadata_wrapper('node', $node);
-            ak_mermix_tools_updateAddress($node_wrapper);
-        } else {
-            //updating node
-            $node_original = entity_metadata_wrapper('node', $node->original);
-            $node_wrapper = entity_metadata_wrapper('node', $node);
-            if (($node_original->field_address->value()['lat'] != $node_wrapper->field_address->value()['lat']) ||
-                    ($node_original->field_address->value()['lon'] != $node_wrapper->field_address->value()['lon'])) {
-                ak_mermix_tools_updateAddress($node_wrapper);
-            }
-        }
+function ak_mermix_tools_node_update($node) {
+    global $user;
+    if ($node->type == 'apartment' && user_access('administer nodes', $user)) {
+	$node_original = entity_metadata_wrapper('node', $node->original);
+	$node_wrapper = entity_metadata_wrapper('node', $node);
+	if (($node_original->field_address->value()['lat'] != $node_wrapper->field_address->value()['lat']) ||
+		($node_original->field_address->value()['lon'] != $node_wrapper->field_address->value()['lon']) ||
+		(!$node_wrapper->field_location->value()) ||
+		($node_original->status->value() == '0' && $node_wrapper->status->value() == '1')) {
+	    watchdog('mermix tools', 'changing location');
+	    ak_mermix_tools_updateAddress($node_wrapper); //changing a field here
+	    field_attach_update('node', $node); //call field attach update to save field 
+	}
     }
 }
 
@@ -65,15 +99,15 @@ function ak_mermix_tools_updateAddress($entWrapper) {
     $lat = $entWrapper->field_address->value()['lat'];
     $lon = $entWrapper->field_address->value()['lon'];
     if ($lat && $lon) {
-        $json = '{
+	$json = '{
     "type": "Point",
     "coordinates": [' . $lon . ',' . $lat . ']
     }';
-        geophp_load();
-        $addressEl = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'el');
-        $addressEn = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'en');
-        $tid = mtools_createTerms(mtools_getTerms($addressEl, $addressEn), 'location');
-        $entWrapper->field_location->set($tid);
+	geophp_load();
+	$addressEl = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'el');
+	$addressEn = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'en');
+	$tid = mtools_createTerms(mtools_getTerms($addressEl, $addressEn), 'location');
+	$entWrapper->field_location->set($tid);
     }
 }
 
@@ -81,9 +115,9 @@ function mtools_getTerms($addressEl, $addressEn) {
     $acceptable = array('locality', 'administrative_area_level_5', 'administrative_area_level_4', 'administrative_area_level_3');
     $terms = array();
     foreach ($addressEl as $key => $addressElement) {
-        if (in_array($addressElement->types[0], $acceptable)) {
-            $terms[$addressElement->long_name] = $addressEn[$key]->long_name;
-        }
+	if (in_array($addressElement->types[0], $acceptable)) {
+	    $terms[$addressElement->long_name] = $addressEn[$key]->long_name;
+	}
     }
     return $terms;
 }
@@ -94,24 +128,24 @@ function mtools_createTerms($terms, $vocabulary_name) {
     $parent = 0;
 
     foreach (array_reverse($terms) as $elname => $enname) {
-        $found_terms = taxonomy_get_term_by_name($enname, $vocabulary_name);
-        if (empty($found_terms)) { //create term
-            $term = (object) array(
-                        'vid' => $voc->vid,
-                        'name' => $enname,
-                        'format' => 'filtered_html',
-                        'parent' => $parent
-            );
-            taxonomy_term_save($term);
-            $parent = $term->tid;
-            i18n_string_translation_update(
-                    array('taxonomy', 'term', $parent, 'name'), // Path where to store source and translation.
-                    $elname, 'el', $enname
-            );
-        } else {
-            $found = array_shift($found_terms);
-            $parent = $found->tid;
-        }
+	$found_terms = taxonomy_get_term_by_name($enname, $vocabulary_name);
+	if (empty($found_terms)) { //create term
+	    $term = (object) array(
+			'vid' => $voc->vid,
+			'name' => $enname,
+			'format' => 'filtered_html',
+			'parent' => $parent
+	    );
+	    taxonomy_term_save($term);
+	    $parent = $term->tid;
+	    i18n_string_translation_update(
+		    array('taxonomy', 'term', $parent, 'name'), // Path where to store source and translation.
+		    $elname, 'el', $enname
+	    );
+	} else {
+	    $found = array_shift($found_terms);
+	    $parent = $found->tid;
+	}
     }
     return $term ? $term->tid : $parent;
 }
@@ -130,31 +164,32 @@ function mtools_createTerms($terms, $vocabulary_name) {
  */
 function ak_mermix_tools_restws_response_alter(&$response, $function, $formatName, $resourceController) {
     if ($function == 'queryResource' && $formatName == 'json') {
-    //e.g. node.json?type=apartment&limit=10
-        foreach ($response['list'] as $key => $listitem) {
-            $fid = $listitem['field_image']['file']['id'] ; //get the file id
-            $file = file_load($fid);
-            $uri = $file->uri; //create the uri
-            $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-            $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
-        }
-    }
-    else if($function == 'viewResource' && $formatName == 'json'){
-    //e.g. node/204.json
-        if(isset($response['field_image'])){
-            $fid = $response['field_image']['file']['id'] ; //get the file id
-            $file = file_load($fid);
-            $uri = $file->uri; //create the uri
-            $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-            $response['field_image'] = $mediumUrl; //replace the original response
-        }
+	//e.g. node.json?type=apartment&limit=10
+	foreach ($response['list'] as $key => $listitem) {
+	    $fid = $listitem['field_image']['file']['id']; //get the file id
+	    $file = file_load($fid);
+	    $uri = $file->uri; //create the uri
+	    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+	    $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
+	}
+    } else if ($function == 'viewResource' && $formatName == 'json') {
+	//e.g. node/204.json
+	if (isset($response['field_image'])) {
+	    $fid = $response['field_image']['file']['id']; //get the file id
+	    $file = file_load($fid);
+	    $uri = $file->uri; //create the uri
+	    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+	    $response['field_image'] = $mediumUrl; //replace the original response
+	}
     }
 }
+
 /*
  * Implement hook_js_alter
  */
+
 function ak_mermix_tools_js_alter(&$javascript) {
-  if(isset($javascript['modules/user/user.js'])) {
-    $javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/user.js' ;
-  }
-} 
+    if (isset($javascript['modules/user/user.js'])) {
+	$javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/user.js';
+    }
+}
