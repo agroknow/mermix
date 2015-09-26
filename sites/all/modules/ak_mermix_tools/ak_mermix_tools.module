@@ -58,6 +58,19 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     }
 }
 
+function ak_mermix_tools_form_user_register_form_alter(&$form, &$form_state) {
+    $replacements = array('Owner' => t('Machinery owner'),
+			  'Renter' => t('Renter'),
+			  'Professional' => t('Machinery renter and owner')
+			 );
+    $options = $form['autoassignrole_user']['user_roles']["#options"];
+    foreach ($options as $key => $option) {
+	$options[$key] = isset($replacements[$option]) ? $replacements[$option] : $option;
+    }
+    
+    $form['autoassignrole_user']['user_roles']["#options"] = $options;
+}
+
 function ak_mermix_tools_module_implements_alter(&$implementations, $hook) {
     if ($hook == 'form_alter') {
 	$module = 'ak_mermix_tools';
