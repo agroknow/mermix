@@ -206,3 +206,81 @@ function ak_mermix_tools_js_alter(&$javascript) {
 	$javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/user.js';
     }
 }
+/* Create a block to hold the search form */
+function ak_mermix_tools_block_info()
+{
+    $blocks = array();
+
+    $blocks['machinery_search_block'] = array(
+        'info' => t('Machinery search'),
+        'title' => t('Search machines'),
+        'region' => 'content',
+        'status' => 1,
+    );
+
+    return $blocks;
+}
+
+function ak_mermix_tools_block_view($delta = '')
+{
+    $block = array();
+
+    switch ($delta) {
+        case 'machinery_search_block' :
+            $block['content'] = ak_mermix_tools_block_content();
+            break;
+    }
+
+    return $block;
+}
+
+function ak_mermix_tools_block_content()
+{
+    return drupal_get_form('machinery_search_form');
+}
+
+/*
+ * Create the custom form
+ */
+function machinery_search_form($form, &$form_state) {
+    $form['place'] = array(
+    '#type' => 'textfield', 
+    '#title' => t('Where'),
+    '#attributes' => array('onfocus' => 'geolocate()'),
+    '#attached' => array('js' => array(
+	drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js',
+	'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places&callback=initAutocomplete' => array('type' => 'external','scope' => 'footer'),
+    )),
+    );
+    $form['coords'] = array(
+    '#type' => 'hidden',
+    '#attributes' => array('id' => 'coords'),
+    );
+    $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Click Here!'),
+  );  
+  return $form;
+    
+}
+
+function machinery_search_form_submit($form, &$form_state) {
+    $form_state['redirect'] = 'machine-results/' . $form_state['values']['coords'];
+    
+}
+
+//function ak_mermix_tools_menu() {
+//    $items['machinery/s/%/latlon/%'] = array(
+//    'title' => 'Search',
+//    'page callback' => 'search_machinery',
+//    'page arguments' => array(2,4),
+//    'access callback' => TRUE,
+//    'type' => MENU_SUGGESTED_ITEM,
+//  );
+//    
+//    return $items;
+//}
+//
+//function search_machinery($location_name,$coords){
+//   return t('Search for: #value', array('#value' => $coords));
+//}
