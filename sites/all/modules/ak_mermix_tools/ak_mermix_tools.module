@@ -246,10 +246,10 @@ function machinery_search_form($form, &$form_state) {
     $form['place'] = array(
     '#type' => 'textfield', 
     '#title' => t('Where'),
-    '#attributes' => array('onfocus' => 'geolocate()'),
+    //'#attributes' => array('onfocus' => 'geolocate()'),
     '#attached' => array('js' => array(
-	drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js',
-	'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places&callback=initAutocomplete' => array('type' => 'external','scope' => 'footer'),
+	'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external','scope' => 'footer'),
+	drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
     )),
     );
     $form['coords'] = array(
