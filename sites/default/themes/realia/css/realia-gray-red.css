@@ -4923,3 +4923,93 @@ html.js input.ui-autocomplete-loading {
     width: 0%;
     background-color: #47C965;
 }
+/* Machine search results listing */
+.machine-results-listing{
+    height: 550px;
+    overflow-y: auto;
+    
+}
+.machine-results-listing .result-item{
+    margin-bottom: 10px;
+    background: #fff;
+    padding: 5px;
+    overflow: auto;
+}
+.machine-results-listing .number{
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bold;
+    display: inline-block;
+    height: 57px;
+    width: 42px;
+    background: url("../img/markers/marker-red.png") no-repeat center top;
+}
+
+.machine-results-listing .result-item div.views-field-title{
+   display: inline-block;
+   
+}
+.machine-results-listing .result-item div.views-field-field-image{
+   display: inline-block;
+   float: right
+    
+}
+/* Results markers */
+#gmap-machine-results .marker{
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bold;
+}
+/*Front banner search*/
+.region-map .banner{
+background: url('http://dummyimage.com/1920x1080/000/fff&text=mermix.gr') no-repeat center;
+background-size: cover; 
+height: 700px;
+position: relative;
+}
+.region-map .banner form{
+    top: 85%;
+    position: relative;
+}
+/* Search form display */
+#machinery-search-form{
+    text-align: center;
+}
+.inline-form .form-item,.inline-form .container-inline-date{
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    float: left;
+}
+.inline-form .container-inline-date{
+    clear: none;
+}
+.inline-form input[type=text]{
+    padding: 10px 15px;
+}
+.inline-form .form-submit{
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+.inline-form{
+    display: inline-block;
+}
+.inline-form > div{
+    display: inline-block;
+}
+.inline-form label,.inline-form .description{
+    display: none;
+}
+.inline-form .container-inline-date .form-item input, .inline-form .container-inline-date .form-item select, .inline-form .container-inline-date .form-item option{
+    margin-right: 0;
+}
+.inline-form .chzn-container .chzn-drop .chzn-search input{
+    width: auto !important;
+}
+.inline-form .chzn-container .chzn-single{
+    border: 1px solid #d5d5d5;
+}
