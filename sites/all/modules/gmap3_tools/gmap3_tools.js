@@ -77,7 +77,6 @@
         // Create map.
         var markers = new Array();
         var mapOptions = map.mapOptions;
-
         mapOptions.center = new google.maps.LatLng(map.mapOptions.centerX, map.mapOptions.centerY);
         var gmap = new google.maps.Map(document.getElementById(map.mapId), mapOptions);
         var oms = new OverlappingMarkerSpiderfier(gmap, {markersWontMove: true, keepSpiderfied: true, nearbyDistance:10, legWeight:2.5});
@@ -87,8 +86,7 @@
 
         $.each(map.markers, function (i, markerData) {
             var position = new google.maps.LatLng(markerData.lat, markerData.lng);
-
-            // creating Google Maps Marker
+	    // creating Google Maps Marker
             var marker = new google.maps.Marker({
                 position: position,
                 map: gmap
@@ -110,7 +108,7 @@
                 closeBoxMargin: "0px 0px 0px 0px",
                 closeBoxURL: '/sites/default/themes/realia/img/icons/cross.png',
                 infoBoxClearance: new google.maps.Size(1, 1),
-                isHidden: false,
+                isHidden: mapOptions.disableInfobox,
                 pane: "floatPane",
                 enableEventPropagation: false
             };
@@ -119,10 +117,16 @@
             marker.infobox.isOpen = false;
 
             // marker
-
-
+	    var markerMark = '';
+	    if(mapOptions.disableInfobox) {
+		var index = +i+1;
+		markerMark = '<div class="marker">' + index + '</div>';
+	    } else {
+		markerMark = '<div class="marker"><div class="marker-inner"></div></div>';
+	    }
+	   
             var extendMarkerOptions = {
-                content: '<div class="marker"><div class="marker-inner"></div></div>',
+                content: markerMark,
                 pixelOffset: new google.maps.Size(-21, -58),
                 disableAutoPan: true,
                 maxWidth: 0,
@@ -132,6 +136,7 @@
                 // pane: "mapPane",
                 enableEventPropagation: true
             };
+	
 
 
 
