@@ -12,18 +12,17 @@ var submit = false;
       var orig_listener = listener;
       listener = function (event) {
         var suggestion_selected = jQuery(".pac-item-selected").length > 0;
-        if (event.which == 13 && !suggestion_selected) {
+        if ((event.which == 13 || event.which == 9)  && !suggestion_selected) {
           var simulated_downarrow = jQuery.Event("keydown", {keyCode:40, which:40})
           orig_listener.apply(input, [simulated_downarrow]);
-	  event.preventDefault();
+	  if(event.which == 13){
+	      event.preventDefault();
+	  }
 	  //google.maps.event.trigger(autocomplete, 'place_changed');
         }
-
         orig_listener.apply(input, [event]);
-	
       };
     }
-
     // add the modified listener
     _addEventListener.apply(input, [type, listener]);
   }
@@ -32,13 +31,11 @@ var submit = false;
     input.addEventListener = addEventListenerWrapper;
   else if (input.attachEvent)
     input.attachEvent = addEventListenerWrapper;
-
 })(pac_input);
-
 
 jQuery(function(){
   var coords = document.getElementById('coords');
-  coords.value = '';
+  //coords.value = '';
   var autocomplete = new google.maps.places.Autocomplete(pac_input);
   autocomplete.addListener('place_changed', fillInAddress);
     function fillInAddress() {

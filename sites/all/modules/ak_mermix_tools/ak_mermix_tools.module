@@ -262,8 +262,7 @@ function machinery_search_form($form, &$form_state) {
     $attach = array('js' => array(
 		drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
 	    ));
-    	    
-    if(!$all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places']){
+    if(!$all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] && current_path() != 'machinery-search'){
 	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
     }
     $form['wrapper_start'] = array (
@@ -273,19 +272,21 @@ function machinery_search_form($form, &$form_state) {
     $form['place'] = array(
 	'#type' => 'textfield',
 	//'#title' => t('Where'),
-	//'#attributes' => array('onfocus' => 'geolocate()'),
+	'#default_value' => isset($_SESSION['search_criteria']['place']) ? $_SESSION['search_criteria']['place'] : '',
 	'#attached' => $attach,
     );
     $form['machine_type'] = array(
-	'#type' => 'textfield',
+	'#type' => 'select',
 	//'#title' => t('Type'),
-	//'#attributes' => array('onfocus' => 'geolocate()'),
-	'#autocomplete_path' => 'taxonomy/autocomplete/field_type', // Field name here.
+	'#default_value' => isset($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '',
+	'#options' => taxonomy_allowed_values(field_info_field('field_type')),
+	'#empty_option' => t('Select category'),
     );
     $form['date_from'] = array(
 	'#type' => 'date_popup',
 	//'#title' => t('From date'),
-	//'#default_value' => $today,
+	'#attributes' => array('placeholder' => t('from date')),
+	'#default_value' => isset($_SESSION['search_criteria']['date_from']) ? $_SESSION['search_criteria']['date_from'] : '',
 	'#date_type' => DATE_DATETIME,
 	'#date_timezone' => date_default_timezone(),
 	'#date_format' => 'd-m-Y',
@@ -295,7 +296,8 @@ function machinery_search_form($form, &$form_state) {
     $form['date_to'] = array(
 	'#type' => 'date_popup',
 	//'#title' => t('To date'),
-	//'#default_value' => $today,
+	'#attributes' => array('placeholder' => t('to date')),
+	'#default_value' => isset($_SESSION['search_criteria']['date_to']) ? $_SESSION['search_criteria']['date_to'] : '',
 	'#date_type' => DATE_DATETIME,
 	'#date_timezone' => date_default_timezone(),
 	'#date_format' => 'd-m-Y',
@@ -304,6 +306,7 @@ function machinery_search_form($form, &$form_state) {
     );
     $form['coords'] = array(
 	'#type' => 'hidden',
+	'#default_value' => isset($_SESSION['search_criteria']['coords']) ? $_SESSION['search_criteria']['coords'] : '',
 	'#attributes' => array('id' => 'coords'),
     );
     $form['submit_button'] = array(
@@ -320,17 +323,10 @@ function machinery_search_form($form, &$form_state) {
 
 //Cannot use form_name_submit function when $['#action'] is defined
 function machinery_search_form_submit($form, &$form_state) {
-    if ($form_state['values']['machine_type']) {
-	$termObj = taxonomy_get_term_by_name($form_state['values']['machine_type']);
-	$termObj = array_shift($termObj);
-	$form_state['values']['machine_type'] = $termObj->tid;
-    } else {
+    if (!$form_state['values']['machine_type']) {
 	$form_state['values']['machine_type'] = 'all';
     }
-    $form_state['values']['date_from'] = strtotime($form_state['values']['date_from']);
-    $form_state['values']['date_to'] = strtotime($form_state['values']['date_to']);
-
-    $_SESSION['search_criteria'] = array_intersect_key($form_state['values'], array('machine_type' => '', 'date_from' => '', 'date_to' => '', 'coords' => ''));
+    $_SESSION['search_criteria'] = array_intersect_key($form_state['values'], array('place' => '', 'machine_type' => '', 'date_from' => '', 'date_to' => '', 'coords' => ''));
     $form_state['redirect'] = 'machinery-search';
 }
 
@@ -346,13 +342,26 @@ function ak_mermix_tools_menu() {
 }
 
 function search_machinery() {
+    drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' , 'external', array('scope' => 'footer'));
+    if(!isset($_SESSION['search_criteria']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+	return array(drupal_get_form('machinery_search_form'), array('#markup' => '<h2>Not found</h2>'));
+    }
     $search_criteria = $_SESSION['search_criteria'];
+    $page_content = array();
     $dates = '';
     $search_criteria['coords'] = $search_criteria['coords'] ?: 'all';
+    $search_criteria['date_from'] = strtotime($search_criteria['date_from']);
+    $search_criteria['date_to'] = strtotime($search_criteria['date_to']);
+    $page_content['form'] = drupal_get_form('machinery_search_form');
     if ($search_criteria['date_from'] && $search_criteria['date_to']) {
 	$dates = date('Y-m-d', $search_criteria['date_from']) . '--' . date('Y-m-d', $search_criteria['date_to']);
-	return views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates);
+	$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates);
+	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)): array('#markup' => '<h2>Not found</h2>');
     } else {
-	return views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type']);
+	$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type']);
+	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'])) : array('#markup' => '<h2>Not found</h2>');
+	 
     }
+    unset($_SESSION['search_criteria']);
+    return $page_content;
 }
