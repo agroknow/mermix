@@ -39,7 +39,10 @@ function webform_term_options_vocabulary_terms($component, $flat, $vid) {
    * @todo Do something for hierarchical vocabularies here (hint: use $flat arg)
    */
   foreach ($tree as $term) {
-    $terms['tid_' . $term->tid] = $term->name;
+      if (module_exists('i18n_taxonomy')) {
+	$term = i18n_taxonomy_localize_terms($term);
+	$terms['tid_' . $term->tid] = $term->name;
+      }
   }
 
   return $terms;
