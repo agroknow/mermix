@@ -5013,3 +5013,12 @@ position: relative;
 .inline-form .chzn-container .chzn-single{
     border: 1px solid #d5d5d5;
 }
+/* Webform */
+.webform-datepicker .chzn-container{
+    float: left;
+    display: inline-block;
+}
+.webform-client-form .form-submit{
+    display: block;
+    clear: both;
+}
