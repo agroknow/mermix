@@ -5014,11 +5014,6 @@ position: relative;
     border: 1px solid #d5d5d5;
 }
 /* Webform */
-.webform-datepicker .chzn-container{
-    float: left;
+.webform-component-date .chzn-container .chzn-single{
     display: inline-block;
-}
-.webform-client-form .form-submit{
-    display: block;
-    clear: both;
 }
