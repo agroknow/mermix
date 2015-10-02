@@ -56,6 +56,29 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	    );
 	}
     }
+    if (substr($form_id, 0, strrpos($form_id, '_')) == 'webform_client_form') {
+	foreach ($form['submitted'] as $key => $value) {
+	    if (strpos($key, 'date_') !== false) {
+
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#type' => 'date_popup',
+		    '#attributes' => array('name' => 'submitted[' . $key . ']'),
+		    '#date_type' => DATE_DATETIME,
+		    '#date_timezone' => date_default_timezone(),
+		    '#date_format' => 'd-m-Y',
+		    '#date_increment' => 1,
+		    '#date_year_range' => '-3:+3',
+		));
+	    }
+	}
+    }
+}
+
+function ak_mermix_tools_date_popup_process_alter(&$element, &$form_state, $context) {
+    unset($element['date']['#title']);
+    unset($element['date']['#description']);
+    unset($element['time']['#title']);
+    unset($element['time']['#description']);
 }
 
 function ak_mermix_tools_form_user_register_form_alter(&$form, &$form_state) {
@@ -246,6 +269,7 @@ function ak_mermix_tools_block_view($delta = '') {
 function ak_mermix_tools_block_content() {
     return drupal_get_form('machinery_search_form');
 }
+
 function ak_mermix_tools_block_content_banner() {
     $out = '<div class="banner">';
     $out .= drupal_render(drupal_get_form('machinery_search_form'));
@@ -260,14 +284,14 @@ function ak_mermix_tools_block_content_banner() {
 function machinery_search_form($form, &$form_state) {
     $all_scripts = drupal_add_js();
     $attach = array('js' => array(
-		drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
-	    ));
-    if(!$all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] && current_path() != 'machinery-search'){
+	    drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
+    ));
+    if (!$all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] && current_path() != 'machinery-search') {
 	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
     }
-    $form['wrapper_start'] = array (
-    '#type' => 'markup',
-    '#markup' => '<div class="inline-form">',
+    $form['wrapper_start'] = array(
+	'#type' => 'markup',
+	'#markup' => '<div class="inline-form">',
     );
     $form['place'] = array(
 	'#type' => 'textfield',
@@ -313,9 +337,9 @@ function machinery_search_form($form, &$form_state) {
 	'#type' => 'submit',
 	'#value' => t('Search'),
     );
-    $form['wrapper_end'] = array (
-    '#type' => 'markup',
-    '#markup' => '</div>',
+    $form['wrapper_end'] = array(
+	'#type' => 'markup',
+	'#markup' => '</div>',
     );
     //$form['#action'] = url('machine-results');
     return $form;
@@ -342,25 +366,24 @@ function ak_mermix_tools_menu() {
 }
 
 function search_machinery() {
-    drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' , 'external', array('scope' => 'footer'));
-    if(!isset($_SESSION['search_criteria']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places', 'external', array('scope' => 'footer'));
+    if (!isset($_SESSION['search_criteria']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
 	return array(drupal_get_form('machinery_search_form'), array('#markup' => '<h2>Not found</h2>'));
     }
     $search_criteria = $_SESSION['search_criteria'];
     $page_content = array();
     $dates = '';
-    $search_criteria['coords'] = $search_criteria['coords'] ?: 'all';
+    $search_criteria['coords'] = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
     $search_criteria['date_from'] = strtotime($search_criteria['date_from']);
     $search_criteria['date_to'] = strtotime($search_criteria['date_to']);
     $page_content['form'] = drupal_get_form('machinery_search_form');
     if ($search_criteria['date_from'] && $search_criteria['date_to']) {
 	$dates = date('Y-m-d', $search_criteria['date_from']) . '--' . date('Y-m-d', $search_criteria['date_to']);
 	$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates);
-	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)): array('#markup' => '<h2>Not found</h2>');
+	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)) : array('#markup' => '<h2>Not found</h2>');
     } else {
 	$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type']);
 	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'])) : array('#markup' => '<h2>Not found</h2>');
-	 
     }
     unset($_SESSION['search_criteria']);
     return $page_content;
