@@ -59,12 +59,11 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     if (substr($form_id, 0, strrpos($form_id, '_')) == 'webform_client_form') {
 	foreach ($form['submitted'] as $key => $value) {
 	    if (strpos($key, 'date_') !== false) {
-
 		$form['submitted'][$key] = array_merge($value, array(
-		    '#type' => 'date_popup',
+		    '#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
 		    '#attributes' => array('name' => 'submitted[' . $key . ']'),
 		    '#date_type' => DATE_DATETIME,
-		    '#date_timezone' => date_default_timezone(),
+		    '#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
 		    '#date_format' => 'd-m-Y',
 		    '#date_increment' => 1,
 		    '#date_year_range' => '-3:+3',
@@ -307,23 +306,23 @@ function machinery_search_form($form, &$form_state) {
 	'#empty_option' => t('Select category'),
     );
     $form['date_from'] = array(
-	'#type' => 'date_popup',
+	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
 	//'#title' => t('From date'),
 	'#attributes' => array('placeholder' => t('from date')),
 	'#default_value' => isset($_SESSION['search_criteria']['date_from']) ? $_SESSION['search_criteria']['date_from'] : '',
 	'#date_type' => DATE_DATETIME,
-	'#date_timezone' => date_default_timezone(),
+	'#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
 	'#date_format' => 'd-m-Y',
 	'#date_increment' => 1,
 	'#date_year_range' => '-3:+3',
     );
     $form['date_to'] = array(
-	'#type' => 'date_popup',
+	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
 	//'#title' => t('To date'),
 	'#attributes' => array('placeholder' => t('to date')),
 	'#default_value' => isset($_SESSION['search_criteria']['date_to']) ? $_SESSION['search_criteria']['date_to'] : '',
 	'#date_type' => DATE_DATETIME,
-	'#date_timezone' => date_default_timezone(),
+	'#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
 	'#date_format' => 'd-m-Y',
 	'#date_increment' => 1,
 	'#date_year_range' => '-3:+3',
