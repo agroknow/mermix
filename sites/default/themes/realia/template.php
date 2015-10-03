@@ -855,3 +855,5 @@ function realia_radio(&$variables) {
 
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
+
+function realia_filter_tips_more_info() { return ''; }

@@ -16,6 +16,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     global $user;
 
     if ($form_id == 'apartment_node_form') {
+	$is_admin = user_access('administer nodes', $user);
 	$add = !isset($form_state['node']->nid) || isset($form_state['node']->is_new);
 	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
 	if ($node_edit) {
@@ -31,7 +32,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	    if (empty($lat) && empty($lon)) {
 		$user_message = t('Your address information is empty and you can configure it <a href="@here" target="_blank">here</a>', array('@here' => url('user/' . $user->uid . '/edit')));
 	    }
-	    $form['language']['#access'] = user_access('administer nodes', $user);
+	    $form['language']['#access'] = $is_admin;
 	    $form['field_address']['#prefix'] = '<div class="toggle-address-field">';
 	    $form['field_address']['#suffix'] = '</div>';
 	    $form['address_checkbox'] = array(
@@ -54,6 +55,15 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 			),
 		    )),
 	    );
+	    if (!$is_admin) {
+		$fieldCollection = $form['field_multiprice']['und'];
+		foreach ($fieldCollection as $key => $value) {
+		    if (is_numeric($value) && ($value >= 0)) {
+			$form['field_multiprice']['und'][$value]['field_multiprice_value']['und'][0]['value']['#title_display'] = 'invisible';
+			$form['field_multiprice']['und'][$value]['field_multiprice_unit']['und']['#title_display'] = 'invisible';
+		    }
+		}
+	    }
 	}
     }
     if (substr($form_id, 0, strrpos($form_id, '_')) == 'webform_client_form') {
