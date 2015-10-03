@@ -5017,3 +5017,16 @@ position: relative;
 .webform-component-date .chzn-container .chzn-single{
     display: inline-block;
 }
+/* Price Multiple */
+.field-name-field-multiprice-value,
+.field-name-field-multiprice-unit{
+    display: inline-block;
+}
+.field-name-field-multiprice-unit .chzn-container{
+    vertical-align: middle;
+}
+
+/* General styles */
+.tabledrag-toggle-weight-wrapper{
+    display: none;
+}
