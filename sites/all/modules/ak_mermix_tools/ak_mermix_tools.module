@@ -20,6 +20,11 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	$add = !isset($form_state['node']->nid) || isset($form_state['node']->is_new);
 	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
 	if ($node_edit) {
+	    if(!$is_admin){
+	    $form['#attached']['js'] = array(
+		drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_tips.js' => array('scope' => 'footer'),
+	      );
+	    }
 	    $user_data = user_load($user->uid);
 	    $lat = $user_data->field_place['und']['0']['lat'];
 	    $lon = $user_data->field_place['und']['0']['lon'];
