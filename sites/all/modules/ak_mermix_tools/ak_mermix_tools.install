@@ -765,3 +765,41 @@ $handler->display->display_options['menu']['name'] = 'management';
 /*function ak_mermix_tools_install(){
     drupal_set_installed_schema_version('ak_mermix_tools', 0);
 }*/
+
+
+/**
+ * Update prices from existing values.
+ */
+function ak_mermix_tools_update_7008(&$sandbox) {
+  $term = taxonomy_get_term_by_name('stremma');
+  $term = array_pop($term);
+  $tid = $term->tid;
+  $properties = node_load_multiple(array(), array('type' => 'apartment'));
+    if (!isset($sandbox['total'])) {
+        $sandbox['total'] = count($properties);
+        $sandbox['current'] = 0;
+    }
+    $nodes_per_pass = 25;
+    $propertiesToProcess = array_slice($properties, $sandbox['current'], $nodes_per_pass);
+    foreach ($propertiesToProcess as $property) {
+	$property->field_multiprice['und']['0']['id'] = $sandbox['current'];
+        $property->field_multiprice['und']['0']['field_multiprice_value']['und'][0]['value'] = number_format($property->field_price['und'][0]['value'],2, '.', '');
+        $property->field_multiprice['und']['0']['field_multiprice_unit']['und'][0]['tid'] = $tid;
+        field_attach_update('node', $property);
+        $sandbox['current'] ++;
+    }
+    // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+
+    if ($sandbox['#finished'] === 1) {
+        drupal_set_message(t('@nodes nodes of type Equipment Updated.', array('@nodes' => $sandbox['total'])));
+    }  
+}
+
+/**
+ * Delete price field from Equipment type.
+ */
+function ak_mermix_tools_update_7009(&$sandbox) {
+    $instances = field_info_instances('node', 'apartment');
+        field_delete_instance($instances['field_price'], true);
+}
