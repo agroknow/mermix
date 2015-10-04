@@ -131,8 +131,8 @@ function ak_mermix_tools_node_update($node) {
 	$node_wrapper = entity_metadata_wrapper('node', $node);
 	if (($node_original->field_address->value()['lat'] != $node_wrapper->field_address->value()['lat']) ||
 		($node_original->field_address->value()['lon'] != $node_wrapper->field_address->value()['lon']) ||
-		(!$node_wrapper->field_location->value()) ||
-		($node_original->status->value() == '0' && $node_wrapper->status->value() == '1')) {
+		(!$node_wrapper->field_location->value() &&
+		($node_original->status->value() == '0' && $node_wrapper->status->value() == '1'))) {
 	    watchdog('mermix tools', 'changing location');
 	    ak_mermix_tools_updateAddress($node_wrapper); //changing a field here
 	    field_attach_update('node', $node); //call field attach update to save field 
@@ -294,7 +294,6 @@ function ak_mermix_tools_block_content_banner() {
 /*
  * Create the custom form
  */
-
 function machinery_search_form($form, &$form_state) {
     $all_scripts = drupal_add_js();
     $attach = array('js' => array(
@@ -359,6 +358,56 @@ function machinery_search_form($form, &$form_state) {
     return $form;
 }
 
+/*
+ * Create custom form as first step to add a machine
+ */
+function machinery_add_form($form, &$form_state) {
+   $attach = array('js' => array(
+	    drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
+	    'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external', 'scope' => 'footer'),
+   ));
+   //Name
+   $form['machine_name'] = array(
+	'#type' => 'textfield',
+	//'#title' => t('Where'),
+	'#default_value' => '',
+    );
+   //Type
+   $form['machine_type'] = array(
+	'#type' => 'select',
+	//'#title' => t('Type'),
+	'#default_value' => '',
+	'#options' => taxonomy_allowed_values(field_info_field('field_type')),
+	'#empty_option' => t('Select category'),
+    );
+   //Location
+   $form['place'] = array(
+	'#type' => 'textfield',
+	//'#title' => t('Where'),
+	'#default_value' => '',
+	'#attached' => $attach,
+    );
+   $form['coords'] = array(
+	'#type' => 'hidden',
+	'#default_value' => '',
+	'#attributes' => array('id' => 'coords'),
+    );
+   //Cultivation
+    $form['machine_cultivation'] = array(
+	'#type' => 'select',
+	//'#title' => t('Type'),
+	'#multiple' => true,
+	'#default_value' => '',
+	'#options' => taxonomy_allowed_values(field_info_field('field_cultivation')),
+	'#empty_option' => t('Select category'),
+    );
+    $form['submit_button'] = array(
+	'#type' => 'submit',
+	'#value' => t('Continue'),
+    );
+    return $form;
+}
+
 //Cannot use form_name_submit function when $['#action'] is defined
 function machinery_search_form_submit($form, &$form_state) {
     if (!$form_state['values']['machine_type']) {
@@ -368,10 +417,23 @@ function machinery_search_form_submit($form, &$form_state) {
     $form_state['redirect'] = 'machinery-search';
 }
 
+function machinery_add_form_submit($form, &$form_state){
+    //if not logged in save to session and redirect to login
+    $_SESSION['user_add_data'] = $form_state['values'];
+    $form_state['redirect'] = 'user/login';
+    //else save node and redirect to edit page
+}
+
 function ak_mermix_tools_menu() {
     $items['machinery-search'] = array(
 	'title' => 'Search',
 	'page callback' => 'search_machinery',
+	'access callback' => TRUE,
+	'type' => MENU_CALLBACK,
+    );
+    $items['machinery-add'] = array(
+	'title' => t('Add your machine'),
+	'page callback' => 'add_machinery',
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
@@ -401,4 +463,40 @@ function search_machinery() {
     }
     unset($_SESSION['search_criteria']);
     return $page_content;
+}
+
+function add_machinery() {
+    return drupal_get_form('machinery_add_form');
+}
+
+function ak_mermix_tools_user_login(){
+    global $user;
+    global $language;
+    if(isset($_SESSION['user_add_data'])){
+	$userData = $_SESSION['user_add_data'];
+	$coords = explode(',',$userData['coords']);
+	$node = new stdClass();
+	$node->title = $userData['machine_name'];
+	$node->type = 'apartment';
+	node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+	$node->language = $language->language; // Or e.g. 'en' if locale is enabled
+	$node->uid = $user->uid; 
+	$node->status = 0; //(1 or 0): published or not
+	$node->promote = 0; //(1 or 0): promoted to front page
+	
+	$node->field_address['und']['0'] = geofield_compute_values(
+                array('lat' => $coords[0],'lon' => $coords[1],), GEOFIELD_INPUT_LAT_LON);
+	// Term reference (taxonomy) field
+	$node->field_type['und'][0]['tid'] = $userData['machine_type'];
+	foreach ($userData['machine_cultivation'] as $key => $value) {
+	  $node->field_cultivation['und'][$key]['tid'] = $value;  
+	}
+	// 'node' is default,
+	// Other possible values are "user" and  "taxonomy_term" 
+        $node = node_submit($node); // Prepare node for saving
+	node_save($node);
+	unset($_SESSION['user_add_data']);
+	$_SESSION['first_update'] = true;
+	drupal_goto('node/' . $node->nid . '/edit');
+    }
 }
