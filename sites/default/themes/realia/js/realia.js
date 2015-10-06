@@ -66,10 +66,12 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
-jQuery('.description').each(function(){
-	var $description = jQuery(this);
-	var $target = jQuery(this).closest('.form-wrapper');
+jQuery('.form-wrapper').each(function(){
+	var $description = jQuery(this).find('div.description');
+	
+	if($description.length > 0) {
 	$description.hide();
-	new Opentip($target, $description.text(),'',{target:true,tipJoint:'right'});
+	new Opentip(jQuery(this), $description.text(),'',{target:true,tipJoint:'right'});
+	}
 	});
 });
