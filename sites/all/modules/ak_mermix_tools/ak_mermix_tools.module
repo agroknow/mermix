@@ -553,6 +553,8 @@ function ak_mermix_tools_user_login(&$edit, $account){
 	unset($_SESSION['user_add_data']);
 	$_SESSION['first_update'] = true;
 	drupal_goto('node/' . $nid . '/edit');
+    } else {
+	drupal_goto('<front>');
     }
 }
 /**
