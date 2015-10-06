@@ -66,7 +66,7 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
-jQuery('.form-wrapper').each(function(){
+jQuery('.form-item').each(function(){
 	var $description = jQuery(this).find('div.description');
 	
 	if($description.length > 0) {
