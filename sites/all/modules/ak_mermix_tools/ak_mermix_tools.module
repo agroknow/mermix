@@ -211,20 +211,32 @@ function ak_mermix_tools_restws_response_alter(&$response, $function, $formatNam
     if ($function == 'queryResource' && $formatName == 'json') {
 	//e.g. node.json?type=apartment&limit=10
 	foreach ($response['list'] as $key => $listitem) {
-	    $fid = $listitem['field_image']['file']['id']; //get the file id
-	    $file = file_load($fid);
-	    $uri = $file->uri; //create the uri
-	    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-	    $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
+		//get the file id
+        $fid = isset($listitem['field_image'][0]) ? $listitem['field_image'][0]['file']['id'] : 0;
+	    if($fid  != 0){
+		    $file = file_load($fid);
+		    $uri = $file->uri; //create the uri
+		    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		    $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
+		}
+        else{
+            $response['list'][$key]['field_image'] = "";
+        }
 	}
     } else if ($function == 'viewResource' && $formatName == 'json') {
 	//e.g. node/204.json
 	if (isset($response['field_image'])) {
-	    $fid = $response['field_image']['file']['id']; //get the file id
-	    $file = file_load($fid);
-	    $uri = $file->uri; //create the uri
-	    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-	    $response['field_image'] = $mediumUrl; //replace the original response
+		//get the file id
+	    $fid = isset($response['field_image'][0]) ? $response['field_image'][0]['file']['id'] : 0;
+	   	if($fid != 0){
+		    $file = file_load($fid);
+		    $uri = $file->uri; //create the uri
+		    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		    $response['field_image'] = $mediumUrl; //replace the original response
+		}
+        else{
+            $response['field_image'] = "";
+        }
 	}
     }
 }
