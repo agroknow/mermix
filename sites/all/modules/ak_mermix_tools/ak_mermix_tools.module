@@ -14,7 +14,7 @@ function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $accou
 
 function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     global $user;
-
+    
     if ($form_id == 'apartment_node_form') {
 	$is_admin = user_access('administer nodes', $user);
 	$add = !isset($form_state['node']->nid) || isset($form_state['node']->is_new);
@@ -131,8 +131,8 @@ function ak_mermix_tools_node_update($node) {
 	$node_wrapper = entity_metadata_wrapper('node', $node);
 	if (($node_original->field_address->value()['lat'] != $node_wrapper->field_address->value()['lat']) ||
 		($node_original->field_address->value()['lon'] != $node_wrapper->field_address->value()['lon']) ||
-		(!$node_wrapper->field_location->value()) ||
-		($node_original->status->value() == '0' && $node_wrapper->status->value() == '1')) {
+		(!$node_wrapper->field_location->value() &&
+		($node_original->status->value() == '0' && $node_wrapper->status->value() == '1'))) {
 	    watchdog('mermix tools', 'changing location');
 	    ak_mermix_tools_updateAddress($node_wrapper); //changing a field here
 	    field_attach_update('node', $node); //call field attach update to save field 
@@ -294,7 +294,6 @@ function ak_mermix_tools_block_content_banner() {
 /*
  * Create the custom form
  */
-
 function machinery_search_form($form, &$form_state) {
     $all_scripts = drupal_add_js();
     $attach = array('js' => array(
@@ -359,6 +358,71 @@ function machinery_search_form($form, &$form_state) {
     return $form;
 }
 
+/*
+ * Create custom form as first step to add a machine
+ */
+function machinery_add_form($form, &$form_state) {
+   $logged = user_is_logged_in();
+   $attach = array('js' => array(
+	    drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
+	    'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external', 'scope' => 'footer'),
+   ));
+   //Name
+   $form['machine_name'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Name'),
+	'#required' => true,
+	'#default_value' => '',
+    );
+   //Type
+   $form['machine_type'] = array(
+	'#type' => 'select',
+	'#title' => t('Type'),
+	'#default_value' => '',
+	'#options' => taxonomy_allowed_values(field_info_field('field_type')),
+	'#empty_option' => t('Select category'),
+    );
+   //Location
+    $form['place'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Location'),
+	'#default_value' => '',
+	'#required' => true,
+	'#attached' => $attach,
+    );
+   $form['coords'] = array(
+	'#type' => 'hidden',
+	'#default_value' => '',
+	'#attributes' => array('id' => 'coords'),
+    );
+   //Cultivation
+    $form['machine_cultivation'] = array(
+	'#type' => 'select',
+	'#title' => t('Cultivation'),
+	'#multiple' => true,
+	'#required' => true,
+	'#default_value' => '',
+	'#options' => taxonomy_allowed_values(field_info_field('field_cultivation')),
+	'#empty_option' => t('Select category'),
+    );
+    $form['submit_button'] = array(
+	'#type' => 'submit',
+	'#value' => t('Continue'),
+	//'#prefix' => $logged ? '':'<div id="hello"></div>',
+	'#attributes' => $logged ? array() : array('class' => array('ctools-modal-modal-popup-small')),
+	//'#ajax' => $logged ? array() : array(
+	//'wrapper' => 'hello',
+	//'callback' => 'ak_mermix_tools_login',  
+	//'path' => 'ak_mermix_tools/nojs/login',  
+      //),
+    );
+//    if(!$logged) {
+//    ctools_include('modal');
+//    ctools_modal_add_js();
+//    }
+    return $form;
+}
+
 //Cannot use form_name_submit function when $['#action'] is defined
 function machinery_search_form_submit($form, &$form_state) {
     if (!$form_state['values']['machine_type']) {
@@ -368,6 +432,22 @@ function machinery_search_form_submit($form, &$form_state) {
     $form_state['redirect'] = 'machinery-search';
 }
 
+function machinery_add_form_submit($form, &$form_state){
+    global $user;
+    $machine_data = array_intersect_key($form_state['values'], array_flip(array('machine_name', 'machine_type', 'place', 'coords', 'machine_cultivation')));
+    //if not logged in save to session and redirect to login
+    if(user_is_logged_in()) {
+	$nid = mtools_create_node($machine_data, $user->uid);
+	$_SESSION['first_update'] = true;
+	$form_state['redirect'] = 'node/' . $nid . '/edit';
+    } else {
+	//var_dump(session_id());exit;
+	$_SESSION['user_add_data'] = $machine_data;
+	$form_state['redirect'] = 'user/login';
+	//save data to session
+    }
+}
+
 function ak_mermix_tools_menu() {
     $items['machinery-search'] = array(
 	'title' => 'Search',
@@ -375,8 +455,60 @@ function ak_mermix_tools_menu() {
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
-
+    $items['machinery-add'] = array(
+	'title' => t('Add your machine'),
+	'page callback' => 'add_machinery',
+	'access callback' => TRUE,
+	'type' => MENU_CALLBACK,
+    );
+    $items['ak_mermix_tools/%ctools_js/login'] = array(
+      'title' => 'Login',
+      'page callback' => 'ak_mermix_tools_login_form',
+      'page arguments' => array(1),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    );
     return $items;
+}
+
+/**
+ * A modal login callback.
+ */
+function ak_mermix_tools_login($form, &$form_state) {
+  ctools_include('modal');
+  ctools_include('ajax');
+  $output = drupal_http_request(url('ak_mermix_tools/ajax/login',array('absolute' => true)))->data;
+  //$output = ctools_modal_form_wrapper('user_login', $form_state);
+  print ajax_render($output);
+  exit;
+}
+
+/**
+ * A modal login callback.
+ */
+function ak_mermix_tools_login_form($js = NULL) {
+    
+    // Fall back if $js is not set.
+  if (!$js) {
+    return drupal_get_form('user_login');
+  }
+
+  ctools_include('modal');
+  ctools_include('ajax');
+  ctools_add_js('ajax-responder');
+  $form_state = array(
+    'title' => t('Login'),
+    'ajax' => TRUE,
+  );
+  $output = ctools_modal_form_wrapper('user_login', $form_state);
+  if (!empty($form_state['executed'])) {
+    // We'll just overwrite the form output if it was successful.
+    $output = array();
+    //code to add the node here
+    $output[] = ctools_ajax_command_redirect('user');
+  }
+  print ajax_render($output);
+  exit;
 }
 
 function search_machinery() {
@@ -401,4 +533,47 @@ function search_machinery() {
     }
     unset($_SESSION['search_criteria']);
     return $page_content;
+}
+
+function add_machinery() {
+    //return drupal_get_form('user_login');
+    return drupal_get_form('machinery_add_form');
+}
+
+function ak_mermix_tools_user_login(&$edit, $account){
+    if(isset($_SESSION['user_add_data'])){
+	$nid = mtools_create_node($_SESSION['user_add_data'],$account->uid);
+	unset($_SESSION['user_add_data']);
+	$_SESSION['first_update'] = true;
+	drupal_goto('node/' . $nid . '/edit');
+    }
+}
+/**
+ * Function to create an equipment type node with given data
+ * 
+ */
+function mtools_create_node($data,$uid) {
+    global $language;
+	$coords = explode(',',$data['coords']);
+	$node = new stdClass();
+	$node->title = $data['machine_name'];
+	$node->type = 'apartment';
+	node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+	$node->language = $language->language; // Or e.g. 'en' if locale is enabled
+	$node->uid = $uid; 
+	$node->status = 0; //(1 or 0): published or not
+	$node->promote = 0; //(1 or 0): promoted to front page
+	
+	$node->field_address['und']['0'] = geofield_compute_values(
+                array('lat' => $coords[0],'lon' => $coords[1],), GEOFIELD_INPUT_LAT_LON);
+	// Term reference (taxonomy) field
+	$node->field_type['und'][0]['tid'] = $data['machine_type'];
+	foreach ($data['machine_cultivation'] as $key => $value) {
+	  $node->field_cultivation['und'][$key]['tid'] = $value;  
+	}
+	// 'node' is default,
+	// Other possible values are "user" and  "taxonomy_term" 
+        $node = node_submit($node); // Prepare node for saving
+	node_save($node);
+	return $node->nid;
 }
