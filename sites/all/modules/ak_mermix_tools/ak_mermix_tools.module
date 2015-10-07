@@ -72,6 +72,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
 		    '#attributes' => array('name' => 'submitted[' . $key . ']'),
+		    '#default_value' => $form['submitted'][$key]['#default_value'] ? date('Y-m-d',  strtotime($form['submitted'][$key]['#default_value'])) : '',
 		    '#date_type' => DATE_DATETIME,
 		    '#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
 		    '#date_format' => 'd-m-Y',
