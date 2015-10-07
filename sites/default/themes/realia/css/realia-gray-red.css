@@ -2764,20 +2764,20 @@ body.node-type-apartment section .block-views {
     }
 }
 
-#block-views-apartments-carousel {
+.region.region-carousel {
     overflow: hidden;
     *zoom:1}
 
-#block-views-apartments-carousel .view {
+.region.region-carousel .view {
     margin-left: 0px
 }
 
-#block-views-apartments-carousel .view .view-content {
+.region.region-carousel .view .view-content {
     background-color: #272727;
     padding: 30px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container {
+.region.region-carousel .view .view-content .jcarousel-container {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     -ms-border-radius: 0px;
@@ -2791,7 +2791,7 @@ body.node-type-apartment section .block-views {
     width: auto
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item {
     border: 0px;
     height: 260px;
     margin: 0px 30px 0px 0px;
@@ -2802,12 +2802,12 @@ body.node-type-apartment section .block-views {
     width: 230px !important
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image {
     height: 170px;
     overflow: hidden
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content {
     -webkit-transition: opacity 0.2s linear,width 0.2s linear;
     -moz-transition: opacity 0.2s linear,width 0.2s linear;
     -o-transition: opacity 0.2s linear,width 0.2s linear;
@@ -2815,17 +2815,17 @@ body.node-type-apartment section .block-views {
     width: 100%
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content:hover {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content:hover {
     opacity: .8;
     width: 104%
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content:hover img {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content:hover img {
     margin-left: -2%;
     margin-top: -2%
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content img {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-image .field-content img {
     -webkit-transition: margin-left 0.2s linear,margin-top 0.2s linear;
     -moz-transition: margin-left 0.2s linear,margin-top 0.2s linear;
     -o-transition: margin-left 0.2s linear,margin-top 0.2s linear;
@@ -2834,13 +2834,13 @@ body.node-type-apartment section .block-views {
     width: 100%
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item h2 {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item h2 {
     line-height: 22px;
     margin: 3px 0px 0px 0px;
     padding: 0px 10px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item h2 a {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item h2 a {
     -webkit-transition: color 0.1s ease-in;
     -moz-transition: color 0.1s ease-in;
     -o-transition: color 0.1s ease-in;
@@ -2850,16 +2850,16 @@ body.node-type-apartment section .block-views {
     font-weight: normal
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item h2 a:hover {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item h2 a:hover {
     color: #ce1919;
     text-decoration: none
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-location {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-location {
     padding: 0px 10px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-price {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-price {
     background-color: #ffffff;
     color: #313131;
     font-size: 18px;
@@ -2869,29 +2869,29 @@ body.node-type-apartment section .block-views {
     top: 130px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-area {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-area {
     color: #313131;
     float: left;
     margin-top: 8px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-area .views-label {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-area .views-label {
     display: inline;
     font-weight: bold;
     padding: 0px 0px 0px 10px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-area .field-content {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-area .field-content {
     display: inline
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bedrooms {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bedrooms {
     float: right;
     margin-right: 10px;
     padding-top: 8px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bedrooms .field-content {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bedrooms .field-content {
     background-image: url("../img/icons/bedrooms.png");
     background-position: left center;
     background-repeat: no-repeat;
@@ -2901,18 +2901,18 @@ body.node-type-apartment section .block-views {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bedrooms .field-content {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bedrooms .field-content {
         background-image: url("../img/icons/bedrooms@2x.png")
     }
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bathrooms {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bathrooms {
     float: right;
     margin-right: 10px;
     padding-top: 8px
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bathrooms .field-content {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bathrooms .field-content {
     background-image: url("../img/icons/bathrooms.png");
     background-position: left center;
     background-repeat: no-repeat;
@@ -2922,16 +2922,16 @@ body.node-type-apartment section .block-views {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bathrooms .field-content {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-item .views-field-field-bathrooms .field-content {
         background-image: url("../img/icons/bathrooms@2x.png")
     }
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-clip {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-clip {
     width: 100%
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-prev {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-prev {
     -webkit-transition: opacity 0.2s linear,background-color 0.2s linear;
     -moz-transition: opacity 0.2s linear,background-color 0.2s linear;
     -o-transition: opacity 0.2s linear,background-color 0.2s linear;
@@ -2950,20 +2950,20 @@ body.node-type-apartment section .block-views {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-prev {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-prev {
         background-image: url("../img/arrow-left-white@2x.png")
     }
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-prev.jcarousel-prev-disabled {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-prev.jcarousel-prev-disabled {
     opacity: 0.6
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-prev:hover {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-prev:hover {
     background-color: #a01414
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-next {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-next {
     -webkit-transition: opacity 0.2s linear,background-color 0.2s linear;
     -moz-transition: opacity 0.2s linear,background-color 0.2s linear;
     -o-transition: opacity 0.2s linear,background-color 0.2s linear;
@@ -2982,42 +2982,42 @@ body.node-type-apartment section .block-views {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-next {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-next {
         background-image: url("../img/arrow-right-white@2x.png")
     }
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-next.jcarousel-next-disabled {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-next.jcarousel-next-disabled {
     opacity: 0.6
 }
 
-#block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-next:hover {
+.region.region-carousel .view .view-content .jcarousel-container .jcarousel-next:hover {
     background-color: #ce1919
 }
 
 @media (max-width: 767px) {
-    #block-views-apartments-carousel {
+    .region.region-carousel {
         padding-left:20px;
         padding-right: 20px
     }
 
-    #block-views-apartments-carousel .view .view-content {
+    .region.region-carousel .view .view-content {
         padding: 30px 0px
     }
 
-    #block-views-apartments-carousel .view .view-content .jcarousel-container {
+    .region.region-carousel .view .view-content .jcarousel-container {
         width: 230px
     }
 
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-prev {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-prev {
         left: -50px
     }
 
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-next {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-next {
         right: -50px
     }
 
-    #block-views-apartments-carousel .view .view-content .jcarousel-container .jcarousel-clip {
+    .region.region-carousel .view .view-content .jcarousel-container .jcarousel-clip {
         width: 230px
     }
 }
