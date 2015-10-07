@@ -803,3 +803,117 @@ function ak_mermix_tools_update_7009(&$sandbox) {
     $instances = field_info_instances('node', 'apartment');
         field_delete_instance($instances['field_price'], true);
 }
+
+
+/**
+ * Create users from content type renter
+ */
+function ak_mermix_tools_update_7010(&$sandbox) {
+ $password = 'mermixuser';
+ $ownerid = array_search('Owner', user_roles());
+ $renters = node_load_multiple(array(), array('type' => 'renter'));
+    if (!isset($sandbox['total'])) {
+        $sandbox['total'] = count($renters);
+        $sandbox['current'] = 0;
+    }
+    $nodes_per_pass = 25;
+    $rentersToProcess = array_slice($renters, $sandbox['current'], $nodes_per_pass);
+    foreach ($rentersToProcess as $renter) {
+	//get renter data
+	list($lastname,$name) = explode(' ', $renter->title);
+	$email =  isset($renter->field_email['und'][0]['value']) ? $renter->field_email['und'][0]['value'] : 'usermail'. $renter->nid . '@example.com';
+	$phone =  isset($renter->field_phone['und'][0]['value']) ? $renter->field_phone['und'][0]['value'] : '0123456789';
+	//create the user
+	$new_user = array(
+	'name' => 'user_'.$renter->nid,
+	'pass' => $password,
+	'mail' => $email,
+	'signature_format' => 'full_html',
+	'status' => 1,
+	'timezone' => variable_get('date_default_timezone', @date_default_timezone_get()),
+	'init' => $email,
+	'roles' => array(
+	    DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+	    $ownerid => 'Owner'
+	),
+	'field_first_name' => array(
+	'und' => array(
+	    0 => array(
+	    'value' => $name ? $name : 'name',
+	    ),
+	    )),
+	'field_last_name' => array(
+	    'und' => array(
+	    0 => array(
+	    'value' => $lastname,
+	    ),
+	    )),
+	'field_phone_number' => array(
+	    'und' => array(
+	    0 => array(
+	    'value' => $phone,
+	    ),
+	    )),
+	);
+	$account= user_save(NULL, $new_user);
+	//query for equipment assigned to renter and change the author to the above created user.
+	$userNodes = db_select('field_data_field_assigned_agents', 'agents')
+	->fields('agents',array('entity_id'))
+	->condition('agents.field_assigned_agents_target_id', $renter->nid)
+	->execute()
+	->fetchCol();
+	foreach ($userNodes as $id) {
+	$nodeObj = node_load($id);
+	$nodeObj->uid = $account->uid;
+	node_save($nodeObj);
+	}
+	$sandbox['current'] ++;
+    }
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+
+    if ($sandbox['#finished'] === 1) {
+        drupal_set_message(t('@users Users created.', array('@users' => $sandbox['total'])));
+    }  
+}
+
+/**
+ * Populate field_image field from files existing in slideshow
+ */
+function ak_mermix_tools_update_7011(&$sandbox) {
+
+  $properties = node_load_multiple(array(), array('type' => 'apartment'));
+    if (!isset($sandbox['total'])) {
+        $sandbox['total'] = count($properties);
+        $sandbox['current'] = 0;
+    }
+    $nodes_per_pass = 25;
+    $propertiesToProcess = array_slice($properties, $sandbox['current'], $nodes_per_pass);
+    foreach ($propertiesToProcess as $property) {
+	$imageid = 1;
+	foreach ($property->field_product_slideshow['und'] as $value){
+	    $info = image_get_info(file_load($value['fid'])->uri);
+	    $property->field_image['und'][$imageid]['fid'] = $value['fid'];
+	    $property->field_image['und'][$imageid]['title'] = '';
+	    $property->field_image['und'][$imageid]['alt'] = '';
+	    $property->field_image['und'][$imageid]['width'] = $info['width'];
+	    $property->field_image['und'][$imageid]['height'] = $info['height'];
+	    $imageid++;
+	}
+        field_attach_update('node', $property);
+        $sandbox['current'] ++;
+    }
+    // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+
+    if ($sandbox['#finished'] === 1) {
+        drupal_set_message(t('@nodes nodes of type Equipment Updated.', array('@nodes' => $sandbox['total'])));
+    }  
+}
+
+/**
+ * Delete field_product_slideshow from Equipment type.
+ */
+function ak_mermix_tools_update_7012(&$sandbox) {
+    $instances = field_info_instances('node', 'apartment');
+        field_delete_instance($instances['field_product_slideshow'], true);
+}
