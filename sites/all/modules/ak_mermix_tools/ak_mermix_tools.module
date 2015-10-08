@@ -545,7 +545,7 @@ function ak_mermix_tools_login_form($js = NULL) {
 function search_machinery() {
     drupal_add_js('https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places', 'external', array('scope' => 'footer'));
     if (!isset($_SESSION['search_criteria']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
-	return array(drupal_get_form('machinery_search_form'), array('#markup' => '<h2>Not found</h2>'));
+	return array(array('#markup' => '<h2>'. t('Search the machine you are looking for..') .'</h2>'), drupal_get_form('machinery_search_form'));
     }
     $search_criteria = $_SESSION['search_criteria'];
     $page_content = array();
@@ -553,14 +553,20 @@ function search_machinery() {
     $search_criteria['coords'] = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
     $search_criteria['date_from'] = strtotime($search_criteria['date_from']);
     $search_criteria['date_to'] = strtotime($search_criteria['date_to']);
-    $page_content['form'] = drupal_get_form('machinery_search_form');
     if ($search_criteria['date_from'] && $search_criteria['date_to']) {
 	$dates = date('Y-m-d', $search_criteria['date_from']) . '--' . date('Y-m-d', $search_criteria['date_to']);
 	$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates);
-	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)) : array('#markup' => '<h2>Not found</h2>');
+	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)) : array('#markup' => '<h2>'. t('Have not found what you are looking for; Try again..').'</h2>');
     } else {
 	$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type']);
-	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'])) : array('#markup' => '<h2>Not found</h2>');
+	$page_content['view'] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'])) : array('#markup' => '<h2>'. t('Have not found what you are looking for; Try again..').'</h2>');
+    }
+    $page_content['form'] = drupal_get_form('machinery_search_form');
+    if(!is_object($result[0])){
+	$block = module_invoke('webform', 'block_view', 'client-block-301');
+	$output = '<h2>'. t('Or fill in the form below..') .'</h2>';
+	$output .= $block['content'];
+	$page_content['block'] = array('#markup' => $output);
     }
     unset($_SESSION['search_criteria']);
     return $page_content;
