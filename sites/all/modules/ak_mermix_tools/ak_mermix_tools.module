@@ -68,9 +68,21 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     }
     if (substr($form_id, 0, strrpos($form_id, '_')) == 'webform_client_form') {
 	foreach ($form['submitted'] as $key => $value) {
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#title' => t($form['submitted'][$key]['#title']),
+		));
+	    if ($key == 'type') {
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#type' => 'select',
+		    '#title' => t($form['submitted'][$key]['#title']),
+		    '#options' => taxonomy_allowed_values(field_info_field('field_type')),
+		    '#empty_option' => t('Select category'),
+		));
+	    }
 	    if (strpos($key, 'date_') !== false) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
+		    '#title' => t($form['submitted'][$key]['#title']),
 		    '#attributes' => array('name' => 'submitted[' . $key . ']'),
 		    '#default_value' => $form['submitted'][$key]['#default_value'] ? date('Y-m-d',  strtotime($form['submitted'][$key]['#default_value'])) : '',
 		    '#date_type' => DATE_DATETIME,
