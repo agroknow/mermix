@@ -41,7 +41,11 @@ jQuery(function(){
     function fillInAddress() {
     // Get the place details from the autocomplete object.
     //lat,lon
-    //console.log(autocomplete.getPlace());
-    coords.value = autocomplete.getPlace().geometry.location.H + ',' + autocomplete.getPlace().geometry.location.L;
+    var coordArr = [];
+    //console.log(autocomplete.getPlace().geometry.location);
+    for (var key in autocomplete.getPlace().geometry.location) {
+    coordArr.push(autocomplete.getPlace().geometry.location[key]);
+    }
+    coords.value = coordArr[0] + ',' + coordArr[1];
   }
 });
