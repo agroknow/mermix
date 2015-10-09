@@ -2798,7 +2798,7 @@ body.node-type-apartment section .block-views {
     overflow: visible;
     position: relative;
     overflow: hidden;
-    text-align: left;
+    text-align: center;
     width: 230px !important
 }
 
@@ -5033,7 +5033,7 @@ position: relative;
 .form-item.form-type-select.form-item-body-und-0-format{
     display: none;
 }
-input, textarea, .uneditable-input{
+input.geofield-gmap-search{
     width: auto;
 }
 form.node-form > div > div{
@@ -5070,4 +5070,9 @@ button.form-submit.field-add-more-submit{
 }
 .field-name-field-multiprice-value input{
     padding-left: 20px;
+}
+.btn.addit-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
 }

@@ -23,4 +23,4 @@
  */
 ?>
 
-<?php print (strlen(trim($output)) == 0) ? '' : date('d/m/Y',strtotime($output)) . ' - '; ?>
+<?php print (strlen(trim($output)) == 0) ? '&nbsp;' : date('d/m/Y',strtotime($output)) . ' - '; ?>
