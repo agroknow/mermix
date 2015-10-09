@@ -554,26 +554,26 @@ function search_machinery($noresults = false) {
 	    return array(array('#markup' => '<h2>' . t('Search the machine you are looking for..') . '</h2>'), drupal_get_form('machinery_search_form'));
 	}
 	//a user submitted data so we can search
-	if(isset($_SESSION['search_criteria'])){
-	$search_criteria = $_SESSION['search_criteria'];
-	$dates = '';
-	$search_criteria['coords'] = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
-	$search_criteria['date_from'] = strtotime($search_criteria['date_from']);
-	$search_criteria['date_to'] = strtotime($search_criteria['date_to']);
-	if ($search_criteria['date_from'] && $search_criteria['date_to']) {
-	    $dates = date('Y-m-d', $search_criteria['date_from']) . '--' . date('Y-m-d', $search_criteria['date_to']);
-	    $result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates);
-	    $page_content[] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)) : '';
-	} else {
-	    $result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type']);
-	    $page_content[] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'])) : '';
-	}
-	if (!is_object($result[0])) {
-	    drupal_goto('machinery-search/noresults');
-	}
-	$page_content[] = array('#markup' => '<h2>' . t('Try a new search!') . '</h2>');
-	$page_content[] = drupal_get_form('machinery_search_form');
-	unset($_SESSION['search_criteria']);
+	if (isset($_SESSION['search_criteria'])) {
+	    $search_criteria = $_SESSION['search_criteria'];
+	    $dates = '';
+	    $search_criteria['coords'] = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
+	    $search_criteria['date_from'] = strtotime($search_criteria['date_from']);
+	    $search_criteria['date_to'] = strtotime($search_criteria['date_to']);
+	    if ($search_criteria['date_from'] && $search_criteria['date_to']) {
+		$dates = date('Y-m-d', $search_criteria['date_from']) . '--' . date('Y-m-d', $search_criteria['date_to']);
+		$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates);
+		$page_content[] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'], $dates)) : '';
+	    } else {
+		$result = views_get_view_result('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type']);
+		$page_content[] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $search_criteria['coords'], $search_criteria['machine_type'])) : '';
+	    }
+	    if (!is_object($result[0])) {
+		drupal_goto('machinery-search/noresults');
+	    }
+	    $page_content[] = array('#markup' => '<h2>' . t('Try a new search!') . '</h2>');
+	    $page_content[] = drupal_get_form('machinery_search_form');
+	    unset($_SESSION['search_criteria']);
 	}
     }
     //when user submits form from search page a post request issued without session data returns an empty array
@@ -586,13 +586,17 @@ function add_machinery() {
 }
 
 function ak_mermix_tools_user_login(&$edit, $account) {
-    if (isset($_SESSION['user_add_data'])) {
-	$nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
-	unset($_SESSION['user_add_data']);
-	$_SESSION['first_update'] = true;
-	drupal_goto('node/' . $nid . '/edit');
-    } else {
-	drupal_goto('<front>');
+    //ignore this hook for restws users
+    $user_regex = variable_get('restws_basic_auth_user_regex', '/^restws.*/');
+    if (!preg_match($user_regex, $account->name)) {
+	if (isset($_SESSION['user_add_data'])) {
+	    $nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
+	    unset($_SESSION['user_add_data']);
+	    $_SESSION['first_update'] = true;
+	    drupal_goto('node/' . $nid . '/edit');
+	} else {
+	    drupal_goto('<front>');
+	}
     }
 }
 
