@@ -384,7 +384,6 @@ function machinery_search_form($form, &$form_state) {
 	'#type' => 'markup',
 	'#markup' => '</div>',
     );
-    //$form['#action'] = url('machine-results');
     return $form;
 }
 
@@ -393,7 +392,7 @@ function machinery_search_form($form, &$form_state) {
  */
 
 function machinery_add_form($form, &$form_state) {
-    $logged = user_is_logged_in();
+    //$logged = user_is_logged_in();
     $attach = array('js' => array(
 	    drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
 	    'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external', 'scope' => 'footer'),
@@ -440,7 +439,7 @@ function machinery_add_form($form, &$form_state) {
 	'#type' => 'submit',
 	'#value' => t('Continue'),
 	//'#prefix' => $logged ? '':'<div id="hello"></div>',
-	'#attributes' => $logged ? array() : array('class' => array('ctools-modal-modal-popup-small')),
+	//'#attributes' => $logged ? array() : array('class' => array('ctools-modal-modal-popup-small')),
 	    //'#ajax' => $logged ? array() : array(
 	    //'wrapper' => 'hello',
 	    //'callback' => 'ak_mermix_tools_login',  
