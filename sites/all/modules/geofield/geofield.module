@@ -262,6 +262,50 @@ function geofield_geom_is_empty($item) {
 }
 
 /**
+ * Implements hook_field_attach_submit().
+ *
+ * This hook is called on entity preview and save. In each case the geometry
+ * value needs to be set in the WKB format before subsequent processing; either
+ * for writing to the backend (on presave) or loading the entity (on preview).
+ * Setting the WKB format in hook_field_presave() does not cover the preview
+ * workflow. For a node entity, see node_form_build_preview().
+ *
+ * This hook implementation should eliminate the need for the same code in
+ * geofield_field_presave().
+ *
+ * The parameters to this function lead one to ask why the field API does not
+ * invoke this hook on a field level (as opposed to the entity) so that the
+ * implementing module does not have to inspect the fields on the bundle to see
+ * if one of its own is present.
+ */
+function geofield_field_attach_submit($entity_type, $entity, $form, &$form_state) {
+  $langcode = entity_language($entity_type, $entity);
+  list($entity_id, , $bundle_name) = entity_extract_ids($entity_type, $entity);
+  $instances = field_info_instances($entity_type, $bundle_name);
+  foreach ($instances as $instance) {
+    $field = field_info_field($instance['field_name']);
+    if ($field['type'] === 'geofield') {
+      ctools_include('plugins');
+      $backend = ctools_get_plugins('geofield', 'geofield_backend', $field['settings']['backend']);
+      $save_callback = $backend['save'];
+      $field_name = $instance['field_name'];
+      if (empty($entity->{$field_name}) || empty($entity->{$field_name}[$langcode])) {
+        // The entity object may not include this field even though it is
+        // defined in the bundle instances.
+        continue;
+      }
+      $items = &$entity->{$field_name}[$langcode];
+      foreach ($items as $delta => $item) {
+        $items[$delta] = geofield_compute_values($item);
+        if (!empty($items[$delta]['geom'])) {
+          $items[$delta]['geom'] = $save_callback($items[$delta]['geom']);
+        }
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_field_presave().
  */
 function geofield_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
@@ -289,6 +333,10 @@ function geofield_field_presave($entity_type, $entity, $field, $instance, $langc
     // For each delta, we compute all the auxiliary columns and transform the geom column into a geometry object
     // We then pass the geometry object (now stored in the geom column) to the backend to prepare it for insertion into the database
     foreach ($items as $delta => $item) {
+      if (isset($item['geohash'])) {
+        // The geometry value was set in hook_field_attach_submit().
+        continue;
+      }
       $items[$delta] = geofield_compute_values($item);
       if (isset($items[$delta]['geom']) && $items[$delta]['geom']) {
         $items[$delta]['geom'] = $save_callback($items[$delta]['geom']);
