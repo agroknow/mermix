@@ -39,13 +39,9 @@ jQuery(function(){
   var autocomplete = new google.maps.places.Autocomplete(pac_input);
   autocomplete.addListener('place_changed', fillInAddress);
     function fillInAddress() {
+	var place = autocomplete.getPlace();
     // Get the place details from the autocomplete object.
     //lat,lon
-    var coordArr = [];
-    //console.log(autocomplete.getPlace().geometry.location);
-    for (var key in autocomplete.getPlace().geometry.location) {
-    coordArr.push(autocomplete.getPlace().geometry.location[key]);
-    }
-    coords.value = coordArr[0] + ',' + coordArr[1];
+    coords.value = place.geometry.location.lat() + ',' + place.geometry.location.lng();
   }
 });
