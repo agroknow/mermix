@@ -4926,14 +4926,16 @@ html.js input.ui-autocomplete-loading {
 /* Machine search results listing */
 .machine-results-listing{
     height: 550px;
-    overflow-y: auto;
+    overflow: hidden;
     
 }
 .machine-results-listing .result-item{
     margin-bottom: 10px;
     background: #fff;
     padding: 5px;
-    overflow: auto;
+    overflow: hidden;
+    max-height: 75px;
+    min-height: 75px;
 }
 .machine-results-listing .number{
     font-size: 14px;
@@ -5075,4 +5077,61 @@ button.form-submit.field-add-more-submit{
     position: absolute;
     top: 0;
     right: 0;
+}
+.banner-container{
+    position: relative;
+    text-align: center;
+    background: #333;
+    padding: 20px;
+    color: #fff;
+}
+.banner-container .content{
+    display: inline-block;
+}
+.banner-container .content a:hover{
+    color: #fff;
+    border-color: #fff;
+    background: #000;
+}
+.banner-container .content a{
+    color: #ddd;
+    padding: 10px;
+    border: 1px solid #ddd;
+    transition: all 0.2s ease-in; 
+}
+.banner-container .content h3{
+    color: #fff;
+    padding: 0;
+}
+.banner-container .content a:hover{
+    text-decoration: none;
+}
+.banner-container .close-btn{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    display: block;
+    width: 11px;
+    height: 10px;
+    background: url('../img/icons/cross.png') no-repeat center center;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: -15px;
+}
+#results-pagination{
+    text-align: center;
+    margin-top: 20px;
+}
+#results-pagination a:hover,#results-pagination a.active{
+    background: #e63434;
+    color: #fff;
+}
+#results-pagination a{
+    padding: 5px;
+    background: #fff;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    display: inline-block;
+    text-decoration: none;
 }
