@@ -8,7 +8,7 @@
 	} else {
 	    banner.fadeIn();
 	}
-    $('.banner-container', context).click(function () {
+    $('.banner-container .close-btn', context).click(function () {
       $.cookie('banner-closed','1');
       banner.fadeOut();
     });

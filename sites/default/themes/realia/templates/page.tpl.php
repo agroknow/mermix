@@ -4,6 +4,7 @@
     <?php if (!empty($page['banner'])): ?>
         <div class="banner-container" style="display: none">
             <?php print render($page['banner']); ?>
+	    <span class="close-btn"></span>
         </div>
     <?php endif; ?>
     <?php if ($breadcrumb): ?>
