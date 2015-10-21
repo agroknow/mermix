@@ -5,7 +5,6 @@
     <?php hide($content['links']); ?>
     <?php hide($content['field_tags']); ?>
     <?php hide($content['field_general_amenities']); ?>
-    <?php hide($content['field_availability']); ?>
 
     <div class="pull-left overview">
         <div class="row">
@@ -16,24 +15,16 @@
                     <?php print render($content['field_price']); ?>
                     <?php print render($content['field_contract_type']); ?>
                     <?php print render($content['field_type']); ?>
-                    <?php print render($content['field_cultivation']); ?>
-                    <?php print render($content['field_purpose_of_use']); ?>
                     <?php print render($content['field_location']); ?>
                     <?php print render($content['field_licence']); ?>
                     <?php print render($content['field_bedrooms']); ?>
                     <?php print render($content['field_area']); ?>
                 </div><!-- /.table -->
             </div><!-- /.span2 -->
-	    <div class="span6">
-		<?php print render($content); ?>
-	    </div>
         </div><!-- /.row -->
-	
     </div><!-- /.overview -->
-    
-    <?php print render($content['field_availability']); ?>
-    
-    <?php //print render($content); ?>
+
+    <?php print render($content); ?>
 
   <h2><?php //print t('General amenities'); ?></h2>
     <?php print render($content['field_general_amenities']); ?>
