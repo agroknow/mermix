@@ -14,6 +14,6 @@
 <?php foreach ($rows as $id => $row): ?>
   <div<?php if ($classes_array[$id]) { print ' class="' . $classes_array[$id] .'"';  } ?>>
     <?php print $row; ?>
-    <div><a class="btn btn-primary" href="<?php echo user_is_logged_in() ? url('node/add/apartment/' . $typeid) : url('machinery-add/' . $typeid) ?>"><?php print t('Add it') ?></a></div>
+      <div class="add-button"><a class="btn btn-primary" href="<?php echo user_is_logged_in() ? url('node/add/apartment/' . $typeid) : url('machinery-add/' . $typeid) ?>"><?php print t('Add it') ?></a></div>
   </div>
 <?php endforeach; ?>
