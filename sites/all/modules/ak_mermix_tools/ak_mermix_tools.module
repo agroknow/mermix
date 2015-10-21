@@ -1,5 +1,15 @@
 <?php
 
+
+/**
+ * Implements hook_init
+ */
+function ak_mermix_tools_init(){
+    if(drupal_is_front_page()){
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_banner.js');
+    drupal_add_library('system', 'jquery.cookie');
+    }
+}
 /**
  * Implements hook_field_access
  */
@@ -55,6 +65,9 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 			),
 		    )),
 	    );
+	    if (arg(3) && is_numeric(arg(3))){
+	    $form['field_type']['und']['#default_value'] = arg(3);
+	    }
 	    if (!$is_admin) {
 		$fieldCollection = $form['field_multiprice']['und'];
 		foreach ($fieldCollection as $key => $value) {
@@ -77,7 +90,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#type' => 'select',
 		    '#title' => t($form['submitted'][$key]['#title']),
-		    '#options' => taxonomy_allowed_values(field_info_field('field_type')),
+		    '#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
 		    '#empty_option' => t('Select category'),
 		));
 	    }
@@ -94,6 +107,14 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		));
 	    }
 	}
+    }
+}
+
+function ak_mermix_tools_webform_submission_presave($node, &$submission) {
+    //TODO check here what is the form
+    if(!user_is_logged_in()) {
+	$_SESSION['availability_submission'] = $submission;
+	drupal_goto('user/login');
     }
 }
 
@@ -115,6 +136,13 @@ function ak_mermix_tools_form_user_register_form_alter(&$form, &$form_state) {
     }
 
     $form['autoassignrole_user']['user_roles']["#options"] = $options;
+    $form['terms_of_use'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('I agree with the website\'s <a href="@tos" >terms and conditions</a>', array('@tos' => url('node/257'))),
+    '#required' => TRUE,
+    '#weight' => 100,
+    '#prefix' => '<p></p>',	
+  );
 }
 
 function ak_mermix_tools_module_implements_alter(&$implementations, $hook) {
@@ -346,8 +374,8 @@ function machinery_search_form($form, &$form_state) {
 	'#type' => 'select',
 	//'#title' => t('Type'),
 	'#default_value' => isset($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '',
-	'#options' => taxonomy_allowed_values(field_info_field('field_type')),
-	'#empty_option' => t('Select category'),
+	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
+	//'#empty_option' => t('Select category'),
     );
     $form['date_from'] = array(
 	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
@@ -409,7 +437,7 @@ function machinery_add_form($form, &$form_state) {
 	'#type' => 'select',
 	'#title' => t('Type'),
 	'#default_value' => '',
-	'#options' => taxonomy_allowed_values(field_info_field('field_type')),
+	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
 	'#empty_option' => t('Select category'),
     );
     //Location
@@ -432,7 +460,7 @@ function machinery_add_form($form, &$form_state) {
 	'#multiple' => true,
 	'#required' => true,
 	'#default_value' => '',
-	'#options' => taxonomy_allowed_values(field_info_field('field_cultivation')),
+	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_cultivation')) : taxonomy_allowed_values(field_info_field('field_cultivation')),
 	'#empty_option' => t('Select category'),
     );
     $form['submit_button'] = array(
@@ -480,14 +508,14 @@ function machinery_add_form_submit($form, &$form_state) {
 
 function ak_mermix_tools_menu() {
     $items['machinery-search'] = array(
-	'title' => t('Search machines'),
+	'title' => 'Search machines',
 	'page callback' => 'search_machinery',
 	'page arguments' => array(1),
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
     $items['machinery-add'] = array(
-	'title' => t('Add your machine'),
+	'title' => 'Add your machine',
 	'page callback' => 'add_machinery',
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
@@ -591,6 +619,14 @@ function ak_mermix_tools_user_login(&$edit, $account) {
     //ignore this hook for restws users
     $user_regex = variable_get('restws_basic_auth_user_regex', '/^restws.*/');
     if (!preg_match($user_regex, $account->name)) {
+	if (isset($_SESSION['availability_submission'])) {
+	    $submission = $_SESSION['availability_submission'];
+	    module_load_include('inc', 'webform', 'includes/webform.submissions');
+	    $node = node_load($submission->nid);
+	    $submission->uid = $account->uid;
+	    webform_submission_insert($node, $submission);
+	    drupal_set_message('Thank you');
+	}
 	if (isset($_SESSION['user_add_data'])) {
 	    $nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
 	    unset($_SESSION['user_add_data']);
