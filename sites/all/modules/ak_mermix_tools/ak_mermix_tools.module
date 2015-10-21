@@ -375,7 +375,7 @@ function machinery_search_form($form, &$form_state) {
 	//'#title' => t('Type'),
 	'#default_value' => isset($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '',
 	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
-	//'#empty_option' => t('Select category'),
+	'#empty_option' => t('Select category'),
     );
     $form['date_from'] = array(
 	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
