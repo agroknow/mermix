@@ -1,6 +1,11 @@
   <div id="wrapper-outer" class="<?php if (!$page['triptych_bottom']): ?>no-triptych<?php endif; ?>">
 <div id="wrapper">
 <div id="wrapper-inner">
+    <?php if (!empty($page['banner'])): ?>
+        <div class="banner-container" style="display: none">
+            <?php print render($page['banner']); ?>
+        </div>
+    <?php endif; ?>
     <?php if ($breadcrumb): ?>
         <div class="breadcrumb-wrapper">
             <div class="container">
@@ -12,7 +17,6 @@
             </div><!-- /.container -->
         </div><!-- /.breadcrumb-wrapper -->
     <?php endif;?>
-
     <div id="header-wrapper">
         <div id="header">
             <div id="header-inner">
