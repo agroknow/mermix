@@ -411,6 +411,11 @@ function machinery_search_form($form, &$form_state) {
 	'#default_value' => isset($_SESSION['search_criteria']['coords']) ? $_SESSION['search_criteria']['coords'] : '',
 	'#attributes' => array('id' => 'coords'),
     );
+    $form['distance'] = array(
+	'#type' => 'hidden',
+	'#default_value' => isset($_SESSION['search_criteria']['distance']) ? $_SESSION['search_criteria']['distance'] : '',
+	'#attributes' => array('id' => 'distance'),
+    );
     $form['submit_button'] = array(
 	'#type' => 'submit',
 	'#value' => t('Search'),
@@ -493,7 +498,7 @@ function machinery_search_form_submit($form, &$form_state) {
     if (!$form_state['values']['machine_type']) {
 	$form_state['values']['machine_type'] = 'all';
     }
-    $_SESSION['search_criteria'] = array_intersect_key($form_state['values'], array_flip(array('place', 'machine_type', 'date_from', 'date_to', 'coords')));
+    $_SESSION['search_criteria'] = array_intersect_key($form_state['values'], array_flip(array('place', 'machine_type', 'date_from', 'date_to', 'coords', 'distance')));
     $form_state['redirect'] = 'machinery-search';
 }
 
@@ -596,6 +601,9 @@ function search_machinery($noresults = false) {
 	    );
 	    $dates = '';
 	    $coords = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
+	    if(isset($search_criteria['distance']) && (int)$search_criteria['distance'] > 10 ){
+	    $coords .= ' ' . $search_criteria['distance'];
+	    }
 	    $dateFrom = strtotime($search_criteria['date_from']);
 	    $dateTo = strtotime($search_criteria['date_to']);
 	    $machineType = $search_criteria['machine_type'];
