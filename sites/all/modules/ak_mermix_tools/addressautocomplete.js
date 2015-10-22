@@ -15,11 +15,11 @@ var submit = false;
         if ((event.which == 13 || event.which == 9)  && !suggestion_selected) {
           var simulated_downarrow = jQuery.Event("keydown", {keyCode:40, which:40})
           orig_listener.apply(input, [simulated_downarrow]);
-	  if(event.which == 13){
-	      event.preventDefault();
-	  }
 	  //google.maps.event.trigger(autocomplete, 'place_changed');
         }
+	if(event.which == 13){
+	      event.preventDefault();
+	  }
         orig_listener.apply(input, [event]);
       };
     }
@@ -40,6 +40,7 @@ jQuery(function(){
   var autocomplete = new google.maps.places.Autocomplete(pac_input);
   autocomplete.addListener('place_changed', fillInAddress);
     function fillInAddress() {
+	console.log('place changed');
 	var place = autocomplete.getPlace();
     // Get the place details from the autocomplete object.
     //lat,lon
@@ -48,7 +49,16 @@ jQuery(function(){
     var km = getDistanceFromLatLonInKm(place.geometry.location.lat(),place.geometry.location.lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng());
     distance.value = Math.round(km);
   }
+  jQuery("#edit-place").keyup(function(){
+	if(jQuery(this).val() == "") {
+	 coords.value = '';
+	 distance.value = '';
+	}
+    });
+  
 });
+
+
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
