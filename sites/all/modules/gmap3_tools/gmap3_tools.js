@@ -108,7 +108,7 @@
                 closeBoxMargin: "0px 0px 0px 0px",
                 closeBoxURL: '/sites/default/themes/realia/img/icons/cross.png',
                 infoBoxClearance: new google.maps.Size(1, 1),
-                isHidden: mapOptions.disableInfobox,
+                isHidden: false,
                 pane: "floatPane",
                 enableEventPropagation: false
             };
