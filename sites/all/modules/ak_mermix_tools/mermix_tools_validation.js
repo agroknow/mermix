@@ -7,7 +7,7 @@ jQuery("#machinery-search-form").validate({
     }
   }
 });
-jQuery("#webform-client-form-301").validate({
+jQuery(".webform-client-form").validate({
   rules: {
     'submitted[date_to][date]': {
     required: function(element){
