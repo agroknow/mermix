@@ -5135,3 +5135,25 @@ button.form-submit.field-add-more-submit{
     display: inline-block;
     text-decoration: none;
 }
+.view-looking-for-type .views-row {
+    position: relative;
+}
+.view-looking-for-type .add-button{
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+.view-looking-for-type .views-row .views-field-title{
+    float: left;
+    margin-right: 20px;
+}
+.view-looking-for-type .views-row .views-field-value-4{
+    clear: both;
+}
+.view-looking-for-type .views-row strong{
+    margin-top: 30px;
+    display: inline-block;
+}
+.node-type-apartment #machinery-search-form{
+    margin-top: 20px;
+}
