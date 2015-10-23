@@ -47,13 +47,13 @@
                                 </div>
 
                                 <?php if (!empty($page['header_right'])): ?>
-                                    <div class="span3 pull-right">
+                                    <div class="span6 pull-right">
                                         <?php print render($page['header_right']); ?>
                                     </div>
                                 <?php endif; ?>
 
                                 <?php if (!empty($page['header_middle'])): ?>
-                                    <div class="span5">
+                                    <div class="span2">
                                         <?php print render($page['header_middle']); ?>
                                     </div>
                                 <?php endif; ?>
