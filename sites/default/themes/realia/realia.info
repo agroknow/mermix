@@ -56,6 +56,7 @@ stylesheets[all][] = libraries/chosen/chosen/chosen.css
 stylesheets[all][] = css/style.css
 stylesheets[all][] = css/realia-blue.css
 stylesheets[all][] = css/opentip.css
+stylesheets[all][] = css/font-awesome.min.css
 
 scripts[] = js/jquery.currency.js
 scripts[] = js/jquery.ezmark.js
