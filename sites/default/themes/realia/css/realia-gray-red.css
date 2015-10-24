@@ -4947,7 +4947,7 @@ html.js input.ui-autocomplete-loading {
 }
 /* Machine search results listing */
 .machine-results-listing{
-    height: 550px;
+    height: 560px;
     overflow: hidden;
     
 }
