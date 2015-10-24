@@ -54,11 +54,20 @@ jQuery(function(){
 	 coords.value = '';
 	 distance.value = '';
 	}
-    });
-  
+    }); 
+    //trigger focus to initialize datepickers
+    jQuery('#edit-date-from-datepicker-popup-0,#edit-date-to-datepicker-popup-0').focus();
+    jQuery('#edit-date-to-datepicker-popup-0').blur();
+    //change their onclose function
+    jQuery('#edit-date-from-datepicker-popup-0').datepicker("option", "onClose", function( selectedDate ) {
+        jQuery( "#edit-date-to-datepicker-popup-0" ).datepicker( "option", "minDate", selectedDate );
+      });
+    jQuery('#edit-date-to-datepicker-popup-0').datepicker("option", "onClose", function( selectedDate ) {
+        jQuery( "#edit-date-from-datepicker-popup-0" ).datepicker( "option", "maxDate", selectedDate );
+      });
+     
 });
-
-
+      
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
