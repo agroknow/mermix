@@ -687,6 +687,28 @@ function ak_mermix_tools_user_login(&$edit, $account) {
     }
 }
 
+function ak_mermix_tools_views_pre_render(&$view) {
+  if ($view->name == 'machine_results') {
+      $result = $view->result;
+      $prices = array();
+     foreach ($result as $row) {
+	 foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
+	     $prices[] = $price['field_multiprice_value']['und'][0]['value'];
+	 }
+      }
+      $min = min($prices);
+      $max = max($prices);
+      $settarr = array('better_exposed_filters' => array(
+	  'slider_options' => array('field_multiprice_field_multiprice_value_value' => array('min' => $min , 'max' => $max))
+      ));
+      drupal_add_js($settarr, 'setting');
+      drupal_add_js("jQuery(document).ready(function(){
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-min').val('');
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-max').val('');
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-wrapper').before('<div id=\"priceIndicator\"><span class=\"min\">". floor($min) ."</span><span class=\"max\">" . ceil($max) . "</span></div>');
+    });", array('type' => 'inline', 'scope' => 'header', 'weight' => -10));
+  }
+}
 /**
  * Function to create an equipment type node with given data
  */

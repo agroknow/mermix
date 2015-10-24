@@ -164,6 +164,8 @@
                   slide: function (event, ui) {
                     $min.val(ui.values[0]);
                     $max.val(ui.values[1]);
+		    $('#priceIndicator .min').text(ui.values[0]);
+		    $('#priceIndicator .max').text(ui.values[1]);
                   },
                   // This fires when the value is set programmatically or the
                   // stop event fires.
