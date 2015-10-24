@@ -705,7 +705,7 @@ function ak_mermix_tools_views_pre_render(&$view) {
       drupal_add_js("jQuery(document).ready(function(){
     jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-min').val('');
     jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-max').val('');
-    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-wrapper').before('<div id=\"priceIndicator\"><span class=\"min\">". floor($min) ."</span><span class=\"max\">" . ceil($max) . "</span></div>');
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-wrapper .views-widget').after('<div id=\"priceIndicator\"><span class=\"min\">". floor($min) ."</span><span class=\"max\">" . ceil($max) . "</span></div>');
     });", array('type' => 'inline', 'scope' => 'header', 'weight' => -10));
   }
 }
