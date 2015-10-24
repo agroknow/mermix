@@ -5298,3 +5298,84 @@ button.form-submit.field-add-more-submit{
 .region-header-right #block-system-user-menu ul.nav{
     margin: 0;
 }
+/* Add and remove from favorite icons */
+.flag-throbber{display: none}
+.flag-wrapper.flag-favorite-machines{ 
+    position: static;
+}
+a.flag{
+    text-indent: -9999px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-family: FontAwesome;
+}
+a.flag:hover:before{
+    color: #ce1919;
+}
+a.flag:before{
+    font-family: FontAwesome;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    text-indent: 0;
+    color: #E63434;
+    text-align: center;
+    font-size: 25px;
+}
+
+a.flag.unflag-action:before{
+    content: "\f004";
+}
+a.flag.flag-action:before{
+    content: "\f08a";
+}
+a.flag.unflag-action:hover:before{
+    content: "\f08a";
+}
+a.flag.flag-action:hover:before{
+    content: "\f004";
+}
+.view-user-favorites .views-field-ops{position: relative}
+/* Filtering */
+.views-exposed-form .views-widget-filter-field_multiprice_field_multiprice_value_value .views-widget{
+    display: none;
+    visibility: hidden;
+}
+#edit-field-multiprice-field-multiprice-value-value-wrapper{
+    width: 200px;
+}
+.views-exposed-form .views-exposed-widget{
+    margin-right: 25px;
+}
+.views-exposed-form #priceIndicator{
+    height: 25px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.views-exposed-form #priceIndicator span:before{
+    content: "\f153";
+    font-family: FontAwesome;
+    font-weight: normal;
+    
+}
+.views-exposed-form #priceIndicator .min{
+    float: left;
+}
+.views-exposed-form #priceIndicator .max{
+    float: right;
+}
+.views-exposed-form .ui-slider-horizontal .ui-slider-range{
+    background: #E63434;
+}
+.views-exposed-form .ui-slider-horizontal{
+    background: #DDD;
+}
+.views-exposed-form label{
+    font-weight: normal;
+}

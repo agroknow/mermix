@@ -54,8 +54,8 @@ border-radius: 0;
 .ui-datepicker td span, .ui-datepicker td a { display: block; padding: .2em; text-align: center; text-decoration: none;}
 .ui-datepicker td span.ui-state-default,.ui-datepicker td a.ui-state-default { background: none; border: none;}
 .ui-datepicker td a.ui-state-active,.ui-datepicker td a.ui-state-hover,.ui-datepicker td a.ui-state-highlight.ui-state-active,.ui-datepicker td a.ui-state-highlight.ui-state-hover.ui-state-active { background: #E63434; border: none; color: #fff; text-decoration: none;}
-.ui-datepicker td a.ui-state-highlight{ background: #ccc;}
-.ui-datepicker td a.ui-state-highlight.ui-state-hover{ background: #ccc; color: #363636;}
+/*.ui-datepicker td a.ui-state-highlight{ background: #ccc;}
+.ui-datepicker td a.ui-state-highlight.ui-state-hover{ background: #ccc; color: #363636;}*/
 .ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
 .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
