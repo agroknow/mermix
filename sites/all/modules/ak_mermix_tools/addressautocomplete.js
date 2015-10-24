@@ -40,7 +40,6 @@ jQuery(function(){
   var autocomplete = new google.maps.places.Autocomplete(pac_input);
   autocomplete.addListener('place_changed', fillInAddress);
     function fillInAddress() {
-	console.log('place changed');
 	var place = autocomplete.getPlace();
     // Get the place details from the autocomplete object.
     //lat,lon
@@ -56,16 +55,22 @@ jQuery(function(){
 	}
     }); 
     //trigger focus to initialize datepickers
-    jQuery('#edit-date-from-datepicker-popup-0,#edit-date-to-datepicker-popup-0').focus();
-    jQuery('#edit-date-to-datepicker-popup-0').blur();
+    jQuery('.form-type-date-popup input').focus();
+    jQuery('.form-type-date-popup input').blur();
     //change their onclose function
-    jQuery('#edit-date-from-datepicker-popup-0').datepicker("option", "onClose", function( selectedDate ) {
-        jQuery( "#edit-date-to-datepicker-popup-0" ).datepicker( "option", "minDate", selectedDate );
-      });
-    jQuery('#edit-date-to-datepicker-popup-0').datepicker("option", "onClose", function( selectedDate ) {
-        jQuery( "#edit-date-from-datepicker-popup-0" ).datepicker( "option", "maxDate", selectedDate );
-      });
-     
+    jQuery('input.hasDatepicker').each(function(){
+	var id = jQuery(this).attr('id');
+	var otherid = id.replace('from','to');
+	if(id.indexOf('from') > -1) {
+	    jQuery( "#" + id ).datepicker("option", "onClose", function( selectedDate ) {
+		jQuery( "#" + otherid ).datepicker( "option", "minDate", selectedDate );
+	    });
+	    jQuery("#" + otherid).datepicker("option", "onClose", function( selectedDate ) {
+		jQuery( "#" + id ).datepicker( "option", "maxDate", selectedDate );
+	    });
+	}
+	
+    });
 });
       
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
