@@ -13,51 +13,64 @@
     </div><!-- /.breadcrumb-wrapper -->
     <?php endif;?>
 
-    <div id="header-wrapper">
+     <div id="header-wrapper">
         <div id="header">
             <div id="header-inner">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="navbar">
                         <div class="navbar-inner">
-                            <div class="row">
+                            <div class="row-fluid">
                                 <div class="span4">
                                     <a href="#nav" class="hidden-desktop" id="btn-nav"><?php print t('Toggle navigation'); ?></a>
 
                                     <?php if ($logo): ?>
-                                    <div class="logo">
-                                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
-                                            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
-                                        </a>
-                                    </div><!-- /.logo -->
+                                        <div class="logo">
+                                            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>">
+                                                <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
+                                            </a>
+                                        </div><!-- /.logo -->
                                     <?php endif; ?>
 
                                     <?php if ($site_name): ?>
-                                    <div class="site-name">
-                                        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="brand">
-                                            <?php print $site_name; ?>
-                                        </a>
-                                    </div><!-- /.site-name -->
+                                        <div class="site-name">
+                                            <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" class="brand">
+                                                <?php print $site_name; ?>
+                                            </a>
+                                        </div><!-- /.site-name -->
                                     <?php endif; ?>
 
                                     <?php if ( $site_slogan ): ?>
-                                    <div class="site-slogan">
-                                        <span><?php print $site_slogan; ?></span>
-                                    </div><!-- /.site-slogan -->
+                                      <div class="site-slogan">
+                                          <span><?php print $site_slogan; ?></span>
+                                      </div><!-- /.site-slogan -->
                                     <?php endif; ?>
                                 </div>
+				<div id="navigation" class="span8">
+				    <div class="container">
+					<?php if (!empty($page['navigation'])): ?>
+					<div class="navigation-wrapper pull-right">
+					    <div class="navigation clearfix">
+						<?php print render($page['navigation']); ?>
+					    </div>
+					    <!-- /.navigation -->
+					</div><!-- /.navigation-wrapper -->
+					<?php endif; ?>
+				    </div>
+				</div>
 
-                                <?php if (!empty($page['header_right'])): ?>
-                                <div class="span6 pull-right">
-                                    <?php print render($page['header_right']); ?>
-                                </div>
+                                <?php if (/*!empty($page['header_right'])*/false): ?>
+                                    <div class="span6 pull-right">
+                                        <?php print render($page['header_right']); ?>
+                                    </div>
                                 <?php endif; ?>
 
-                                <?php if (!empty($page['header_middle'])): ?>
-                                <div class="span2">
-                                    <?php print render($page['header_middle']); ?>
-                                </div>
+                                <?php if (/*!empty($page['header_middle'])*/false): ?>
+                                    <div class="span2">
+                                        <?php print render($page['header_middle']); ?>
+                                    </div>
                                 <?php endif; ?>
                             </div>
+
                         </div>
                         <!-- /.navbar-inner -->
                     </div>
@@ -70,21 +83,6 @@
         <!-- /#header -->
     </div>
     <!-- /#header-wrapper -->
-
-    <div id="navigation">
-        <div class="container">
-            <?php //print render($page['header']); ?>
-
-            <?php if (!empty($page['navigation'])): ?>
-            <div class="navigation-wrapper">
-                <div class="navigation clearfix">
-                    <?php print render($page['navigation']); ?>
-                </div>
-                <!-- /.navigation -->
-            </div><!-- /.navigation-wrapper -->
-            <?php endif; ?>
-        </div>
-    </div>
     <div id="map">
         <div class="container" style="position: relative;">
             <div class="row">
