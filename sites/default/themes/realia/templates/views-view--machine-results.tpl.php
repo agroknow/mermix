@@ -27,7 +27,10 @@
  * @ingroup views_templates
  */
 ?>
-<?php $results = $view->result;
+<?php
+drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/jquery.easing.1.3.js');
+drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_results.js');
+$results = $view->result;
 $searchform = drupal_get_form('machinery_search_form');
 if(is_object($results[0])) {
 ?>
