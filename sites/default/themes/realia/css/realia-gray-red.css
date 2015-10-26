@@ -299,7 +299,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 .navigation-wrapper .navigation .block-superfish .content ul li .nolink,.navigation-wrapper .navigation .block-superfish .content ul li a {
     background-color: transparent;
     border-left: 0px;
-    border-top: 2px solid transparent;
+    border-top: none;
     color: #313131;
     cursor: pointer;
     display: block;
@@ -312,14 +312,14 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li .nolink:hover,.navigation-wrapper .navigation .block-superfish .content ul li a:hover {
-    background-color: #272727;
-    border-top: 2px solid #e63434;
-    color: #e63434;
+    background: none;
+    border-top: none;
+/*    color: #e63434;*/
     text-decoration: none
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li .nolink.active,.navigation-wrapper .navigation .block-superfish .content ul li a.active {
-    border-top: 2px solid #e63434
+    border-top: none;
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul {
@@ -3102,7 +3102,7 @@ body.node-type-apartment section .block-views {
     *zoom:1;filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF313131', endColorstr='#FF313131');
     background-color: transparent;
     border: 0px;
-    height: 90px;
+    height: 70px;
     padding: 0px
 }
 
@@ -3127,15 +3127,15 @@ body.node-type-apartment section .block-views {
 
 #header-wrapper #header #header-inner .navbar .navbar-inner .logo {
     float: left;
-    height: 90px;
+    height: 70px;
     margin: 0px 15px 0px 0px;
-    line-height: 90px
+    line-height: 70px
 }
 
 #header-wrapper #header #header-inner .navbar .navbar-inner .site-name {
     float: left;
-    height: 90px;
-    line-height: 90px
+    height: 70px;
+    line-height: 70px
 }
 
 #header-wrapper #header #header-inner .navbar .navbar-inner .site-name .brand {
@@ -3273,13 +3273,13 @@ body.node-type-apartment section .block-views {
 
     #header-wrapper #header #header-inner .navbar .navbar-inner .site-phone {
         float: left;
-        line-height: 90px;
+        line-height: 70px;
         margin-left: 40px
     }
 
     #header-wrapper #header #header-inner .navbar .navbar-inner .site-email {
         float: left;
-        line-height: 90px;
+        line-height: 70px;
         margin-left: 40px
     }
 }
@@ -4397,7 +4397,14 @@ ul.pager li:first-child a,ul.pager li:last-child a {
 }
 
 .infoBox>img {
-    display: none
+    display: block;
+    width: 12px;
+    height: 12px;
+    position: relative;
+    top: 20px;
+    z-index: 600;
+    padding: 3px;
+    background: #fff;
 }
 
 .infoBox .infobox {
@@ -4870,6 +4877,9 @@ body.header-light #navigation {
 }
 
 body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
+    color: #333 !important
+}
+body.header-light.front #navigation .block-superfish .nolink,body.header-light.front #navigation .block-superfish a {
     color: #fff !important
 }
 
@@ -4947,18 +4957,22 @@ html.js input.ui-autocomplete-loading {
 }
 /* Machine search results listing */
 .machine-results-listing{
-    height: 560px;
+    height: 655px;
+/*    height: 560px;*/
     overflow: hidden;
+    position: relative;
     
 }
 .machine-results-listing .result-item{
     margin-bottom: 10px;
     background: #fff;
     padding: 5px;
+    width: 46%;
+    margin-right: 2%;
+    height: 200px;
     overflow: hidden;
-    max-height: 75px;
-    min-height: 75px;
     position: relative;
+    float: left;
 }
 .machine-results-listing .number{
     font-size: 14px;
@@ -4970,28 +4984,51 @@ html.js input.ui-autocomplete-loading {
     height: 57px;
     width: 42px;
     background: url("../img/markers/marker-red.png") no-repeat center top;
+    position: absolute;
+    top: 0;
 }
-
+.machine-results-listing h3,.infobox h3{
+    line-height: 20px;
+}
 .machine-results-listing .result-item div.views-field-title{
-   display: inline-block;
+   /*display: inline-block;*/
    
 }
+.machine-results-listing .views-field-field-multiprice{
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.views-field.views-field-field-multiprice ul{
+    list-style-type: none;
+}
+.views-field.views-field-field-multiprice ul li{
+    margin-bottom: 5px;
+    padding: 2px;
+    text-align: right;
+    background: #fff;
+}
 .machine-results-listing .result-item div.views-field-field-image{
-   display: inline-block;
-   float: right
+  height: 140px;
+  overflow: hidden;
     
+}
+.machine-results-listing .result-item div.views-field-field-image img{
+  width: 100%;
+  height: auto;
 }
 .machine-results-listing .views-field-field-multiprice, .machine-results-listing .views-field-field-location{
 /*    margin:10px 15px 0 0;*/
 /*    font-weight: bold;*/
-    position: absolute;
+    /*position: absolute;
     bottom: 0;
     left: 0;
     display: inline-block;
-    float: right;
+    float: right;*/
 }
 .machine-results-listing .views-field-field-location{
-    left: 30%;
+/*    left: 30%;*/
 /*    margin-left: 20px;*/
 }
 /* Results markers */
@@ -5001,6 +5038,15 @@ html.js input.ui-autocomplete-loading {
     text-align: center;
     padding-top: 10px;
     font-weight: bold;
+}
+#gmap-machine-results .infoBox .infobox .views-field-field-image{
+    height: 180px;
+    overflow: hidden;
+    float: none;
+}
+#gmap-machine-results .infoBox .infobox .views-field-field-image img{
+    width: 100%;
+    height: auto;
 }
 /*Front banner search*/
 .region-map .banner{
@@ -5378,4 +5424,13 @@ a.flag.flag-action:hover:before{
 }
 .views-exposed-form label{
     font-weight: normal;
+}
+/* New style */
+body.front #header{
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+body.header-light #navigation{
+    background: transparent;
 }
