@@ -100,7 +100,7 @@
                 content: boxText,
                 disableAutoPan: false,
                 maxWidth: 0,
-                pixelOffset: new google.maps.Size(-145, -200),
+                pixelOffset: new google.maps.Size(-145, -320),
                 zIndex: null,
                 boxStyle: {
                     width: "280px"
@@ -146,7 +146,10 @@
 
             // add to collection - marker.infobox marker.marker
             markers.push(marker);
-
+	     google.maps.event.addDomListener(marker.infobox, 'closeclick', function(){
+		 marker.infobox.close();
+                    marker.infobox.isOpen = false;
+	     });
             google.maps.event.addListener(marker, "click", function (e) {
                 var curMarker = this;
 

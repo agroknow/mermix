@@ -11,16 +11,16 @@ drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/ak_mermix_scrolli
 $pagination = array(); 
 ?>
 <div class="row">
-    <div class="span7">
+    <div class="span6">
 	<div id="<?php print $view_id ?>" style="width:<?php print $width; ?>; height:<?php print $height; ?>;"></div>
     </div>
-    <div class="span5 machine-results-listing">
+    <div class="span6 machine-results-listing">
 	<?php if (!empty($title)): ?>
     	<h3><?php print $title; ?></h3>
 	<?php endif; ?>
 	<?php foreach ($rows as $id => $row): ?>
 	<div <?php if( $id%6 == 0 ) {print 'id="position-'.$id.'"'; $pagination[] = $id; } ?> class="result-item">
-    	    <span class="number"><?php print $id + 1 ?></span><?php print $row; ?>
+    	    <?php print $row; ?><span class="number"><?php print $id + 1 ?></span>
     	</div>
 	<?php endforeach; ?>
     </div>
