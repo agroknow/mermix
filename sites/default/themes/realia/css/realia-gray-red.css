@@ -329,12 +329,14 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     -ms-border-radius: 0px;
     -o-border-radius: 0px;
     border-radius: 0px;
-    background-color: #272727;
+    background: #fff;
     margin: 25px 0px 0px 0px;
     padding: 0px !important;
     width: 220px !important
 }
-
+body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
+    background: none;
+}
 .navigation-wrapper .navigation .block-superfish .content ul li ul li {
     float: none;
     display: block;
@@ -379,7 +381,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul li .nolink:hover,.navigation-wrapper .navigation .block-superfish .content ul li ul li a:hover {
-    background-color: #e63434;
+    background: none;
     padding-left: 25px
 }
 
@@ -389,8 +391,8 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li.sfHover .nolink,.navigation-wrapper .navigation .block-superfish .content ul li.sfHover a {
-    background-color: #272727;
-    border-top: 2px solid #e63434;
+    background: none;
+    border-top: none;
     color: #e63434;
     text-decoration: none
 }
@@ -420,9 +422,9 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 .navigation-wrapper .navigation #block-realia-blocks-realia-language {
-    -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
-    -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
-    box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
     float: right;
     margin: 11px 0px 11px 0px
 }
@@ -4431,7 +4433,16 @@ ul.pager li:first-child a,ul.pager li:last-child a {
 }
 
 .infoBox .infobox .views-field-title {
-    font-size: 18px
+    font-size: 18px;
+    text-align: center;
+}
+
+.infoBox .infobox .views-field-field-location {
+    text-align: center;
+}
+
+.infoBox .views-field.views-field-field-multiprice ul{
+    height: 60px;
 }
 
 .infoBox .infobox .views-field-title a:href {
@@ -4883,23 +4894,43 @@ body.header-light.front #navigation .block-superfish .nolink,body.header-light.f
     color: #fff !important
 }
 
-body.header-light #navigation .block-superfish .menuparent>.nolink,body.header-light #navigation .block-superfish .menuparent>a {
+body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent>a {
     background-image: url("../img/arrow-bottom-white.png") !important
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    body.header-light #navigation .block-superfish .menuparent>.nolink,body.header-light #navigation .block-superfish .menuparent>a {
+    body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent>a {
         background-image: url("../img/arrow-bottom-white@2x.png") !important
     }
 }
 
-body.header-light #navigation .block-superfish .menuparent .menuparent>.nolink,body.header-light #navigation .block-superfish .menuparent .menuparent>a {
+body.header-light.front #navigation .block-superfish .menuparent .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent .menuparent>a {
     background-image: url("../img/arrow-right-white.png") !important
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    body.header-light #navigation .block-superfish .menuparent .menuparent>.nolink,body.header-light #navigation .block-superfish .menuparent .menuparent>a {
+    body.header-light.front #navigation .block-superfish .menuparent .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent .menuparent>a {
         background-image: url("../img/arrow-right-white@2x.png") !important
+    }
+}
+
+body.header-light.not-front #navigation .block-superfish .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent>a {
+    background-image: url("../img/arrow-bottom-black.png") !important
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+    body.header-light.not-front #navigation .block-superfish .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent>a {
+        background-image: url("../img/arrow-bottom-black@2x.png") !important
+    }
+}
+
+body.header-light.not-front #navigation .block-superfish .menuparent .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent .menuparent>a {
+    background-image: url("../img/arrow-right-black.png") !important
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+    body.header-light.not-front #navigation .block-superfish .menuparent .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent .menuparent>a {
+        background-image: url("../img/arrow-right-black@2x.png") !important
     }
 }
 
@@ -4995,19 +5026,54 @@ html.js input.ui-autocomplete-loading {
    
 }
 .machine-results-listing .views-field-field-multiprice{
-    display: inline-block;
+    display: block;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -200px;
+    width: 100%;
+    z-index: 2;
 }
 .views-field.views-field-field-multiprice ul{
     list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 94%;
+    
+}
+.views-field.views-field-field-multiprice ul:after{
+    width: 100%; 
+    display: inline-block; 
+    content: "."; 
+    visibility: hidden;
 }
 .views-field.views-field-field-multiprice ul li{
-    margin-bottom: 5px;
-    padding: 2px;
-    text-align: right;
+    padding: 7px;
+    text-align: center;
     background: #fff;
+    display: inline-block;
+    width: auto;
+    min-width: 25%;
+    background: #E63434;
+    color: #fff;
+    box-shadow: 1px 1px 2px #ddd;
+}
+.views-field.views-field-field-multiprice ul li .field-name-field-multiprice-value{
+    display: block;
+    font-size: 16px;
+}
+.views-field.views-field-field-multiprice ul li .field-name-field-multiprice-value span{
+    display: none;
+}
+.views-field.views-field-field-multiprice ul li .field-name-field-multiprice-unit .field-item{
+    display: inline-block;
+    position: relative;
+    padding-left: 8px;
+}
+.views-field.views-field-field-multiprice ul li .field-name-field-multiprice-unit .field-item:before{
+    content: "/";
+    position: absolute;
+    left: 0;
+    
 }
 .machine-results-listing .result-item div.views-field-field-image{
   height: 140px;
@@ -5040,7 +5106,7 @@ html.js input.ui-autocomplete-loading {
     font-weight: bold;
 }
 #gmap-machine-results .infoBox .infobox .views-field-field-image{
-    height: 180px;
+    height: 165px;
     overflow: hidden;
     float: none;
 }
@@ -5304,26 +5370,43 @@ button.form-submit.field-add-more-submit{
 }
 #block-realia-blocks-realia-language .content ul li{
     float: left;
+    margin-right: 10px;
 }
 #block-realia-blocks-realia-language .content ul li span{
     display: none;
 }
-#block-realia-blocks-realia-language .content ul li a{
+body.front #block-realia-blocks-realia-language .content ul li a{
+    float: none;
+    padding: 10px;
+    color: #ddd;
+    text-decoration: none;
+    display: block;
+    border: 1px solid #ddd;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+body.front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover{
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+body.not-front #block-realia-blocks-realia-language .content ul li a{
     float: none;
     padding: 10px;
     color: #777;
     text-decoration: none;
-    text-shadow: 0 1px 0 #fff;
     display: block;
     border: 1px solid #777;
     width: 20px;
     height: 20px;
     text-align: center;
 }
-#block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover{
+body.not-front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover{
     border: 1px solid #333;
     color: #333;
 }
+
 .region-header-right li a{
     margin-right: 6px;
 }
@@ -5433,4 +5516,23 @@ body.front #header{
 }
 body.header-light #navigation{
     background: transparent;
+}
+#navigation span.fa.notitle{
+    text-indent: -9999px;
+    position: relative;
+}
+#navigation span.fa.notitle:before{
+    text-indent: 0;
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+}
+#superfish-3 li.menuparent ul{
+    right: 0 !important;
+}
+#superfish-3 li.menuparent ul.sf-hidden{
+    display: none !important;
+}
+article.node-apartment footer .links.inline{
+    position: relative;
 }
