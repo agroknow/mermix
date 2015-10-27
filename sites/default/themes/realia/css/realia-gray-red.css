@@ -306,8 +306,8 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     font-size: 16px;
     line-height: 1;
     padding-left: 20px;
-    padding-bottom: 23px;
-    padding-top: 21px;
+    padding-bottom: 27px;
+    padding-top: 27px;
     white-space: nowrap
 }
 
@@ -322,8 +322,11 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     border-top: none;
 }
 
-body.front .navigation-wrapper, body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    background: rgba(130, 121, 121, 0.61);
+body.front #header,body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
+    background: rgba(0, 0, 0, 0.54);
+}
+body #header{
+    border-bottom: 2px solid #313131;
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul {
@@ -334,7 +337,7 @@ body.front .navigation-wrapper, body.front .navigation-wrapper .navigation .bloc
     -o-border-radius: 0px;
     border-radius: 0px;
     background: #fff;
-    margin: 29px 0px 0px 0px;
+    margin: 35px 0px 0px 0px;
     padding: 0px !important;
     width: 220px !important
 }
@@ -354,7 +357,7 @@ body.front .navigation-wrapper, body.front .navigation-wrapper .navigation .bloc
     color: #ffffff !important;
     display: block;
     font-size: 14px;
-    padding-right: 20px;
+    padding-right: 1em;
     padding-bottom: 15px;
     padding-top: 15px
 }
@@ -665,7 +668,7 @@ body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.he
     }
 
     .navigation-wrapper .navigation #block-realia-blocks-realia-language {
-        display: none
+        display: block;
     }
     #superfish-3 li.menuparent ul.sf-hidden{
 	display: block !important;
@@ -5406,7 +5409,7 @@ button.form-submit.field-add-more-submit{
 }
 #block-realia-blocks-realia-language .content ul li{
     float: left;
-    margin-right: 10px;
+    margin-left: 15px;
 }
 #block-realia-blocks-realia-language .content ul li span{
     display: none;
@@ -5558,12 +5561,62 @@ article.node-apartment footer .links.inline{
 }
 
 @media (max-width: 1199px) {
+     #header .row-fluid .span4{
+	width: 23%;
+    }
+    #header .row-fluid .span8{
+	width: 77%;
+	margin: 0;
+    }
+    .navigation-wrapper .navigation .block-superfish .content ul li .nolink, .navigation-wrapper .navigation .block-superfish .content ul li a{
+	padding-left: 0.6em;
+	padding-right: 0.6em;
+    }
+    .machine-results-listing .result-item{
+	width: 46%;
+    }
+    .page-machine-results .inline-form .form-submit{
+	max-width: 76px;
+    }
+}
+@media (min-width: 980px) and (max-width: 1120px) {
+    #header .row-fluid .span4,#header .row-fluid .span8{
+	width: 100%;
+    }
+    #header .row-fluid .span4{
+	text-align: center;
+    }
+    #header-wrapper #header #header-inner .navbar .navbar-inner .logo{
+	float: none;
+    }
+    #header .navigation-wrapper.pull-right{
+	float: none;
+    }
+    .navigation-wrapper .navigation .block-superfish .content ul li .nolink, .navigation-wrapper .navigation .block-superfish .content ul li a{
+	padding-left: 1em;
+	padding-right: 1em;
+    }
     
 }
+@media (min-width: 1200px) {
+    #header .row-fluid .span4{
+	width: 23%;
+    }
+    #header .row-fluid .span8{
+	width: 77%;
+	margin: 0;
+    }
+    .navigation-wrapper .navigation .block-superfish .content ul li .nolink, .navigation-wrapper .navigation .block-superfish .content ul li a{
+	padding-left: 1em;
+	padding-right: 1em;
+    }
+    
+}
+
 @media (max-width: 979px) {
     /* Search form */
     .inline-form{
-	width: 80%
+	width: 95%;
     }
     .inline-form input{
 	width: 90%;
@@ -5574,11 +5627,10 @@ article.node-apartment footer .links.inline{
     }
     .inline-form > div{
 	float: left;
-	width: 48%;
-	margin-left: 2%;
+	width: 49%;
     }
-    .inline-form > div.form-item, .inline-form > div.container-inline-date{
-	margin-left: 2%;
+    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date{
+	margin-right: 2%;
     }
     .inline-form .form-item div{
 	display: inline-block;
@@ -5601,15 +5653,24 @@ article.node-apartment footer .links.inline{
 	display: block;
     }
     .inline-form .chzn-container-single{
-	width: 101% !important;
+	width: 90% !important;
+	border: 1px solid #d5d5d5;
+        padding: 0 15px;
+	background: #fff;
+    
     }
     .inline-form .chzn-container .chzn-drop{
 	width: 100% !important;
+	
+    }
+    .inline-form .chzn-container .chzn-single{
+	border: none;
+	padding: 0;
     }
     .inline-form .form-submit{
 	display: inline-block;
-	margin-left: 2%;
-	width: 98%;
+	margin-left: 0;
+	width: 100%;
 	margin-top: 10px;
     }
     /* /Search form */
@@ -5630,6 +5691,15 @@ article.node-apartment footer .links.inline{
 	height: 120px;
     }
 }
+@media (min-width: 768px) and (max-width: 979px) {
+    
+
+    .region-sidebar-second .block-webform .container-inline-date{
+	width: auto;
+    }
+    
+}
+
 @media (max-width: 767px) {
     .machine-results-listing .result-item{
 	width: 47%;
@@ -5652,14 +5722,42 @@ article.node-apartment footer .links.inline{
 	margin-top: 20px;
     }
 }
-@media (min-width: 1200px) {
-    
-}
-@media (min-width: 768px) and (max-width: 979px) {
-    
-
-    .region-sidebar-second .block-webform .container-inline-date{
-	width: auto;
+@media (max-width: 600px) {
+    .inline-form > div{
+	float: left;
+	width: 100%;
     }
+    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date{
+	margin-right: 0;
+    }
+    .region-map .banner form{
+	margin: -500px auto 0
+    }
+    .inline-form > div,.inline-form > .form-item, .inline-form .container-inline-date{
+	margin-bottom: 10px;
+    }
+    .inline-form .form-submit{
+	display: inline-block;
+	margin-left: 0;
+	width: 85%;
+	margin-top: 10px;
+    }
+    .inline-form input{
+	width: 80%;
+	margin: 0;
+    }
+    .inline-form .chzn-container-single{
+	width: 80% !important;
+	border: 1px solid #d5d5d5;
+        padding: 0 15px;
+	background: #fff;
     
+    }
+    .container-inline-date .form-item input{
+	width: 80%;
+    }
+    .machine-results-listing .result-item{
+	width: 46%;
+    }
 }
+
