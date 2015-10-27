@@ -322,6 +322,10 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     border-top: none;
 }
 
+body.front .navigation-wrapper, body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
+    background: rgba(130, 121, 121, 0.61);
+}
+
 .navigation-wrapper .navigation .block-superfish .content ul li ul {
     background-image: none;
     -webkit-border-radius: 0px;
@@ -330,13 +334,11 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     -o-border-radius: 0px;
     border-radius: 0px;
     background: #fff;
-    margin: 25px 0px 0px 0px;
+    margin: 29px 0px 0px 0px;
     padding: 0px !important;
     width: 220px !important
 }
-body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    background: none;
-}
+
 .navigation-wrapper .navigation .block-superfish .content ul li ul li {
     float: none;
     display: block;
@@ -527,6 +529,7 @@ body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
     width: 195px
 }
 
+
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
     .navigation-wrapper .navigation #block-realia-blocks-realia-language .content .default .current ul li {
         background-image: url("../img/arrow-bottom-black@2x.png")
@@ -542,9 +545,37 @@ body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
         width: 145px
     }
 }
+/* New style */
+body.front #header{
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+#superfish-3 li.menuparent ul.sf-hidden{
+    display: none !important;
+}
+
+body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent>a {
+    background-image: url("../img/arrow-bottom-white.png") !important
+}
+
+#navigation span.fa.notitle{
+    text-indent: -9999px;
+    position: relative;
+}
+#navigation span.fa.notitle:before{
+    text-indent: 0;
+    position: absolute;
+    left: 15px;
+    font-size: 20px;
+}
 
 @media (max-width: 979px) {
-    .navigation-wrapper {
+    
+    body.front #header{
+	position: static;
+    }
+    .navigation-wrapper,body.front .navigation-wrapper, body.not-front .navigation-wrapper {
         background-color:#272727;
         height: 100%;
         left: -70%;
@@ -583,6 +614,9 @@ body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
         font-weight: bold;
         padding-bottom: 20px;
         padding-top: 20px
+    }
+    body.header-light.front #navigation .block-superfish .menuparent>.nolink, body.header-light.front #navigation .block-superfish .menuparent>a{
+	background-image: none !important;
     }
 
     .navigation-wrapper .navigation .block-superfish .content ul li .nolink:hover,.navigation-wrapper .navigation .block-superfish .content ul li a:hover {
@@ -632,6 +666,19 @@ body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
 
     .navigation-wrapper .navigation #block-realia-blocks-realia-language {
         display: none
+    }
+    #superfish-3 li.menuparent ul.sf-hidden{
+	display: block !important;
+    }
+    #navigation span.fa.notitle:before{
+    text-indent: 0;
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    visibility: visible;
+    }
+    #navigation span.fa.notitle{
+	visibility: hidden;
     }
 }
 
@@ -1986,6 +2033,9 @@ body.nav-open #aviators-palette {
 #gmap-apartment-map #block-views-exp-apartments-page,#map #block-views-exp-apartments-page {
     margin-top: 30px
 }
+#map {
+    margin-bottom: 30px;
+}
 
 @media (max-width: 979px) {
     .block-filter form .views-exposed-widgets .bef-checkboxes .ez-checkbox {
@@ -1999,12 +2049,12 @@ body.nav-open #aviators-palette {
 
 @media (max-width: 767px) {
     #map {
-        padding-left:20px;
-        padding-right: 20px
+        padding-left:5px;
+        padding-right: 5px
     }
 
     #map .region-map {
-        display: none
+        display: block;
     }
 
     #map .row {
@@ -2768,11 +2818,11 @@ body.node-type-apartment section .block-views {
     padding: 0px
 }
 
-#pikachoose-apartment-gallery {
+#pikachoose-apartment-gallery,#pikachoose-equipment-gallery {
     width: 100% !important
 }
 
-#pikachoose-apartment-gallery li {
+#pikachoose-apartment-gallery li,#pikachoose-equipment-gallery li {
     float: left !important;
     max-width: 30%
 }
@@ -2783,7 +2833,7 @@ body.node-type-apartment section .block-views {
         margin-right: 20px
     }
 
-    #pikachoose-apartment-gallery {
+    #pikachoose-apartment-gallery,#pikachoose-equipment-gallery {
         height: auto !important
     }
 }
@@ -4894,10 +4944,6 @@ body.header-light.front #navigation .block-superfish .nolink,body.header-light.f
     color: #fff !important
 }
 
-body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent>a {
-    background-image: url("../img/arrow-bottom-white.png") !important
-}
-
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
     body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent>a {
         background-image: url("../img/arrow-bottom-white@2x.png") !important
@@ -4998,12 +5044,15 @@ html.js input.ui-autocomplete-loading {
     margin-bottom: 10px;
     background: #fff;
     padding: 5px;
-    width: 46%;
-    margin-right: 2%;
+    width: 47%;
+    margin-right: 0;
     height: 200px;
     overflow: hidden;
     position: relative;
     float: left;
+}
+.machine-results-listing .result-item.odd{
+    margin-right: 2%;
 }
 .machine-results-listing .number{
     font-size: 14px;
@@ -5017,14 +5066,12 @@ html.js input.ui-autocomplete-loading {
     background: url("../img/markers/marker-red.png") no-repeat center top;
     position: absolute;
     top: 0;
+    left: 2px;
 }
 .machine-results-listing h3,.infobox h3{
     line-height: 20px;
 }
-.machine-results-listing .result-item div.views-field-title{
-   /*display: inline-block;*/
-   
-}
+
 .machine-results-listing .views-field-field-multiprice{
     display: block;
     position: absolute;
@@ -5084,19 +5131,7 @@ html.js input.ui-autocomplete-loading {
   width: 100%;
   height: auto;
 }
-.machine-results-listing .views-field-field-multiprice, .machine-results-listing .views-field-field-location{
-/*    margin:10px 15px 0 0;*/
-/*    font-weight: bold;*/
-    /*position: absolute;
-    bottom: 0;
-    left: 0;
-    display: inline-block;
-    float: right;*/
-}
-.machine-results-listing .views-field-field-location{
-/*    left: 30%;*/
-/*    margin-left: 20px;*/
-}
+
 /* Results markers */
 #gmap-machine-results .marker{
     font-size: 14px;
@@ -5116,14 +5151,15 @@ html.js input.ui-autocomplete-loading {
 }
 /*Front banner search*/
 .region-map .banner{
-background: url('http://dummyimage.com/1920x1080/000/fff&text=mermix.gr') no-repeat center;
-background-size: cover; 
-height: 700px;
-position: relative;
+    background-size: cover; 
+    height: 700px;
+    position: relative;
 }
 .region-map .banner form{
-    top: 85%;
-    position: relative;
+    top: 100%;
+    position: absolute;
+    margin: -20px auto 0;
+    width: 100%;
 }
 /* Search form display */
 #machinery-search-form{
@@ -5508,31 +5544,122 @@ a.flag.flag-action:hover:before{
 .views-exposed-form label{
     font-weight: normal;
 }
-/* New style */
-body.front #header{
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-}
+
 body.header-light #navigation{
     background: transparent;
 }
-#navigation span.fa.notitle{
-    text-indent: -9999px;
-    position: relative;
-}
-#navigation span.fa.notitle:before{
-    text-indent: 0;
-    position: absolute;
-    left: 15px;
-    font-size: 20px;
-}
+
 #superfish-3 li.menuparent ul{
     right: 0 !important;
 }
-#superfish-3 li.menuparent ul.sf-hidden{
-    display: none !important;
-}
+
 article.node-apartment footer .links.inline{
     position: relative;
+}
+
+@media (max-width: 1199px) {
+    
+}
+@media (max-width: 979px) {
+    /* Search form */
+    .inline-form{
+	width: 80%
+    }
+    .inline-form input{
+	width: 90%;
+	margin: 0;
+    }
+    .region-map .banner form{
+	margin: -120px auto 0
+    }
+    .inline-form > div{
+	float: left;
+	width: 48%;
+	margin-left: 2%;
+    }
+    .inline-form > div.form-item, .inline-form > div.container-inline-date{
+	margin-left: 2%;
+    }
+    .inline-form .form-item div{
+	display: inline-block;
+    }
+    .inline-form .container-inline-date .form-item .form-item,.inline-form .container-inline-date > .form-item{
+	float: none;
+    }
+    .inline-form .container-inline-date .form-type-textfield{
+	display: block;
+	width: 100%;
+    }
+    .container-inline-date .form-item{
+	width: 100%;
+    }
+    .container-inline-date .form-item input{
+	width: 90%;
+    }
+    .inline-form .container-inline-date .date-padding{
+	float: none;
+	display: block;
+    }
+    .inline-form .chzn-container-single{
+	width: 101% !important;
+    }
+    .inline-form .chzn-container .chzn-drop{
+	width: 100% !important;
+    }
+    .inline-form .form-submit{
+	display: inline-block;
+	margin-left: 2%;
+	width: 98%;
+	margin-top: 10px;
+    }
+    /* /Search form */
+    body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
+    color: #fff !important
+    }
+    .navigation-wrapper .navigation .block-superfish .content ul li ul,body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
+	background: none;
+    }
+    .machine-results-listing .result-item{
+	width: 46%;
+    }
+    .machine-results-listing h3, .infobox h3{
+	line-height: 18px;
+	margin-bottom: 5px;
+    }
+    .machine-results-listing .result-item div.views-field-field-image{
+	height: 120px;
+    }
+}
+@media (max-width: 767px) {
+    .machine-results-listing .result-item{
+	width: 47%;
+	height: 160px;
+    }
+    .machine-results-listing .result-item div.views-field-field-image{
+	height: auto;
+	float: left;
+	max-width: 62%;
+    }
+    .machine-results-listing .result-item div.views-field-title,.machine-results-listing .views-field-field-location{
+    float: left;
+    min-width: 35%;
+    max-width: 36%;
+    word-break: break-all;
+    margin-left: 5px;
+    }
+    .machine-results-listing{
+	height: 540px;
+	margin-top: 20px;
+    }
+}
+@media (min-width: 1200px) {
+    
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    
+
+    .region-sidebar-second .block-webform .container-inline-date{
+	width: auto;
+    }
+    
 }

@@ -19,7 +19,7 @@ $pagination = array();
     	<h3><?php print $title; ?></h3>
 	<?php endif; ?>
 	<?php foreach ($rows as $id => $row): ?>
-	<div <?php if( $id%6 == 0 ) {print 'id="position-'.$id.'"'; $pagination[] = $id; } ?> class="result-item">
+	<div <?php if( $id%6 == 0 ) {print 'id="position-'.$id.'"'; $pagination[] = $id; } ?> class="result-item <?php if( $id%2 == 0 ) {print 'odd';} ?>">
     	    <?php print $row; ?><span class="number"><?php print $id + 1 ?></span>
     	</div>
 	<?php endforeach; ?>

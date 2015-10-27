@@ -360,7 +360,7 @@ function ak_mermix_tools_block_content() {
 
 function ak_mermix_tools_block_content_banner() {
     $search_form = drupal_get_form('machinery_search_form');
-    $out = '<div class="banner">';
+    $out = '<div class="banner" style="background:url(/sites/default/themes/realia/img/banners/2.jpg) no-repeat center">';
     $out .= drupal_render($search_form);
     $out .= '</div>';
     return $out;
