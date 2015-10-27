@@ -63,9 +63,11 @@ jQuery(function(){
 	var otherid = id.replace('from','to');
 	if(id.indexOf('from') > -1) {
 	    jQuery( "#" + id ).datepicker("option", "onClose", function( selectedDate ) {
+		if(selectedDate)
 		jQuery( "#" + otherid ).datepicker( "option", "minDate", selectedDate );
 	    });
 	    jQuery("#" + otherid).datepicker("option", "onClose", function( selectedDate ) {
+		if(selectedDate)
 		jQuery( "#" + id ).datepicker( "option", "maxDate", selectedDate );
 	    });
 	}
