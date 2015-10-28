@@ -5560,21 +5560,31 @@ article.node-apartment footer .links.inline{
     position: relative;
 }
 /* Machine types carousel */
-#block-views-machine-types-block-promo .owl-item > div{
+.view-machine-types .owl-item > div{
     padding-right: 20px;
 }
-#block-views-machine-types-block-promo{
-    
-}
-#block-views-machine-types-block-promo .sub-item:first-child{
+
+.view-machine-types .sub-item{
     margin-bottom: 10px;
 }
-#block-views-machine-types-block-promo .sub-item{
+.view-machine-types .sub-item .fields-wrapper{
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.view-machine-types .sub-item{
     position: relative;
-    height: 280px;
+    
     overflow: hidden;
 }
-#block-views-machine-types-block-promo .sub-item:after{
+.view-machine-types .sub-item .fields-wrapper.large{
+    height: 330px;
+}
+.view-machine-types .sub-item .fields-wrapper.medium{
+    height: 180px;
+}
+.view-machine-types .sub-item:after{
     content: " ";
     position: absolute;
     top: 5px;
@@ -5582,23 +5592,40 @@ article.node-apartment footer .links.inline{
     right: 5px;
     bottom: 5px;
     background: #000;
-    opacity: 0.3;
+    opacity: 0.4;
     transition: opacity 0.4s;
 }
-#block-views-machine-types-block-promo .sub-item:hover:after{
+.view-machine-types .sub-item:hover:after{
     opacity: 0;
 }
-#block-views-machine-types-block-promo .sub-item .views-field-name-i18n a{
+.view-machine-types .sub-item .views-field-name-i18n a{
     position: absolute;
     width: 100%;
     height: 100%;
-    text-align: center;
     z-index: 10;
 }
-
-#block-views-machine-types-block-promo .owl-carousel .owl-item{
-    height: 570px;
+.view-machine-types .sub-item .views-field-name-i18n a span.name{
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 23px;
+    color: #fff;
+    font-weight: bold;
+    
 }
+.view-machine-types .sub-item.odd.odd .fields-wrapper.large, .view-machine-types .sub-item.even.even .fields-wrapper.large{
+    height: 230px;
+}
+.view-machine-types .sub-item.odd.even .fields-wrapper.large{
+    height: 330px;
+}
+
+/*.view-machine-types.view-display-id-block_promo .owl-carousel .owl-item{
+    height: auto;
+}*/
+
 
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
