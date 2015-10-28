@@ -384,18 +384,18 @@ function machinery_search_form($form, &$form_state) {
 	'#type' => 'markup',
 	'#markup' => '<div class="inline-form">',
     );
-    $form['place'] = array(
-	'#type' => 'textfield',
-	//'#title' => t('Where'),
-	'#default_value' => isset($_SESSION['search_criteria']['place']) ? $_SESSION['search_criteria']['place'] : '',
-	'#attached' => $attach,
-    );
     $form['machine_type'] = array(
 	'#type' => 'select',
 	//'#title' => t('Type'),
 	'#default_value' => isset($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '',
 	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
 	'#empty_option' => t('Select category'),
+    );
+    $form['place'] = array(
+	'#type' => 'textfield',
+	//'#title' => t('Where'),
+	'#default_value' => isset($_SESSION['search_criteria']['place']) ? $_SESSION['search_criteria']['place'] : '',
+	'#attached' => $attach,
     );
     $form['date_from'] = array(
 	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
