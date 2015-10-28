@@ -5,12 +5,13 @@
  * Implements hook_init
  */
 function ak_mermix_tools_init(){
+    
     if(drupal_is_front_page()){
-    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_banner.js');
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_banner.js');
     drupal_add_library('system', 'jquery.cookie');
     }
-    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/jquery.validate.min.js');
-    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_validation.js', array('scope' => 'footer'));
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.validate.min.js');
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js', array('scope' => 'footer'));
 }
 /**
  * Implements hook_field_access
@@ -56,7 +57,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		'#suffix' => isset($user_message) ? $user_message : '',
 		'#disabled' => isset($user_message),
 		'#attached' => array('js' => array(
-			drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools.js',
+			drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools.js',
 			array(
 			    'data' => array(
 				'userPlace' => array(
@@ -304,7 +305,7 @@ function ak_mermix_tools_restws_response_alter(&$response, $function, $formatNam
 
 function ak_mermix_tools_js_alter(&$javascript) {
     if (isset($javascript['modules/user/user.js'])) {
-	$javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/user.js';
+	$javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/js/user.js';
     }
 }
 
@@ -314,7 +315,7 @@ function ak_mermix_tools_js_alter(&$javascript) {
 
 function ak_mermix_tools_css_alter(&$css) {
     if (isset($css['sites/all/modules/date/date_popup/themes/datepicker.1.7.css'])) {
-	$css['sites/all/modules/date/date_popup/themes/datepicker.1.7.css']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/datepicker.css';
+	$css['sites/all/modules/date/date_popup/themes/datepicker.1.7.css']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/css/datepicker.css';
     }
 }
 
@@ -373,8 +374,8 @@ function ak_mermix_tools_block_content_banner() {
 function machinery_search_form($form, &$form_state) {
     $all_scripts = drupal_add_js();
     $attach = array('js' => array(
-	    drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
-	    drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_validation.js' => array('scope' => 'footer'),
+	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer'),
+	    drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js' => array('scope' => 'footer'),
     ));
     if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
 	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
@@ -448,7 +449,7 @@ function machinery_search_form($form, &$form_state) {
 function machinery_add_form($form, &$form_state) {
     //$logged = user_is_logged_in();
     $attach = array('js' => array(
-	    drupal_get_path('module', 'ak_mermix_tools') . '/addressautocomplete.js' => array('scope' => 'footer'),
+	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer'),
 	    'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external', 'scope' => 'footer'),
     ));
     //Name
@@ -553,6 +554,25 @@ function machinery_add_form_submit($form, &$form_state) {
 }
 
 function ak_mermix_tools_menu() {
+    $items['admin/config/mermixtools'] = array(
+			'title' => 'Mermix tools configuration',
+			'description' => 'Set options for Ak mermix tools module.',
+			'position' => 'right',
+			'weight' => -5,
+			'page callback' => 'system_admin_menu_block_page',
+			'access arguments' => array('administer site configuration'),
+			'file' => 'system.admin.inc',
+			'file path' => drupal_get_path('module', 'system'),
+	);
+    $items['admin/config/mermixtools/settings'] = array(
+			'title' => 'Mermix tools configuration',
+			'description' => 'Set options for Ak mermix tools module.',
+			'page callback' => 'drupal_get_form',
+			'page arguments' => array('mermixtools_admin_settings'),
+			'access arguments' => array('administer site configuration'),
+			'type' => MENU_NORMAL_ITEM,
+			'file' => 'ak_mermix_tools.admin.inc',
+	);
     /*$items['machinery-search'] = array(
 	'title' => 'Search machines',
 	'page callback' => 'search_machinery',
@@ -688,13 +708,17 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 }
 
 function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
-    //TODO get submission data from admin configuration
+    
     if ($view->name == 'machine_types' && $display_id == 'block_promo_lf') {
 	module_load_include('inc', 'webform', 'includes/webform.submissions');
-	$submissions = webform_get_submissions(array('nid'=>301));
+	
+	$webformId = (int)variable_get('looking_for_webform_id');
+	$webformCompId = (int)variable_get('looking_for_webform_key');
+	
+	$submissions = webform_get_submissions(array('nid'=> $webformId));
 	$ids = array();
 	foreach ( $submissions as $submission){
-	    $ids[] = $submission->data[11][0];
+	    $ids[] = $submission->data[$webformCompId][0];
 	}
 	$ids = array_unique($ids);
 	if(arg(0) == 'looking-for' && (arg(1) && is_numeric(arg(1)))) {
