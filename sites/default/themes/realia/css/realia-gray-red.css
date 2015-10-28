@@ -5836,7 +5836,7 @@ article.node-apartment footer .links.inline{
 	width: 46%;
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 480px) {
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
 	width: 320px;
 	margin: 0 auto;
