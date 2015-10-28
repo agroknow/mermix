@@ -23,9 +23,12 @@
  *
  * @ingroup views_templates
  */
-$url = url('taxonomy/term/' . $row->tid);
-$fields['field_map_icon']->content = '<a href="'. $url .'" >'. $fields['field_map_icon']->content . '</a>';
+
+$style = $row->field_field_map_icon[0]['rendered']['#image_style'];
+$backgroundUri = $row->field_field_map_icon[0]['raw']['uri'];
+$backgroundUrl = image_style_url($style,$backgroundUri);
 ?>
+<div class="fields-wrapper <?php print $style ?>" style="background-image: url('<?php print $backgroundUrl; ?>')">
 <?php foreach ($fields as $id => $field): ?>
   <?php if (!empty($field->separator)): ?>
     <?php print $field->separator; ?>
@@ -36,3 +39,4 @@ $fields['field_map_icon']->content = '<a href="'. $url .'" >'. $fields['field_ma
     <?php print $field->content; ?>
   <?php print $field->wrapper_suffix; ?>
 <?php endforeach; ?>
+</div>

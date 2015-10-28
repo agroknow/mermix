@@ -689,7 +689,7 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 
 function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
     //TODO get submission data from admin configuration
-    if ($view->name == 'machine_types' && $display_id == 'block') {
+    if ($view->name == 'machine_types' && $display_id == 'block_promo_lf') {
 	module_load_include('inc', 'webform', 'includes/webform.submissions');
 	$submissions = webform_get_submissions(array('nid'=>301));
 	$ids = array();
