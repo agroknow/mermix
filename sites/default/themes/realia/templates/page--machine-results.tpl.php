@@ -101,17 +101,16 @@
         <div class="container">
             <?php if ($page['highlighted']): ?>
                 <div class="row" id="highlighted">
-                    <div class="span9">
+                    <div class="<?php print ($page['highlighted_sidebar'])? 'span9' : 'span12' ?>">
                         <?php if ($page['highlighted']): ?>
                         <div class="highlighted"><?php print render($page['highlighted']); ?></div>
                         <?php endif; ?>
                     </div>
-
+		    <?php if ($page['highlighted_sidebar']): ?>
                     <div class="span3">
-                        <?php if ($page['highlighted_sidebar']): ?>
                         <?php print render($page['highlighted_sidebar']); ?>
-                        <?php endif; ?>
                     </div>
+		    <?php endif; ?>
                 </div><!-- /#highlighted -->                
             <?php endif; ?>
 
