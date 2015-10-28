@@ -687,6 +687,26 @@ function ak_mermix_tools_user_login(&$edit, $account) {
     }
 }
 
+function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
+    //TODO get submission data from admin configuration
+    if ($view->name == 'machine_types' && $display_id == 'block') {
+	module_load_include('inc', 'webform', 'includes/webform.submissions');
+	$submissions = webform_get_submissions(array('nid'=>301));
+	$ids = array();
+	foreach ( $submissions as $submission){
+	    $ids[] = $submission->data[11][0];
+	}
+	$ids = array_unique($ids);
+	if(arg(0) == 'looking-for' && (arg(1) && is_numeric(arg(1)))) {
+	    $key = array_search(arg(1), $ids);
+	    if( $key !== false) {
+	    unset($ids[$key]);
+	    }
+	} 
+	$args = array(implode(',', $ids));
+    }
+}
+
 function ak_mermix_tools_views_pre_render(&$view) {
   if ($view->name == 'machine_results') {
       $result = $view->result;
