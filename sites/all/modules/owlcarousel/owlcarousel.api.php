@@ -6,22 +6,11 @@
  */
 
 /**
- * Implements hook_owlcarousel_pre_render_alter().
- *
- * @param array $element
- *  Pre render array of carousel output & settings.
- */
-function hook_owlcarousel_pre_render_alter(&$element) {
-  // Alter the fully built carousel & settings array
-  // before render.
-}
-
-/**
  * Implements hook_owlcarousel_settings_alter().
  *
- * @param array $settings
+ * @param array
  *   Instance settings.
- * @param string $instance
+ * @param string
  *   Carousel identifier.
  */
 function hook_owlcarousel_settings_alter(&$settings, $instance) {

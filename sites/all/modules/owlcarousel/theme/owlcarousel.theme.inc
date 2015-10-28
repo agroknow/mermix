@@ -3,15 +3,16 @@
 /**
  * @file
  * owlcarousel.theme.inc
+ *
+ * Implements theme functions for Owl Carousel.
  */
 
 /**
- * Template process owlcarousel.
+ * Template process carousel theme.
  */
-function template_process_owlcarousel(&$variables) {
-  $instance = $variables['settings']['attributes']['id']['default'];
-  $variables['settings']['attributes']['id'] = $instance;
-  $variables['settings']['attributes']['class'][] = 'owl-carousel';
+function template_process_owlcarousel(&$vars) {
+  $instance_id = $vars['settings']['instance'];
+  $vars['settings']['attributes']['class'][] = $vars['settings']['id'];
 }
 
 /**
@@ -27,7 +28,7 @@ function theme_owlcarousel_wrapper($variables) {
  * Theme declaration for Owl Carousel.
  */
 function theme_owlcarousel($variables) {
-  $instance = $variables['settings']['attributes']['id'];
+  $instance = $variables['settings']['id'];
   $settings = $variables['settings'];
   $items = $variables['items'];
 
@@ -39,18 +40,6 @@ function theme_owlcarousel($variables) {
     '#pre_render' => array('owlcarousel_pre_render_cache'),
   );
 
-  $debug = variable_get('owlcarousel_debug_mode', TRUE);
-  if (!$debug) {
-    $output += array(
-      '#cache' => array(
-        'keys' => array('owlcarousel', $instance),
-        'bin' => 'cache',
-        'expire' => time() + variable_get('owlcarousel_cache_interval', 3600),
-        'granularity' => DRUPAL_CACHE_GLOBAL
-      )
-    );
-  }
-
   return drupal_render($output);
 }
 
@@ -59,7 +48,7 @@ function theme_owlcarousel($variables) {
  */
 function owlcarousel_pre_render_cache($element) {
   $settings = $element['#output']['settings']['instance'];
-  $instance = $element['#output']['settings']['attributes']['id'];
+  $instance = $element['#output']['settings']['id'];
 
   $output = array(
     '#theme' => 'owlcarousel_list',
@@ -67,8 +56,11 @@ function owlcarousel_pre_render_cache($element) {
     '#settings' => $element['#output']['settings']
   );
 
-  // Build wrapper.
-  $build = owlcarousel_build($output);
+  // Load carousel settings from the instance id.
+  $instance_settings = _owlcarousel_return_carousel_instance_settings($settings);
+
+  // Provide legacy settings alter.
+  drupal_alter('owlcarousel_settings', $instance_settings, $instance);
 
   // Element output /w attached.
   $element['#markup'] = owlcarousel_build($output);
@@ -82,15 +74,20 @@ function owlcarousel_pre_render_cache($element) {
       ),
       array(
         'data' => array('owlcarousel' => array(
-          $instance => owlcarousel_settings($instance, $settings)
-        )),
+          $instance => array(
+            'settings' => $instance_settings,
+            'views' => array(
+              'ajax_pagination' => variable_get('owlcarousel_override_ajax_pagination_' . $settings)
+            ),
+          ),
+        ),),
         'type' => 'setting'
       )
     ),
     'library' => array(
       array(
         'owlcarousel',
-        'owlcarousel'
+        'owl-carousel'
       )
     ),
   );
@@ -112,10 +109,10 @@ function owlcarousel_build($output) {
 }
 
 /**
- * Theme declaration for carousel lists.
+ * Default theme implementation for lists
  */
-function theme_owlcarousel_list(&$variables) {
-  $items = &$variables['items'];
+function theme_owlcarousel_list(&$vars) {
+  $items = &$vars['items'];
   $output = '';
 
   if (!empty($items)) {
@@ -133,8 +130,8 @@ function theme_owlcarousel_list(&$variables) {
 }
 
 /**
- * Theme declaration for carousel items.
+ * Default theme implementation for carousel items
  */
-function theme_owlcarousel_list_item(&$variables) {
-  return '<div class="' . $variables['class'] . '">' . $variables['item'] . '</div>';
+function theme_owlcarousel_list_item(&$vars) {
+  return '<div class="' . $vars['class'] . '">' . $vars['item'] . "</div>";
 }

@@ -1,34 +1,70 @@
-Owl Carousel
-Branch: 2.x
+CONTENTS OF THIS FILE
+---------------------
+ * Introduction
+ * Branches
+ * Sub modules
+ * Requirements
+ * Installation
+ * Configuration
+ * Troubleshooting
+ * FAQ
 
-This module provides integration for Owl Carousel (2.x). Please download the Owl Carousel 2.x
-branch for use with this module.
+ 
+INTRODUCTION
+------------
+This module integrates the wonderful Owl Carousel slider built by OwlFonk. The primary module is comprised of three sub modules providing
+a views style, field formatter & administration UI.
 
-Required modules
- - Libraries
- - jQuery Update
+BRANCHES
+--------
+ *  1.x
+    For Owl Carousel library 1.x
+ *  2.x
+    For Owl Carousel library 2.x
 
-Optional modules
- - Views
- - Variable
+SUB MODULES
+-----------
+ *  Owl Carousel Views
+    Provides Drupal Views integration.
+ *  Owl Carousel Fields
+    Provides a Drupal field formatter.
+ *  Owl Carousel UI
+    Provides an administration user interface for Owl Carousel variables.
 
-Install 
-Before starting the installation please make sure you have all of the required modules. Ensure
-you have the correct jQuery version loaded by using the jQuery Update configuration page.
+REQUIREMENTS
+------------
+This module requires the following contrib modules:
+ *  Views (https://drupal.org/project/views)
+ *  Variable (https://drupal.org/project/variable)
+ *  jQuery Update (https://drupal.org/project/jquery_update)
 
-Download the Owl Carousel library from https://github.com/smashingboxes/OwlCarousel2#quick-start
+INSTALLATION
+------------
+ *  Install as you would normally install a contributed drupal module. See:
+    https://drupal.org/documentation/install/modules-themes/modules-7
+    for further information.
+ *  Download the Owl Carousel library from http://owlgraphic.com/owlcarousel
+ *  Place the library in the appropriate directory E.G.
+    sites/all/libraries/owl-carousel
+    sites/all/libraries/owl-carousel/owl.carousel.js
+    sites/all/libraries/owl-carousel/owl.carousel.min.js
+    sites/all/libraries/owl-carousel/owl.carousel.css
+    sites/all/libraries/owl-carousel/owl.theme.css
+    sites/all/libraries/owl-carousel/owl.transitions.css
 
-Library location
-sites\all\libraries\owlcarousel
+CONFIGURATION
+-------------
+ *  Owl Carousel settings can be found at admin/config/user-interface/owlcarousel.
+ *  Settings are defined as groups and may be applied to any number of
+    carousel instances.
+ *  Once you have configured your settings; create a new view & select 
+    Owl Carousel as the display format.
+ *  Finally select the desired settings group.
+ *  See http://legomenon.io/article/drupal-7-configuration-owl-carousel 
+    for instructions with images =).
 
-Example;
-sites\all\libraries\owlcarousel\owl.carousel.min.js,
-sites\all\libraries\owlcarousel\owl.carousel.js
-sites\all\libraries\owlcarousel\assets
-sites\all\libraries\owlcarousel\assets\owl.carousel.min.css
-sites\all\libraries\owlcarousel\assets\owl.theme.default.min.css
-
-Once downloaded and placed in the correct directory install the Owl Carousel via the module page. 
-This module provides field formatters and an additional Views module. Settings are managed from 
-a global administration page located at admin/config/user-interface/owlcarousel. View settings may
-be changed on the view edit page, under the Settings tab; next to Format.
+TROUBLESHOOTING
+---------------
+ *  If you are receiving this error, TypeError: t.$elem.data(...) is undefined. Please change your jQuery version
+    to 1.8, this is required until the patch below is merged into Owlcarousel.
+    @ref, https://github.com/OwlFonk/OwlCarousel/pull/133
