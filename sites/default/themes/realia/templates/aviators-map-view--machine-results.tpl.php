@@ -7,7 +7,7 @@
  */
 ?>
 <?php 
-drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/ak_mermix_scrolling.js');
+drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/ak_mermix_scrolling.js');
 $pagination = array(); 
 ?>
 <div class="row">

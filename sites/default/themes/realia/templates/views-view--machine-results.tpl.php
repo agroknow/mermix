@@ -28,8 +28,8 @@
  */
 ?>
 <?php
-drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/jquery.easing.1.3.js');
-drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/mermix_tools_results.js');
+drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.easing.1.3.js');
+drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_results.js');
 $results = $view->result;
 $searchform = drupal_get_form('machinery_search_form');
 if(is_object($results[0])) {
@@ -101,8 +101,9 @@ print '<h2>' . t('Try a new search!') . '</h2>';
 ?>
 <?php } else { 
  print '<h2>' . t('Have not found what you are looking for; Try again..') . '</h2>';
- print render($searchform);   
- $block = module_invoke('webform', 'block_view', 'client-block-301');
+ print render($searchform);
+ $blockid = 'client-block-' . variable_get('looking_for_webform_id');
+ $block = module_invoke('webform', 'block_view', $blockid);
  print render($block['content']);
 } 
 unset($_SESSION['search_criteria']);
