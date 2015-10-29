@@ -360,6 +360,7 @@ function ak_mermix_tools_block_content() {
 }
 
 function ak_mermix_tools_block_content_banner() {
+    //TODO add option here for image
     $search_form = drupal_get_form('machinery_search_form');
     $out = '<div class="banner" style="background:url(/sites/default/themes/realia/img/banners/2.jpg) no-repeat center">';
     $out .= drupal_render($search_form);
@@ -584,7 +585,8 @@ function ak_mermix_tools_menu() {
 	'title' => 'Add your machine',
 	'page callback' => 'add_machinery',
 	'access callback' => TRUE,
-	'type' => MENU_CALLBACK,
+	'menu_name' => 'main-menu',
+	'type' => MENU_NORMAL_ITEM,
     );
     $items['ak_mermix_tools/%ctools_js/login'] = array(
 	'title' => 'Login',
@@ -681,6 +683,7 @@ function ak_mermix_tools_login_form($js = NULL) {
 }*/
 
 function add_machinery() {
+    drupal_set_title(t('Add your machine'));
     return drupal_get_form('machinery_add_form');
 }
 
