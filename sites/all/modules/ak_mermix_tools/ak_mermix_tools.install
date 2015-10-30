@@ -1,4 +1,104 @@
 <?php
+
+/**
+ * Implements hook_schema().
+ */
+function ak_mermix_tools_schema() {
+  $schema['ak_mermix_tools_search_log'] = array(
+    // This explains purpose of this table.
+    'description' => 'Table to keep user machinery searches',
+
+    // This array keeps information about the fields in this table.
+    'fields' => array(
+      'searchid' => array(
+        'description' => 'The primary identifier for a search.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'user' => array(
+        'description' => 'The id of user performed the search',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+	'default' => 0
+      ),
+      'machine_type' => array(
+        'description' => 'The id of machine type',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+	'default' => 0
+      ),
+      'date_from' => array(
+         'type' => 'int',
+	  'not null' => FALSE,
+	  'default' => null
+      ),
+      'date_to' => array(
+	 'type' => 'int',
+	  'not null' => FALSE,
+	  'default' => null
+      ),
+      'coords' => array(
+        'description' => 'lat lon provided in search comma separated',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+	'default' => ''
+      ),
+      'place' => array(
+        'description' => 'human readable location name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+	'default' => ''
+      ),
+      'hash' => array(
+	'description' => 'md5 hash representation of main search arguments',
+	'type' => 'varchar',
+	'length' => 32,
+	'not null' => FALSE,
+	'default' => ''
+       ),
+      'searched' => array(
+	  'type' => 'int',
+	  'not null' => TRUE,
+	  'default' => 0
+       ),
+      'results' => array(
+	'description' => 'The number of results this search returned',
+	'type' => 'int',
+	'unsigned' => TRUE,
+	'not null' => TRUE,
+	'default' => 0
+	),
+    ),
+    // Index 'rating' field to speed up retrieval of rows based on rating.
+    'indexes' => array(
+      'userindex' => array('user'),
+      'searchedindex' => array('searched'),
+    ),
+      'foreign keys' => array(
+      // This table contains a reference field to node table.
+      // 'nid' field of this  table references a row in {node} table.
+      'users' => array(
+        'table' => 'users',
+        'columns' => array('user' => 'uid'),
+      ),
+      'taxonomy_term_data' => array(
+        'table' => 'taxonomy_term_data',
+        'columns' => array('machine_type' => 'tid'),
+      ),
+    ),
+    
+    'primary key' => array('searchid'),
+  );
+
+  return $schema;
+}
+
+
 /**
  * Update addressfield geofield from lat- lon
  */
@@ -916,4 +1016,15 @@ function ak_mermix_tools_update_7011(&$sandbox) {
 function ak_mermix_tools_update_7012(&$sandbox) {
     $instances = field_info_instances('node', 'apartment');
         field_delete_instance($instances['field_product_slideshow'], true);
+}
+
+/**
+ * Add the ak_mermix_tools_search_log table.
+ */ 
+function ak_mermix_tools_update_7013() {
+  
+  $schema = drupal_get_schema_unprocessed('ak_mermix_tools', 'ak_mermix_tools_search_log');
+  db_create_table('ak_mermix_tools_search_log', $schema);
+
+  return 'ak_mermix_tools_search_log table created.';
 }

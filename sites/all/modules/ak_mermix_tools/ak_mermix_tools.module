@@ -511,9 +511,7 @@ function machinery_add_form($form, &$form_state) {
 
 //Cannot use form_name_submit function when $['#action'] is defined
 function machinery_search_form_submit($form, &$form_state) {
-    if (!$form_state['values']['machine_type']) {
-	$form_state['values']['machine_type'] = 'all';
-    }
+    
     $_SESSION['search_criteria'] = array_intersect_key($form_state['values'], array_flip(array('place', 'machine_type', 'date_from', 'date_to', 'coords', 'distance')));
     $search_criteria = isset($_SESSION['search_criteria']) ? $_SESSION['search_criteria'] : array(
 	'coords' => 'all',
@@ -531,7 +529,7 @@ function machinery_search_form_submit($form, &$form_state) {
     $dateTo = strtotime($search_criteria['date_to']);
     $dates = date('Y-m-d', $dateFrom) . '--' . date('Y-m-d', $dateTo);
     }
-    $machineType = $search_criteria['machine_type'];
+    $machineType = $search_criteria['machine_type'] ? $search_criteria['machine_type'] : 'all';
     if($coords == 'all' && $machineType == all && $dates == all){
     $form_state['redirect'] = 'machine-results';
     } else {
@@ -735,12 +733,43 @@ function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
 }
 
 function ak_mermix_tools_views_pre_render(&$view) {
-  if ($view->name == 'machine_results') {
-      $result = $view->result;
-      $prices = array();
+    global $user;
+    if ($view->name == 'machine_results') {
+     $result = $view->result;
+     //Add logic to log search arguments with number of results
+     if(is_object($result[0])) {
+	 $results_count = count($result);
+     } else {
+	 $results_count = 0;
+     }
+     //add data to log in database table
+     //use $_SESSION['search_criteria']
+     if(isset($_SESSION['search_criteria'])) {
+     $data_to_log = $_SESSION['search_criteria'];
+     $data_to_log['machine_type'] = $data_to_log['machine_type'] ? $data_to_log['machine_type'] : 0;
+     $place = $data_to_log['place'];
+     $data_to_log['coords'] = $data_to_log['distance'] > 10 ? $data_to_log['coords'] . ' ' . $data_to_log['distance'] : $data_to_log['coords'];
+     unset($data_to_log['distance']);
+     unset($data_to_log['place']);
+     $data_to_log['user'] = $user->uid;
+     $data_to_log['date_from'] = $data_to_log['date_from'] ? strtotime($data_to_log['date_from']) : null;
+     $data_to_log['date_to'] = $data_to_log['date_to'] ? strtotime($data_to_log['date_to']) : null;
+     
+     $hash = md5(serialize($data_to_log));
+     $data_to_log['place'] = $place;
+     $data_to_log['hash'] = $hash;
+     $data_to_log['searched'] = REQUEST_TIME;
+     $data_to_log['results'] = $results_count;
+     
+	db_insert('ak_mermix_tools_search_log')->fields($data_to_log)->execute();
+     }
+     //Insert data into db table
+     $prices = array();
      foreach ($result as $row) {
-	 foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
-	     $prices[] = $price['field_multiprice_value']['und'][0]['value'];
+	 if(isset($row->_field_data['nid']['entity']->field_multiprice['und'])) {
+	    foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
+		$prices[] = $price['field_multiprice_value']['und'][0]['value'];
+	    }
 	 }
       }
       $min = (float)min($prices);
@@ -756,6 +785,18 @@ function ak_mermix_tools_views_pre_render(&$view) {
     });", array('type' => 'inline', 'scope' => 'header', 'weight' => -10));
   }
 }
+
+/**
+ * Implements hook_views_api().
+ */
+function ak_mermix_tools_views_api()
+{
+    return array(
+        'api' => 3,
+        'path' => drupal_get_path('module', 'ak_mermix_tools') . '/includes/views',
+    );
+}
+
 /**
  * Function to create an equipment type node with given data
  */
