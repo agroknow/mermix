@@ -25,12 +25,12 @@
 	function() {
 	    var elm = $(this);
 	    timer = setTimeout(function(){
-	    elm.find('.views-field-field-multiprice').animate({top:"70px"},1200,"easeOutBounce");
-	    },  1000);
+	    elm.find('.views-field-field-multiprice').animate({bottom:"-10px"},1000);
+	    },  500);
 	}, function() {
 	    var elm = $(this);
 	  clearTimeout(timer);
-	  elm.find('.views-field-field-multiprice').animate({top:"-200px"});
+	  elm.find('.views-field-field-multiprice').animate({bottom:"-200px"},800);
 	}
       );
     }

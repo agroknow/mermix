@@ -165,7 +165,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     background-position: 95% center;
     background-repeat: no-repeat;
     border: 1px solid #707070;
-    width: 100% !important
+    width: auto !important
 }
 
 .chzn-container .chzn-drop .chzn-results .active-result {
@@ -3557,7 +3557,10 @@ body.node-type-apartment section .block-views {
 
 .triptych-wrapper {
     background-color: #ffffff;
-    padding: 50px 20px
+    padding: 50px 0px
+}
+.region-triptych-bottom{
+    padding-left: 30px;
 }
 
 @media (max-width: 767px) {
@@ -5078,17 +5081,19 @@ html.js input.ui-autocomplete-loading {
 .machine-results-listing .views-field-field-multiprice{
     display: block;
     position: absolute;
-    top: -200px;
+    bottom: -200px;
     width: 100%;
     z-index: 2;
+    box-sizing: border-box;
+    padding-right: 10px;
 }
 .views-field.views-field-field-multiprice ul{
     list-style-type: none;
     margin: 0 auto;
     padding: 0;
     text-align: center;
-    width: 94%;
-    
+    width: 100%;
+    background: #E63434;
 }
 .views-field.views-field-field-multiprice ul:after{
     width: 100%; 
@@ -5105,7 +5110,6 @@ html.js input.ui-autocomplete-loading {
     min-width: 25%;
     background: #E63434;
     color: #fff;
-    box-shadow: 1px 1px 2px #ddd;
 }
 .views-field.views-field-field-multiprice ul li .field-name-field-multiprice-value{
     display: block;
@@ -5178,7 +5182,7 @@ html.js input.ui-autocomplete-loading {
     clear: none;
 }
 .inline-form input[type=text]{
-    padding: 10px 15px;
+    padding: 10px 5px 10px 30px;
 }
 .inline-form .form-submit{
     padding-top: 11px;
@@ -5202,6 +5206,43 @@ html.js input.ui-autocomplete-loading {
 .inline-form .chzn-container .chzn-single{
     border: 1px solid #d5d5d5;
 }
+/*Icons*/
+.inline-form .chzn-container .chzn-single:before{
+    content: "\f0d1";
+    font-family: FontAwesome;
+    position: absolute;
+    left: 20px;
+    font-size: 22px;
+    color: #555;
+}
+.inline-form > .form-item,.form-type-date-popup .form-type-textfield{
+    position: relative;
+}
+.inline-form > .form-item:before , .inline-form .form-type-date-popup .form-type-textfield:before{
+    position: absolute;
+    font-family: FontAwesome;
+    left: 7px;
+    font-size: 22px;
+    top: 10px;
+    color: #555;
+}
+.inline-form .form-item-place:before{
+    content: "\f041";
+}
+.form-type-date-popup .form-type-textfield:before{
+    content: "\f073";
+}
+.inline-form .form-type-date-popup .form-type-textfield:before{
+    font-size: 20px;
+}
+
+.block-webform .form-type-date-popup .form-type-textfield:before{
+    position: absolute;
+    font-family: FontAwesome;
+    left: 19px;
+    top: 5px;
+    font-size: 20px;
+}
 /* Webform */
 .webform-component-date .chzn-container .chzn-single{
     display: inline-block;
@@ -5213,6 +5254,10 @@ html.js input.ui-autocomplete-loading {
 }
 .field-name-field-multiprice-unit .chzn-container{
     vertical-align: middle;
+}
+
+.container-inline-date > .form-item {
+    margin-right: 0;
 }
 
 /* General styles */
@@ -5347,8 +5392,12 @@ button.form-submit.field-add-more-submit{
 /* Sidebar webform dates -- check availability*/
 .region-sidebar-second .block-webform {
     text-align: center;
-    padding: 15px;
+    padding: 15px 5px 0 5px;
     border: 1px solid #E63434;
+    margin-top: 25px;
+}
+.region-sidebar-second .block-webform .container-inline-date .form-item, .region-sidebar-second .block-webform .container-inline-date .form-item input{
+    width: 100%;
 }
 .region-sidebar-second .block-webform .container-inline-date{
     float: left;
@@ -5363,7 +5412,9 @@ button.form-submit.field-add-more-submit{
 }
 
 .region-sidebar-second .block-webform .container-inline-date .form-item input{
-    width: 100%;
+    width: 70%;
+    margin-right: 0;
+    padding-left: 27px;
 }
 .region-sidebar-second .block-webform button{
     margin-top: 20px;
@@ -5518,8 +5569,34 @@ a.flag.flag-action:hover:before{
 #edit-field-multiprice-field-multiprice-value-value-wrapper{
     width: 200px;
 }
-.views-exposed-form .views-exposed-widget{
+.page-machine-results .views-exposed-form .views-exposed-widget{
     margin-right: 25px;
+}
+.page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by{
+    float: right;
+    margin-right: 0;
+    padding-left: 40px;
+    position: relative;
+}
+.page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by:before{
+    content: "\f160";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    font-size: 25px;
+}
+.page-machine-results .views-exposed-form .views-exposed-widgets{
+    padding-left: 45px;
+    position: relative;
+}
+.page-machine-results .views-exposed-form .views-exposed-widgets:before{
+    content: "\f0b0";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 62%;
+    left: 0;
+    font-size: 30px;
 }
 .views-exposed-form #priceIndicator{
     height: 25px;
@@ -5622,8 +5699,28 @@ article.node-apartment footer .links.inline{
 /*.view-machine-types.view-display-id-block_promo .owl-carousel .owl-item{
     height: auto;
 }*/
+#block-block-8 .span4{
+    text-align: center;
+    height: 169px;
+}
+#block-block-8 h4{
+    font-weight: normal;
+    text-align: center;
+}
 
-
+.node-apartment-form button.form-submit{
+    margin-top: 20px;
+}
+/* User registration */
+.password-strength-text,.password-confirm,.password-suggestions{display: none;}
+.password-strength{
+    width: 220px;
+    float: right;
+}
+.password-indicator .indicator.weak{background-color:#E24141}
+.password-indicator .indicator.fair{background-color:#FFA243}
+.password-indicator .indicator.good{background-color:#DDE01E}
+.password-indicator .indicator.strong{background-color:#47C965}
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
 	width: 23%;
@@ -5644,6 +5741,9 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (min-width: 980px) and (max-width: 1120px) {
+    .region-triptych-bottom{
+	padding-left: 20px;
+    }
     #header .row-fluid .span4,#header .row-fluid .span8{
 	width: 100%;
     }
@@ -5660,7 +5760,12 @@ article.node-apartment footer .links.inline{
 	padding-left: 1em;
 	padding-right: 1em;
     }
-    
+    .inline-form input, .inline-form textarea, .inline-form .uneditable-input{
+	width: 180px;
+    }
+    .region-sidebar-second .block-webform .container-inline-date{
+	width: 100%;
+    }
 }
 @media (min-width: 1200px) {
     #header .row-fluid .span4{
@@ -5678,6 +5783,9 @@ article.node-apartment footer .links.inline{
 }
 
 @media (max-width: 979px) {
+    .region-triptych-bottom{
+	padding-left: 20px;
+    }
     /* Search form */
     .inline-form{
 	width: 95%;
@@ -5719,7 +5827,7 @@ article.node-apartment footer .links.inline{
     .inline-form .chzn-container-single{
 	width: 90% !important;
 	border: 1px solid #d5d5d5;
-        padding: 0 15px;
+        padding: 0 15px 0 20px;
 	background: #fff;
     
     }
@@ -5760,6 +5868,13 @@ article.node-apartment footer .links.inline{
 }
 @media (min-width: 768px) and (max-width: 979px) {
     
+    .block-webform .form-type-date-popup .form-type-textfield:before{
+    position: absolute;
+    font-family: FontAwesome;
+    left: 13px;
+    top: 5px;
+    font-size: 20px;
+    }
 
     .region-sidebar-second .block-webform .container-inline-date{
 	width: auto;
@@ -5768,6 +5883,19 @@ article.node-apartment footer .links.inline{
 }
 
 @media (max-width: 767px) {
+    div#content .container{
+	padding:0 20px;
+    }
+    #block-block-8,#block-block-7,#block-views-features-features{
+	text-align: center;
+    }
+    .container-inline-date .date-padding{
+	float: none;
+    }
+    .region-sidebar-second .block-webform .container-inline-date .form-item input{
+	width: 85%;
+	padding-left: 35px;
+    }
     #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
 	width: 600px;
 	margin: 0 auto;
@@ -5794,6 +5922,12 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (max-width: 600px) {
+    .node-apartment-form .field-name-field-multiprice-value input,.node-apartment-form .field-name-field-multiprice-unit .chzn-container{
+	width: 120px !important;
+    }
+    .region-sidebar-second .block-webform .container-inline-date .form-item input{
+	width: 75%;
+    }
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
 	width: 480px;
 	margin: 0 auto;
@@ -5819,27 +5953,82 @@ article.node-apartment footer .links.inline{
 	margin-top: 10px;
     }
     .inline-form input{
-	width: 80%;
+	width: 93%;
 	margin: 0;
     }
     .inline-form .chzn-container-single{
-	width: 80% !important;
+	width: 93% !important;
 	border: 1px solid #d5d5d5;
-        padding: 0 15px;
+        padding: 0 15px 0 20px;
 	background: #fff;
     
     }
     .container-inline-date .form-item input{
-	width: 80%;
+	width: 93%;
     }
     .machine-results-listing .result-item{
 	width: 46%;
     }
 }
 @media (max-width: 480px) {
+    .password-strength{
+	float: none;
+    }
+    tr.draggable div.form-actions{
+    display: inline-block;
+    margin-left: 0;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    }
+    tr.draggable div.form-actions button.form-submit{
+	margin-top: 0;
+    }
+    div#content .container{
+	padding:0 0 0 5px;
+    }
+    .region-sidebar-second .block-webform .container-inline-date .form-item input{
+	width: 83%;
+    }
+    .region-sidebar-second .block-webform .container-inline-date{
+	width: 100%;
+    }
+    .inline-form > .form-item:before, .form-type-date-popup .form-type-textfield:before{
+	left: 13px;
+    }
+    .inline-form .chzn-container-single{
+	width: 92% !important;
+	border: 1px solid #d5d5d5;
+        padding: 0 15px 0 20px;
+	background: #fff;
+    
+    }
+    .inline-form input,
+    .container-inline-date .form-item input{
+	width: 92%;
+    }
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
 	width: 320px;
 	margin: 0 auto;
+    }
+}
+@media (max-width: 320px) {
+    .inline-form .form-type-date-popup .form-type-textfield:before,
+    .block-webform .form-type-date-popup .form-type-textfield:before
+    {
+	left: 15px;
+    }
+    .inline-form .chzn-container-single{
+	width: 80% !important;
+	border: 1px solid #d5d5d5;
+        padding: 0 15px 0 20px;
+	background: #fff;
+    
+    }
+    .inline-form input,
+    .container-inline-date .form-item input{
+	width: 80%;
     }
 }
 
