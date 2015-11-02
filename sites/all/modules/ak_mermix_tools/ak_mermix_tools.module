@@ -457,7 +457,7 @@ function ak_mermix_tools_block_content() {
 function ak_mermix_tools_block_content_banner() {
     //TODO add option here for image
     $search_form = drupal_get_form('machinery_search_form');
-    $out = '<div class="banner" style="background:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .') no-repeat center">';
+    $out = '<div class="banner" style="background-image:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .')">';
     $out .= drupal_render($search_form);
     $out .= '</div>';
     return $out;
