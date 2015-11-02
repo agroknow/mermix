@@ -13,6 +13,101 @@ function ak_mermix_tools_init(){
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.validate.min.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js', array('scope' => 'footer'));
 }
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function ak_mermix_tools_field_formatter_info() {
+  return array(
+    'mermix_tools_custom' => array(
+      'label' => t('Mermix reference'),
+      'field types' => array('taxonomy_term_reference'),
+      'settings' => array(
+        'view_url' => 'machine-results',
+        'argument_num' => '4',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form
+ */
+function ak_mermix_tools_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $element = array();
+
+  if ($display['type'] == 'mermix_tools_custom') {
+
+    $element['view_url'] = array(
+      '#title' => t('View url'),
+      '#type' => 'textfield',
+      '#default_value' => $settings['view_url'],
+      '#required' => TRUE,
+    );
+
+    $element['argument_num'] = array(
+      '#title' => t('Argument number'),
+      '#type' => 'textfield',
+      '#default_value' => $settings['argument_num'],
+      '#required' => TRUE,
+    );
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary
+ */
+function ak_mermix_tools_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $settings = $instance['display'][$view_mode]['settings'];
+
+  $lines[] = t('View url: @viewurl', array('@viewurl' => $settings['view_url']));
+  $lines[] = t('Argument num: @argno', array('@argno' => $settings['argument_num']));
+  
+  return implode('<br />', $lines);
+}
+
+/**
+ * Implements hook_field_formatter_view
+ */
+function ak_mermix_tools_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'mermix_tools_custom':
+      foreach ($items as $delta => $item) {
+        if ($item['tid'] == 'autocreate') {
+          $element[$delta] = array(
+            '#markup' => check_plain($item['name']),
+          );
+        }
+        else {
+	  $term = isset($item['taxonomy_term']) ? $item['taxonomy_term'] : taxonomy_term_load($item['tid']);
+	   if (module_exists('i18n_taxonomy')) {
+	   $term = i18n_taxonomy_localize_terms($term);
+	   }
+	  $argnum = $display['settings']['argument_num']; 
+	  $view_url = $display['settings']['view_url']; 
+	  $path = $view_url . '/';
+	  
+	  for($i=1; $i < $argnum; $i++){
+	      $path .= 'all/';
+	  }
+	  $path .= $item['tid'];
+          $element[$delta] = array(
+            '#markup' => l($term->name, $path)
+          );
+        }
+      }
+      break;
+  }
+
+  return $element;
+}
+
 /**
  * Implements hook_field_access
  */
@@ -362,7 +457,7 @@ function ak_mermix_tools_block_content() {
 function ak_mermix_tools_block_content_banner() {
     //TODO add option here for image
     $search_form = drupal_get_form('machinery_search_form');
-    $out = '<div class="banner" style="background:url(/sites/default/themes/realia/img/banners/2.jpg) no-repeat center">';
+    $out = '<div class="banner" style="background:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .') no-repeat center">';
     $out .= drupal_render($search_form);
     $out .= '</div>';
     return $out;
