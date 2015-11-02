@@ -5229,8 +5229,16 @@ html.js input.ui-autocomplete-loading {
 .inline-form .form-item-place:before{
     content: "\f041";
 }
+.webform-client-form .form-type-date-popup .form-type-textfield:before,
 .form-type-date-popup .form-type-textfield:before{
     content: "\f073";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+.webform-client-form .form-type-date-popup .form-type-textfield input{
+    padding-left: 20px;
 }
 .inline-form .form-type-date-popup .form-type-textfield:before{
     font-size: 20px;
@@ -5239,7 +5247,7 @@ html.js input.ui-autocomplete-loading {
 .block-webform .form-type-date-popup .form-type-textfield:before{
     position: absolute;
     font-family: FontAwesome;
-    left: 19px;
+    left: 8px;
     top: 5px;
     font-size: 20px;
 }
@@ -5427,7 +5435,7 @@ button.form-submit.field-add-more-submit{
 .page-machine-results .webform-client-form .webform-component.webform-component--location,
 .page-machine-results .webform-client-form .webform-component.webform-component--email{
     float: left;
-    width: 30%;
+    width: 33%;
 }
 .page-machine-results .webform-client-form .webform-component.webform-component--comments{
     clear: both;
@@ -5736,11 +5744,11 @@ article.node-apartment footer .links.inline{
     .machine-results-listing .result-item{
 	width: 46%;
     }
-    .page-machine-results .inline-form .form-submit{
-	max-width: 76px;
-    }
 }
 @media (min-width: 980px) and (max-width: 1120px) {
+    .block-webform .form-type-date-popup .form-type-textfield:before{
+	left: 18px;
+    }
     .region-triptych-bottom{
 	padding-left: 20px;
     }
@@ -5780,6 +5788,11 @@ article.node-apartment footer .links.inline{
 	padding-right: 1em;
     }
     
+}
+@media (min-width: 980px) {
+.page-machine-results .inline-form input,.page-machine-results .container-inline-date .form-item input{
+	width: 170px;
+    }
 }
 
 @media (max-width: 979px) {
@@ -5883,6 +5896,15 @@ article.node-apartment footer .links.inline{
 }
 
 @media (max-width: 767px) {
+    .page-machine-results .webform-client-form .webform-component.webform-component--type,
+.page-machine-results .webform-client-form .webform-component.webform-component--location,
+.page-machine-results .webform-client-form .webform-component.webform-component--email{
+    float: left;
+    width: 100%;
+}
+.page-machine-results .webform-client-form .container-inline-date{
+    width: 48%;
+}
     div#content .container{
 	padding:0 20px;
     }
@@ -5922,6 +5944,10 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (max-width: 600px) {
+    .page-machine-results .webform-client-form .container-inline-date{
+    width: 45%;
+    margin-right: 20px;
+}
     .node-apartment-form .field-name-field-multiprice-value input,.node-apartment-form .field-name-field-multiprice-unit .chzn-container{
 	width: 120px !important;
     }
@@ -5993,6 +6019,9 @@ article.node-apartment footer .links.inline{
     }
     .region-sidebar-second .block-webform .container-inline-date{
 	width: 100%;
+    }
+    .block-webform .form-type-date-popup .form-type-textfield:before{
+	left: 18px;
     }
     .inline-form > .form-item:before, .form-type-date-popup .form-type-textfield:before{
 	left: 13px;
