@@ -23,6 +23,13 @@ function mermixtools_admin_settings() {
 	'#default_value' => variable_get('looking_for_webform_key', ''),
 	
     );
+    $form['mermix_tools_settings']['banner_image'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Banner image name'),
+	'#required' => false,
+	'#default_value' => variable_get('mtools_banner_image', ''),
+	
+    );
     
     return system_settings_form($form);
     
