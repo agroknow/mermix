@@ -1,7 +1,7 @@
   <div id="wrapper-outer" class="<?php if (!$page['triptych_bottom']): ?>no-triptych<?php endif; ?>">
 <div id="wrapper">
 <div id="wrapper-inner">
-    <?php if ($breadcrumb): ?>
+    <?php if (/*$breadcrumb*/false): ?>
         <div class="breadcrumb-wrapper">
             <div class="container">
                 <div class="row">

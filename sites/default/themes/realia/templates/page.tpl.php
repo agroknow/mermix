@@ -7,7 +7,7 @@
 	    <span class="close-btn"></span>
         </div>
     <?php endif; ?>
-    <?php if ($breadcrumb): ?>
+    <?php if (/*$breadcrumb*/false): ?>
         <div class="breadcrumb-wrapper">
             <div class="container">
                 <div class="row">
