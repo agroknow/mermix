@@ -5158,9 +5158,11 @@ html.js input.ui-autocomplete-loading {
 }
 /*Front banner search*/
 .region-map .banner{
-    background-size: cover; 
+    background-size: 100%; 
     height: 700px;
     position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .region-map .banner form{
     top: 100%;
