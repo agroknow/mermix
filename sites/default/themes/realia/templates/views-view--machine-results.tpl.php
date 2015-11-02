@@ -28,8 +28,8 @@
  */
 ?>
 <?php
-drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.easing.1.3.js');
-drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_results.js');
+//drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.easing.1.3.js');
+//drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_results.js');
 $results = $view->result;
 $searchform = drupal_get_form('machinery_search_form');
 if(is_object($results[0])) {

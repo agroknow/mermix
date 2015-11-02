@@ -25,7 +25,7 @@
 	function() {
 	    var elm = $(this);
 	    timer = setTimeout(function(){
-	    elm.find('.views-field-field-multiprice').animate({bottom:"-10px"},1000);
+	    elm.find('.views-field-field-multiprice').animate({bottom:"-15px"},1000);
 	    },  500);
 	}, function() {
 	    var elm = $(this);
