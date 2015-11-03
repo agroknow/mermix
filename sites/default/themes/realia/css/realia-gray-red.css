@@ -331,7 +331,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     padding-top: 27px;
     white-space: nowrap
 }
-#header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li .nolink,#header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li a {
+#header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li .nolink,#header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content > ul > li > a {
     background-color: transparent;
     border-left: 0px;
     border-top: none;
@@ -5237,6 +5237,17 @@ html.js input.ui-autocomplete-loading {
     border-radius: 17px;
     padding: 5px 8px;
 }
+.infoBox .views-field.views-field-field-multiprice ul li{
+    display: inline-block;
+}
+.infoBox .views-field.views-field-field-multiprice ul li .field.field-name-field-multiprice-unit{
+    font-weight: normal;
+    font-size: 14px;
+}
+.infoBox .field-name-field-multiprice-value{
+    font-weight: normal;
+    font-size: 14px;
+}
 /* views price suffix */
 .views-field-field-multiprice .field-name-field-multiprice-value .suffix{
     font-size: 14px;
@@ -5886,10 +5897,11 @@ article.node-apartment footer .links.inline{
     color: #fff;
 }
 .banner-text .text-inner h1{
-    font-size: 50px;
+    font-size: 43px;
+    line-height: 48px;
 }
 .banner-text .text-inner h2{
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 400;
 }
 
@@ -6112,10 +6124,10 @@ article.node-apartment footer .links.inline{
 }
 @media (max-width: 600px) {
     .banner-text .text-inner h1{
-	font-size: 40px;
+	font-size: 38px;
     }
     .banner-text .text-inner h2{
-	font-size: 30px;
+	font-size: 28px;
 	font-weight: 400;
     }
     .region-map .banner form{
@@ -6181,11 +6193,11 @@ article.node-apartment footer .links.inline{
 }
 @media (max-width: 480px) {
     .banner-text .text-inner h1{
-	font-size: 36px;
-	line-height: 40px;
+	font-size: 28px;
+	line-height: 30px;
     }
     .banner-text .text-inner h2{
-	font-size: 24px;
+	font-size: 20px;
 	line-height: 24px;
 	font-weight: 400;
     }
@@ -6236,11 +6248,11 @@ article.node-apartment footer .links.inline{
 }
 @media (max-width: 320px) {
     .banner-text .text-inner h1{
-	font-size: 30px;
-	line-height: 30px;
+	font-size: 26px;
+	line-height: 28px;
     }
     .banner-text .text-inner h2{
-	font-size: 20px;
+	font-size: 18px;
 	line-height: 20px;
 	font-weight: 400;
     }
