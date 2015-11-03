@@ -916,7 +916,7 @@ function ak_mermix_tools_update_7010(&$sandbox) {
         $sandbox['total'] = count($renters);
         $sandbox['current'] = 0;
     }
-    $nodes_per_pass = 25;
+    $nodes_per_pass = 15;
     $rentersToProcess = array_slice($renters, $sandbox['current'], $nodes_per_pass);
     foreach ($rentersToProcess as $renter) {
 	//get renter data
@@ -955,7 +955,9 @@ function ak_mermix_tools_update_7010(&$sandbox) {
 	    ),
 	    )),
 	);
+	if($account = user_load_by_name($new_user->name) == false) {
 	$account= user_save(NULL, $new_user);
+	}
 	//query for equipment assigned to renter and change the author to the above created user.
 	$userNodes = db_select('field_data_field_assigned_agents', 'agents')
 	->fields('agents',array('entity_id'))
