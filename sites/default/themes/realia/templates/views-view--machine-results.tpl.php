@@ -97,11 +97,12 @@ if(is_object($results[0])) {
 </div><?php /* class view */ ?>
 <?php 
 print '<h2>' . t('Try a new search!') . '</h2>';
- print render($searchform); 
+print render($searchform); 
 ?>
-<?php } else { 
+<?php } else {
  print '<h2>' . t('Have not found what you are looking for; Try again..') . '</h2>';
  print render($searchform);
+ print '<div class="looking-for-title"><h2>' . t('Or...<br /> tell us what you are looking for') . '</h2></div>';
  $blockid = 'client-block-' . variable_get('looking_for_webform_id');
  $block = module_invoke('webform', 'block_view', $blockid);
  print render($block['content']);
