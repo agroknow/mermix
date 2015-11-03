@@ -15,6 +15,17 @@ function ak_mermix_tools_init(){
 }
 
 /**
+ * Implements hook_variable_info().
+ */
+function ak_mermix_tools_variable_info($options) {
+    $variables['mtools_banner_text'] = array(
+    'title' => t('Banner text'),
+    'description' => t('Mermix tools banner text'),
+    'localize' => TRUE,
+  );
+    return $variables;
+}
+/**
  * Implements hook_field_formatter_info().
  */
 function ak_mermix_tools_field_formatter_info() {
@@ -458,6 +469,7 @@ function ak_mermix_tools_block_content_banner() {
     //TODO add option here for image
     $search_form = drupal_get_form('machinery_search_form');
     $out = '<div class="banner" style="background-image:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .')">';
+    $out .= '<div class="banner-text"><div class="text-inner">' . variable_get('mtools_banner_text') . '</div></div>';
     $out .= drupal_render($search_form);
     $out .= '</div>';
     return $out;
@@ -825,6 +837,7 @@ function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
 	} 
 	$args = array(implode(',', $ids));
     }
+    
 }
 
 function ak_mermix_tools_views_pre_render(&$view) {

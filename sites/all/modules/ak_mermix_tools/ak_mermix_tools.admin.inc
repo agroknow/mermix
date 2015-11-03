@@ -30,6 +30,12 @@ function mermixtools_admin_settings() {
 	'#default_value' => variable_get('mtools_banner_image', ''),
 	
     );
+    $form['mermix_tools_settings']['mtools_banner_text'] = array(
+	'#type' => 'textarea',
+	'#title' => t('Banner text'),
+	'#required' => false,
+	'#default_value' => variable_get('mtools_banner_text', ''),
+    );
     
     return system_settings_form($form);
     
