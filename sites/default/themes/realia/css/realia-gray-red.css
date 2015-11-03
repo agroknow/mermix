@@ -2253,7 +2253,7 @@ body.nav-open #aviators-palette {
     padding: 0px 15px
 }
 
-.view-apartments .item .views-field-field-price,.views-field.views-field-field-multiprice {
+.view-apartments .item .views-field-field-price,.result-item .views-field.views-field-field-multiprice {
     background: none;
     color: #313131;
     font-size: 18px;
