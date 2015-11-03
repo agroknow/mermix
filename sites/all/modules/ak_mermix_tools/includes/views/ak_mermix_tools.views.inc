@@ -137,6 +137,21 @@ $data['ak_mermix_tools_search_log']['place'] = array(
     ),
 );
 
+// The Place field
+$data['ak_mermix_tools_search_log']['coords'] = array(
+    'title' => t('Coordinates'),
+    'help' => t('The coordinates given.'),
+    'field' => array(
+        'handler' => 'views_handler_field',
+    ),
+    'sort' => array(
+        'handler' => 'views_handler_sort',
+    ),
+    'filter' => array(
+        'handler' => 'views_handler_filter_string',
+    ),
+);
+
 // The searched date field
 $data['ak_mermix_tools_search_log']['searched'] = array(
     'title' => t('Searched - date'),
