@@ -187,18 +187,20 @@ function realia_blocks_theme() {
 function template_preprocess_realia_language_switch(&$variables) {
   global $language;
   $links = & $variables['links'];
+  foreach ($links as $lang => $link) {
+      $links[$lang]['title'] = ($lang == 'el') ? 'gr' : $lang;
+  }
+//  $variables['default_language'] = theme_links(
+//    array(
+//      'links' =>
+//      array(
+//        $language->language => $links[$language->language],
+//      ),
+//      'attributes' => array(),
+//      'heading' => NULL,
+//    )
+//  );
 
-  $variables['default_language'] = theme_links(
-    array(
-      'links' =>
-      array(
-        $language->language => $links[$language->language],
-      ),
-      'attributes' => array(),
-      'heading' => NULL,
-    )
-  );
-
-  unset($links[$language->language]);
+  //unset($links[$language->language]);
   $links = theme_links(array('links' => $links, 'attributes' => array(), 'heading' => NULL));
 }

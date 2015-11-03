@@ -55,7 +55,7 @@ function aviators_palette_init() {
 }
 
 function aviators_palette_page_build(&$page) {
-  if (path_is_admin(current_path())) {
+  if (user_access('view the administration theme') && path_is_admin(current_path())) {
     return;
   }
 

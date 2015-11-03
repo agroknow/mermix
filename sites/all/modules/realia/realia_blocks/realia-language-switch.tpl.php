@@ -8,12 +8,6 @@
  */
 ?>
 
-<div class="default">
-	<div class="current">
-  	<?php print render($default_language); ?>
-  </div><!-- /.current -->
 
-  <div class="expand">
-    <?php print render($links); ?>
-  </div><!-- /.expand -->
-</div><!-- /.default -->
+<?php //print render($default_language); ?>
+<?php print render($links); ?>

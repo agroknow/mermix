@@ -65,4 +65,24 @@ Drupal.behaviors.languageSwitch = {
         }
     }
 }
-
+jQuery(document).ready(function(){
+    var scrollHeight = 200;
+    if(jQuery('#map .banner').length == 1) {
+	scrollHeight = jQuery('#map .banner').offset().top + 700;
+    }
+    jQuery(window).bind('scroll', function () {
+	if (jQuery(window).scrollTop() > scrollHeight) {
+	    jQuery('#header-wrapper').addClass('fixed');
+	} else {
+	    jQuery('#header-wrapper').removeClass('fixed');
+	}
+});
+jQuery('.form-item').each(function(){
+	var $description = jQuery(this).find('div.description');
+	
+	if($description.length > 0) {
+	$description.hide();
+	new Opentip(jQuery(this), $description.text(),'',{target:true,tipJoint:'right'});
+	}
+	});
+});

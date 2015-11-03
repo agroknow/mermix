@@ -143,9 +143,11 @@ function template_preprocess_realia_view_gmap(&$variables) {
     // strip tags and get raw values
     // @todo this works with text fields, but no idea what will happen with non-standard field type
     // @todo - values should be probably selected according to field_schema and field_handler - raw from db (performance overhead?)
-    $latitude = strip_tags($field_render[$options['latitude-field']]);
-    $longitude = strip_tags($field_render[$options['longitude-field']]);
-
+    $latlon = str_replace(' ', '', $field_render['field_address']);
+    list($latitude,$longitude) = explode(',', $latlon);
+//    $latitude = strip_tags($field_render[$options['latitude-field']]);
+//    $longitude = strip_tags($field_render[$options['longitude-field']]);
+        
     if (!empty($latitude) && !empty($longitude)) {
 
     // Create a DOM object from a string

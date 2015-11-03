@@ -21,6 +21,7 @@ regions[carousel]                   = 'Carousel'
 regions[bottom]                     = 'Bottom'
 regions[map]                        = 'Map'
 regions[map_sidebar]                = 'Map Sidebar'
+regions[banner]			    = 'Banner'
 
 ; TRIPTYCH
 regions[triptych_bottom]            = 'Bottom triptych'
@@ -54,9 +55,12 @@ stylesheets[all][] = css/jcarousel.css
 stylesheets[all][] = libraries/chosen/chosen/chosen.css
 stylesheets[all][] = css/style.css
 stylesheets[all][] = css/realia-blue.css
+stylesheets[all][] = css/opentip.css
+stylesheets[all][] = css/font-awesome.min.css
 
 scripts[] = js/jquery.currency.js
 scripts[] = js/jquery.ezmark.js
 scripts[] = js/retina.js
 scripts[] = libraries/chosen/chosen/chosen.jquery.min.js
+scripts[] = js/opentip-jquery.min.js
 scripts[] = js/realia.js

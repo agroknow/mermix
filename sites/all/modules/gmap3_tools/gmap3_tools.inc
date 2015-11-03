@@ -118,12 +118,13 @@ function gmap3_tools_add_map($options) {
     $init = TRUE;
     // Visit https://code.google.com/apis/console and generate new api key if
     // you need it.
-    $lib_url = 'http://maps.googleapis.com/maps/api/js?&sensor=false';
-    if ($api_key = variable_get('gmap3_tools_api_key', NULL)) {
+    $lib_url = 'https://maps.googleapis.com/maps/api/js?&sensor=false';
+    if ($api_key = variable_get('gmap3_tools_api_key', 'AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places')) {
       $lib_url .= '&key=' . $api_key;
     }
     drupal_add_js($lib_url, 'external', array('scope' => 'footer'));
 
+    drupal_add_js(drupal_get_path('module', 'gmap3_tools') . '/oms.min.js', array('scope' => 'footer'));
     drupal_add_js(drupal_get_path('module', 'gmap3_tools') . '/gmap3_tools.js', array('scope' => 'footer'));
   }
 

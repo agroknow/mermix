@@ -1,0 +1,933 @@
+<?php
+
+
+/**
+ * Implements hook_init
+ */
+function ak_mermix_tools_init(){
+    
+    if(drupal_is_front_page()){
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_banner.js');
+    drupal_add_library('system', 'jquery.cookie');
+    }
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.validate.min.js');
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js', array('scope' => 'footer'));
+}
+
+/**
+ * Implements hook_variable_info().
+ */
+function ak_mermix_tools_variable_info($options) {
+    $variables['mtools_banner_text'] = array(
+    'title' => t('Banner text'),
+    'description' => t('Mermix tools banner text'),
+    'localize' => TRUE,
+  );
+    return $variables;
+}
+/**
+ * Implements hook_field_formatter_info().
+ */
+function ak_mermix_tools_field_formatter_info() {
+  return array(
+    'mermix_tools_custom' => array(
+      'label' => t('Mermix reference'),
+      'field types' => array('taxonomy_term_reference'),
+      'settings' => array(
+        'view_url' => 'machine-results',
+        'argument_num' => '4',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form
+ */
+function ak_mermix_tools_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $element = array();
+
+  if ($display['type'] == 'mermix_tools_custom') {
+
+    $element['view_url'] = array(
+      '#title' => t('View url'),
+      '#type' => 'textfield',
+      '#default_value' => $settings['view_url'],
+      '#required' => TRUE,
+    );
+
+    $element['argument_num'] = array(
+      '#title' => t('Argument number'),
+      '#type' => 'textfield',
+      '#default_value' => $settings['argument_num'],
+      '#required' => TRUE,
+    );
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary
+ */
+function ak_mermix_tools_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $settings = $instance['display'][$view_mode]['settings'];
+
+  $lines[] = t('View url: @viewurl', array('@viewurl' => $settings['view_url']));
+  $lines[] = t('Argument num: @argno', array('@argno' => $settings['argument_num']));
+  
+  return implode('<br />', $lines);
+}
+
+/**
+ * Implements hook_field_formatter_view
+ */
+function ak_mermix_tools_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  switch ($display['type']) {
+    case 'mermix_tools_custom':
+      foreach ($items as $delta => $item) {
+        if ($item['tid'] == 'autocreate') {
+          $element[$delta] = array(
+            '#markup' => check_plain($item['name']),
+          );
+        }
+        else {
+	  $term = isset($item['taxonomy_term']) ? $item['taxonomy_term'] : taxonomy_term_load($item['tid']);
+	   if (module_exists('i18n_taxonomy')) {
+	   $term = i18n_taxonomy_localize_terms($term);
+	   }
+	  $argnum = $display['settings']['argument_num']; 
+	  $view_url = $display['settings']['view_url']; 
+	  $path = $view_url . '/';
+	  
+	  for($i=1; $i < $argnum; $i++){
+	      $path .= 'all/';
+	  }
+	  $path .= $item['tid'];
+          $element[$delta] = array(
+            '#markup' => l($term->name, $path)
+          );
+        }
+      }
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_access
+ */
+function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $account) {
+    $hiddenFields = array('field_location', 'field_licence', 'field_featured', 'field_assigned_agents', 'field_purpose_of_use', 'field_availability', 'field_video', 'field_general_amenities');
+    if (in_array($field['field_name'], $hiddenFields) && $op == 'edit') {
+	// Only allow admins to edit field value
+	return user_access('administer nodes', $account);
+    }
+    return true;
+}
+
+function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
+    global $user;
+
+    if ($form_id == 'apartment_node_form') {
+	$is_admin = user_access('administer nodes', $user);
+	$add = !isset($form_state['node']->nid) || isset($form_state['node']->is_new);
+	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
+	if ($node_edit) {
+	    $user_data = user_load($user->uid);
+	    $lat = isset($user_data->field_place['und']['0']['lat']) ? $user_data->field_place['und']['0']['lat'] : '';
+	    $lon = isset($user_data->field_place['und']['0']['lon']) ? $user_data->field_place['und']['0']['lon'] : '';
+	    $defaultlat = $form['field_address']['und'][0]['geom']['#default_value']['lat'];
+	    $defaultlon = $form['field_address']['und'][0]['geom']['#default_value']['lon'];
+	    $userLocation = false;
+	    if (($lat == $defaultlat) && ($lon == $defaultlon)) {
+		$userLocation = true;
+	    }
+	    if (empty($lat) && empty($lon)) {
+		$user_message = t('Your address information is empty and you can configure it <a href="@here" target="_blank">here</a>', array('@here' => url('user/' . $user->uid . '/edit')));
+	    }
+	    $form['language']['#access'] = $is_admin;
+	    $form['field_address']['#prefix'] = '<div class="toggle-address-field">';
+	    $form['field_address']['#suffix'] = '</div>';
+	    $form['address_checkbox'] = array(
+		'#type' => 'checkbox',
+		'#title' => t('Use profile address'),
+		'#attributes' => array('class' => array('enable-user-address')),
+		'#weight' => 3,
+		'#default_value' => !isset($user_message) && ($add || $userLocation),
+		'#suffix' => isset($user_message) ? $user_message : '',
+		'#disabled' => isset($user_message),
+		'#attached' => array('js' => array(
+			drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools.js',
+			array(
+			    'data' => array(
+				'userPlace' => array(
+				    'lat' => $lat,
+				    'lon' => $lon,
+				)),
+			    'type' => 'setting',
+			),
+		    )),
+	    );
+	    if (arg(3) && is_numeric(arg(3))){
+	    $form['field_type']['und']['#default_value'] = arg(3);
+	    }
+	    if (!$is_admin) {
+		$fieldCollection = $form['field_multiprice']['und'];
+		foreach ($fieldCollection as $key => $value) {
+		    if (is_numeric($value) && ($value >= 0)) {
+			$form['field_multiprice']['und'][$value]['field_multiprice_value']['und'][0]['value']['#title_display'] = 'invisible';
+			$form['field_multiprice']['und'][$value]['field_multiprice_unit']['und']['#title_display'] = 'invisible';
+		    }
+		}
+	    }
+	}
+    }
+    if (substr($form_id, 0, strrpos($form_id, '_')) == 'webform_client_form') {
+	foreach ($form['submitted'] as $key => $value) {
+	    if (in_array($key, array('location', 'comments'))) {
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#title' => t($form['submitted'][$key]['#title']),
+		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : '',
+		));
+	    }
+	    if ($key == 'type') {
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#type' => 'select',
+		    '#title' => t($form['submitted'][$key]['#title']),
+		    '#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
+		    '#empty_option' => t('Select category'),
+		    '#default_value' => (isset($_SESSION['search_criteria']['machine_type']) && is_numeric($_SESSION['search_criteria']['machine_type'])) ? $_SESSION['search_criteria']['machine_type'] : '',
+		));
+	    }
+	    if (strpos($key, 'date_') !== false) {
+		$default_date_from_search = (isset($_SESSION['search_criteria'][$key]) && $_SESSION['search_criteria'][$key]) ? $_SESSION['search_criteria'][$key] : '';
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
+		    '#title' => t($form['submitted'][$key]['#title']),
+		    '#default_value' => $form['submitted'][$key]['#default_value'] ? date('Y-m-d', strtotime($form['submitted'][$key]['#default_value'])) : $default_date_from_search,
+		    '#date_type' => DATE_DATETIME,
+		    '#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
+		    '#date_format' => 'd-m-Y',
+		    '#date_increment' => 1,
+		    '#date_year_range' => '-2:+2',
+		    '#datepicker_options' => array('minDate' => "0D", 'changeMonth' => false, 'changeYear' => false),
+		    //'#attach' => $attach,
+		));
+	    }
+	}
+    }
+}
+
+function ak_mermix_tools_webform_submission_presave($node, &$submission) {
+    if($node->title == 'Check availability') {    
+	if(!user_is_logged_in()) {
+	    $_SESSION['availability_submission'] = $submission;
+	    drupal_goto('user/login');
+	}
+    }
+}
+
+function ak_mermix_tools_date_popup_process_alter(&$element, &$form_state, $context) {
+    unset($element['date']['#title']);
+    unset($element['date']['#description']);
+    unset($element['time']['#title']);
+    unset($element['time']['#description']);
+}
+
+function ak_mermix_tools_form_user_register_form_alter(&$form, &$form_state) {
+    $replacements = array('Owner' => t('Machinery owner'),
+	'Renter' => t('Renter'),
+	'Professional' => t('Machinery renter and owner')
+    );
+    $options = $form['autoassignrole_user']['user_roles']["#options"];
+    foreach ($options as $key => $option) {
+	$options[$key] = isset($replacements[$option]) ? $replacements[$option] : $option;
+    }
+
+    $form['autoassignrole_user']['user_roles']["#options"] = $options;
+    $form['terms_of_use'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('I agree with the website\'s <a href="@tos" >terms and conditions</a>', array('@tos' => url('node/257'))),
+    '#required' => TRUE,
+    '#weight' => 100,
+    '#prefix' => '<p></p>',	
+  );
+}
+
+function ak_mermix_tools_module_implements_alter(&$implementations, $hook) {
+    if ($hook == 'form_alter') {
+	$module = 'ak_mermix_tools';
+	// store
+	$group = array($module => $implementations[$module]);
+	// unset
+	unset($implementations[$module]);
+	// add to the end
+	$implementations = $implementations + $group;
+    }
+}
+
+/**
+ * Implements hook_node_presave
+ * @param type $node
+ */
+function ak_mermix_tools_node_update($node) {
+    global $user;
+    if ($node->type == 'apartment' && user_access('administer nodes', $user)) {
+	$node_original = entity_metadata_wrapper('node', $node->original);
+	$node_wrapper = entity_metadata_wrapper('node', $node);
+	if (($node_original->field_address->value()['lat'] != $node_wrapper->field_address->value()['lat']) ||
+		($node_original->field_address->value()['lon'] != $node_wrapper->field_address->value()['lon']) ||
+		(!$node_wrapper->field_location->value() &&
+		($node_original->status->value() == '0' && $node_wrapper->status->value() == '1'))) {
+	    watchdog('mermix tools', 'changing location');
+	    ak_mermix_tools_updateAddress($node_wrapper); //changing a field here
+	    field_attach_update('node', $node); //call field attach update to save field 
+	}
+    }
+}
+
+/**
+ * Helper function to update / populate address fields
+ * @param type $entWrapper
+ */
+function ak_mermix_tools_updateAddress($entWrapper) {
+
+    $lat = $entWrapper->field_address->value()['lat'];
+    $lon = $entWrapper->field_address->value()['lon'];
+    if ($lat && $lon) {
+	$json = '{
+    "type": "Point",
+    "coordinates": [' . $lon . ',' . $lat . ']
+    }';
+	geophp_load();
+	$addressEl = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'el');
+	$addressEn = geoPHP::load($json, 'json')->out('google_geocode', 'array', 'en');
+	$tid = mtools_createTerms(mtools_getTerms($addressEl, $addressEn), 'location');
+	$entWrapper->field_location->set($tid);
+    }
+}
+
+function mtools_getTerms($addressEl, $addressEn) {
+    $acceptable = array('locality', 'administrative_area_level_5', 'administrative_area_level_4', 'administrative_area_level_3');
+    $terms = array();
+    foreach ($addressEl as $key => $addressElement) {
+	if (in_array($addressElement->types[0], $acceptable)) {
+	    $terms[$addressElement->long_name] = $addressEn[$key]->long_name;
+	}
+    }
+    return $terms;
+}
+
+function mtools_createTerms($terms, $vocabulary_name) {
+
+    $voc = taxonomy_vocabulary_machine_name_load($vocabulary_name);
+    $parent = 0;
+
+    foreach (array_reverse($terms) as $elname => $enname) {
+	$found_terms = taxonomy_get_term_by_name($enname, $vocabulary_name);
+	if (empty($found_terms)) { //create term
+	    $term = (object) array(
+			'vid' => $voc->vid,
+			'name' => $enname,
+			'format' => 'filtered_html',
+			'parent' => $parent
+	    );
+	    taxonomy_term_save($term);
+	    $parent = $term->tid;
+	    i18n_string_translation_update(
+		    array('taxonomy', 'term', $parent, 'name'), // Path where to store source and translation.
+		    $elname, 'el', $enname
+	    );
+	} else {
+	    $found = array_shift($found_terms);
+	    $parent = $found->tid;
+	}
+    }
+    return $term ? $term->tid : $parent;
+}
+
+/**
+ * Alter the outgoing response.
+ *
+ * @param mixed $response
+ *   The response data being returned by the REST service (not yet serialized).
+ * @param string $function
+ *   The function being called on the REST service.
+ * @param string $format
+ *   The name of the format serializing the response.
+ * @param RestWSResourceControllerInterface $resourceController
+ *   The resource controller.
+ */
+function ak_mermix_tools_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+    if ($function == 'queryResource' && $formatName == 'json') {
+	//e.g. node.json?type=apartment&limit=10
+	foreach ($response['list'] as $key => $listitem) {
+	    //get the file id
+	    $fid = isset($listitem['field_image']) && isset($listitem['field_image'][0]) ?
+		    $listitem['field_image'][0]['file']['id'] :
+		    0;
+	    if ($fid != 0) {
+		$file = file_load($fid);
+		$uri = $file->uri; //create the uri
+		$mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		$response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
+	    } else if (isset($listitem['field_image'])) {
+		$response['list'][$key]['field_image'] = "";
+	    }
+	    //get vocabulary id
+	    $vocabularyid = isset($listitem['vocabulary']) ? $listitem['vocabulary']['id'] : 0;
+	    if ($vocabularyid != 0) {
+		$response['list'][$key]['vocabulary'] = taxonomy_vocabulary_load($vocabularyid)->machine_name;
+	    } else if (isset($listitem['vocabulary'])) {
+		$response['list'][$key]['vocabulary'] = "";
+	    }
+	}
+    } else if ($function == 'viewResource' && $formatName == 'json') {
+	//e.g. node/204.json
+	if (isset($response['field_image'])) {
+	    //get the file id
+	    $fid = isset($response['field_image'][0]) ? $response['field_image'][0]['file']['id'] : 0;
+	    if ($fid != 0) {
+		$file = file_load($fid);
+		$uri = $file->uri; //create the uri
+		$mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		$response['field_image'] = $mediumUrl; //replace the original response
+	    } else {
+		$response['field_image'] = "";
+	    }
+	}
+    }
+}
+
+/*
+ * Implement hook_js_alter
+ */
+
+function ak_mermix_tools_js_alter(&$javascript) {
+    if (isset($javascript['modules/user/user.js'])) {
+	$javascript['modules/user/user.js']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/js/user.js';
+    }
+}
+
+/*
+ * Implement hook_css_alter
+ */
+
+function ak_mermix_tools_css_alter(&$css) {
+    if (isset($css['sites/all/modules/date/date_popup/themes/datepicker.1.7.css'])) {
+	$css['sites/all/modules/date/date_popup/themes/datepicker.1.7.css']['data'] = drupal_get_path('module', 'ak_mermix_tools') . '/css/datepicker.css';
+    }
+}
+
+/* Create a block to hold the search form */
+
+function ak_mermix_tools_block_info() {
+    $blocks = array();
+
+    $blocks['machinery_search_block_banner'] = array(
+	'info' => t('Machinery search with banner'),
+	//'title' => t('Search machines'),
+	'region' => 'map',
+	'status' => 1,
+    );
+    $blocks['machinery_search_block'] = array(
+	'info' => t('Machinery search'),
+	//'title' => t('Search machines'),
+	'region' => 'content',
+	'status' => 1,
+    );
+
+    return $blocks;
+}
+
+function ak_mermix_tools_block_view($delta = '') {
+    $block = array();
+
+    switch ($delta) {
+	case 'machinery_search_block' :
+	    $block['content'] = ak_mermix_tools_block_content();
+	    break;
+	case 'machinery_search_block_banner' :
+	    $block['content'] = ak_mermix_tools_block_content_banner();
+	    break;
+    }
+
+    return $block;
+}
+
+function ak_mermix_tools_block_content() {
+    return drupal_get_form('machinery_search_form');
+}
+
+function ak_mermix_tools_block_content_banner() {
+    //TODO add option here for image
+    $search_form = drupal_get_form('machinery_search_form');
+    $out = '<div class="banner" style="background-image:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .')">';
+    $out .= '<div class="banner-text"><div class="text-inner">' . variable_get('mtools_banner_text') . '</div></div>';
+    $out .= drupal_render($search_form);
+    $out .= '</div>';
+    return $out;
+}
+
+/*
+ * Create the custom form
+ */
+
+function machinery_search_form($form, &$form_state) {
+    $all_scripts = drupal_add_js();
+    $attach = array('js' => array(
+	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer'),
+	    drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js' => array('scope' => 'footer'),
+    ));
+    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
+	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
+    }
+    $form['wrapper_start'] = array(
+	'#type' => 'markup',
+	'#markup' => '<div class="inline-form">',
+    );
+    $form['machine_type'] = array(
+	'#type' => 'select',
+	//'#title' => t('Type'),
+	'#default_value' => isset($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '',
+	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
+	'#empty_option' => t('Select category'),
+    );
+    $form['place'] = array(
+	'#type' => 'textfield',
+	//'#title' => t('Where'),
+	'#default_value' => isset($_SESSION['search_criteria']['place']) ? $_SESSION['search_criteria']['place'] : '',
+	'#attached' => $attach,
+    );
+    $form['date_from'] = array(
+	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
+	//'#title' => t('From date'),
+	'#attributes' => array('placeholder' => t('from date')),
+	'#default_value' => isset($_SESSION['search_criteria']['date_from']) ? $_SESSION['search_criteria']['date_from'] : '',
+	'#date_type' => DATE_DATETIME,
+	'#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
+	'#date_format' => 'd-m-Y',
+	'#date_increment' => 1,
+	'#date_year_range' => '-2:+2',
+	'#datepicker_options' => array('minDate' => "0D", 'changeMonth' => false, 'changeYear' => false),
+    );
+    $form['date_to'] = array(
+	'#type' => module_exists('date_popup') ? 'date_popup' : 'textfield',
+	//'#title' => t('To date'),
+	'#attributes' => array('placeholder' => t('to date')),
+	'#default_value' => isset($_SESSION['search_criteria']['date_to']) ? $_SESSION['search_criteria']['date_to'] : '',
+	'#date_type' => DATE_DATETIME,
+	'#date_timezone' => module_exists('date_api') ? date_default_timezone() : variable_get('date_default_timezone', @date_default_timezone_get()),
+	'#date_format' => 'd-m-Y',
+	'#date_increment' => 1,
+	'#date_year_range' => '-2:+2',
+	'#datepicker_options' => array('minDate' => "0D", 'changeMonth' => false, 'changeYear' => false),
+    );
+    $form['coords'] = array(
+	'#type' => 'hidden',
+	'#default_value' => isset($_SESSION['search_criteria']['coords']) ? $_SESSION['search_criteria']['coords'] : '',
+	'#attributes' => array('id' => 'coords'),
+    );
+    $form['distance'] = array(
+	'#type' => 'hidden',
+	'#default_value' => isset($_SESSION['search_criteria']['distance']) ? $_SESSION['search_criteria']['distance'] : '',
+	'#attributes' => array('id' => 'distance'),
+    );
+    $form['submit_button'] = array(
+	'#type' => 'submit',
+	'#value' => t('Search'),
+    );
+    $form['wrapper_end'] = array(
+	'#type' => 'markup',
+	'#markup' => '</div>',
+    );
+    return $form;
+}
+
+/*
+ * Create custom form as first step to add a machine
+ */
+
+function machinery_add_form($form, &$form_state) {
+    //$logged = user_is_logged_in();
+    $attach = array('js' => array(
+	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer'),
+	    'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external', 'scope' => 'footer'),
+    ));
+    //Name
+    $form['machine_name'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Name'),
+	'#required' => true,
+	'#default_value' => '',
+    );
+    //Type
+    $form['machine_type'] = array(
+	'#type' => 'select',
+	'#title' => t('Type'),
+	'#default_value' => arg(1) && is_numeric(arg(1)) ? arg(1) : '',
+	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
+	'#empty_option' => t('Select category'),
+    );
+    //Location
+    $form['place'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Location'),
+	'#default_value' => '',
+	'#required' => true,
+	'#attached' => $attach,
+    );
+    $form['coords'] = array(
+	'#type' => 'hidden',
+	'#default_value' => '',
+	'#attributes' => array('id' => 'coords'),
+    );
+    //Cultivation
+    $form['machine_cultivation'] = array(
+	'#type' => 'select',
+	'#title' => t('Cultivation'),
+	'#multiple' => true,
+	'#required' => true,
+	'#default_value' => '',
+	'#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_cultivation')) : taxonomy_allowed_values(field_info_field('field_cultivation')),
+	'#empty_option' => t('Select category'),
+    );
+    $form['submit_button'] = array(
+	'#type' => 'submit',
+	'#value' => t('Continue'),
+	//'#prefix' => $logged ? '':'<div id="hello"></div>',
+	//'#attributes' => $logged ? array() : array('class' => array('ctools-modal-modal-popup-small')),
+	    //'#ajax' => $logged ? array() : array(
+	    //'wrapper' => 'hello',
+	    //'callback' => 'ak_mermix_tools_login',  
+	    //'path' => 'ak_mermix_tools/nojs/login',  
+	    //),
+    );
+//    if(!$logged) {
+//    ctools_include('modal');
+//    ctools_modal_add_js();
+//    }
+    return $form;
+}
+
+//Cannot use form_name_submit function when $['#action'] is defined
+function machinery_search_form_submit($form, &$form_state) {
+    
+    $_SESSION['search_criteria'] = array_intersect_key($form_state['values'], array_flip(array('place', 'machine_type', 'date_from', 'date_to', 'coords', 'distance')));
+    $search_criteria = isset($_SESSION['search_criteria']) ? $_SESSION['search_criteria'] : array(
+	'coords' => 'all',
+	'date_from' => NULL,
+	'date_to' => NULL,
+	'machine_type' => 'all',
+    );
+    $dates = 'all';
+    $coords = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
+    if(isset($search_criteria['distance']) && (int)$search_criteria['distance'] > 10 ){
+    $coords .= ' ' . $search_criteria['distance'];
+    }
+    if ($search_criteria['date_from'] && $search_criteria['date_to']) {
+    $dateFrom = strtotime($search_criteria['date_from']);
+    $dateTo = strtotime($search_criteria['date_to']);
+    $dates = date('Y-m-d', $dateFrom) . '--' . date('Y-m-d', $dateTo);
+    }
+    $machineType = $search_criteria['machine_type'] ? $search_criteria['machine_type'] : 'all';
+    if($coords == 'all' && $machineType == all && $dates == all){
+    $form_state['redirect'] = 'machine-results';
+    } else {
+    $form_state['redirect'] = 'machine-results/' . $coords . '/' . $machineType . '/' . $dates;
+    }
+}
+
+function machinery_add_form_submit($form, &$form_state) {
+    global $user;
+    $machine_data = array_intersect_key($form_state['values'], array_flip(array('machine_name', 'machine_type', 'place', 'coords', 'machine_cultivation')));
+    //if not logged in save to session and redirect to login
+    if (user_is_logged_in()) {
+	$nid = mtools_create_node($machine_data, $user->uid);
+	//may add here $_SESSION['user_add_data'] and $_SESSION['first_update']
+	$form_state['redirect'] = 'node/' . $nid . '/edit';
+    } else {
+	$_SESSION['user_add_data'] = $machine_data;
+	$form_state['redirect'] = 'user/login';
+	//save data to session
+    }
+}
+
+function ak_mermix_tools_menu() {
+    $items['admin/config/mermixtools'] = array(
+			'title' => 'Mermix tools configuration',
+			'description' => 'Set options for Ak mermix tools module.',
+			'position' => 'right',
+			'weight' => -5,
+			'page callback' => 'system_admin_menu_block_page',
+			'access arguments' => array('administer site configuration'),
+			'file' => 'system.admin.inc',
+			'file path' => drupal_get_path('module', 'system'),
+	);
+    $items['admin/config/mermixtools/settings'] = array(
+			'title' => 'Mermix tools configuration',
+			'description' => 'Set options for Ak mermix tools module.',
+			'page callback' => 'drupal_get_form',
+			'page arguments' => array('mermixtools_admin_settings'),
+			'access arguments' => array('administer site configuration'),
+			'type' => MENU_NORMAL_ITEM,
+			'file' => 'ak_mermix_tools.admin.inc',
+	);
+    /*$items['machinery-search'] = array(
+	'title' => 'Search machines',
+	'page callback' => 'search_machinery',
+	'page arguments' => array(1),
+	'access callback' => TRUE,
+	'type' => MENU_CALLBACK,
+    );*/
+    $items['machinery-add'] = array(
+	'title' => 'Add your machine',
+	'page callback' => 'add_machinery',
+	'access callback' => TRUE,
+	'menu_name' => 'main-menu',
+	'type' => MENU_NORMAL_ITEM,
+    );
+    $items['ak_mermix_tools/%ctools_js/login'] = array(
+	'title' => 'Login',
+	'page callback' => 'ak_mermix_tools_login_form',
+	'page arguments' => array(1),
+	'access callback' => TRUE,
+	'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+/**
+ * A modal login callback.
+ */
+function ak_mermix_tools_login($form, &$form_state) {
+    ctools_include('modal');
+    ctools_include('ajax');
+    $output = drupal_http_request(url('ak_mermix_tools/ajax/login', array('absolute' => true)))->data;
+    //$output = ctools_modal_form_wrapper('user_login', $form_state);
+    print ajax_render($output);
+    exit;
+}
+
+/**
+ * A modal login callback.
+ */
+function ak_mermix_tools_login_form($js = NULL) {
+
+    // Fall back if $js is not set.
+    if (!$js) {
+	return drupal_get_form('user_login');
+    }
+
+    ctools_include('modal');
+    ctools_include('ajax');
+    ctools_add_js('ajax-responder');
+    $form_state = array(
+	'title' => t('Login'),
+	'ajax' => TRUE,
+    );
+    $output = ctools_modal_form_wrapper('user_login', $form_state);
+    if (!empty($form_state['executed'])) {
+	// We'll just overwrite the form output if it was successful.
+	$output = array();
+	//code to add the node here
+	$output[] = ctools_ajax_command_redirect('user');
+    }
+    print ajax_render($output);
+    exit;
+}
+
+/*function search_machinery($noresults = false) {
+    $page_content = array();
+    //no results display just form and a block
+    if ($noresults) {
+	return array(array('#markup' => '<h2>' . t('Have not found what you are looking for; Try again..') . '</h2>'), drupal_get_form('machinery_search_form'));
+    } else {
+	//user visits directly the machinery-search page so a search form is displayed
+	if (!isset($_SESSION['search_criteria']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+	    return array(array('#markup' => '<h2>' . t('Search the machine you are looking for..') . '</h2>'), drupal_get_form('machinery_search_form'));
+	}
+	//a user submitted data so we can search
+	    $search_criteria = isset($_SESSION['search_criteria']) ? $_SESSION['search_criteria'] : array(
+		'coords' => 'all',
+		'date_from' => NULL,
+		'date_to' => NULL,
+		'machine_type' => 'all',
+	    );
+	    $dates = '';
+	    $coords = $search_criteria['coords'] ? $search_criteria['coords'] : 'all';
+	    if(isset($search_criteria['distance']) && (int)$search_criteria['distance'] > 10 ){
+	    $coords .= ' ' . $search_criteria['distance'];
+	    }
+	    $dateFrom = strtotime($search_criteria['date_from']);
+	    $dateTo = strtotime($search_criteria['date_to']);
+	    $machineType = $search_criteria['machine_type'];
+	    
+	    if ($search_criteria['date_from'] && $search_criteria['date_to']) {
+		$dates = date('Y-m-d', $dateFrom) . '--' . date('Y-m-d', $dateTo);
+		$result = views_get_view_result('machine_results', 'page', $coords, $machineType, $dates);
+		$page_content[] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $coords, $machineType, $dates)) : '';
+	    } else {
+		$result = views_get_view_result('machine_results', 'page', $coords, $machineType);
+		$page_content[] = is_object($result[0]) ? array('#markup' => views_embed_view('machine_results', 'page', $coords, $machineType)) : '';
+	    }
+	    if (!is_object($result[0])) {
+		drupal_goto('machinery-search/noresults');
+	    }
+	    $page_content[] = array('#markup' => '<h2>' . t('Try a new search!') . '</h2>');
+	    $page_content[] = drupal_get_form('machinery_search_form');
+	    unset($_SESSION['search_criteria']);
+	    return $page_content;
+	}
+}*/
+
+function add_machinery() {
+    drupal_set_title(t('Add your machine'));
+    return drupal_get_form('machinery_add_form');
+}
+
+function ak_mermix_tools_user_login(&$edit, $account) {
+    //ignore this hook for restws users
+    $user_regex = variable_get('restws_basic_auth_user_regex', '/^restws.*/');
+    if (!preg_match($user_regex, $account->name)) {
+	if (isset($_SESSION['availability_submission'])) {
+	    $submission = $_SESSION['availability_submission'];
+	    module_load_include('inc', 'webform', 'includes/webform.submissions');
+	    $node = node_load($submission->nid);
+	    $submission->uid = $account->uid;
+	    webform_submission_insert($node, $submission);
+	    drupal_set_message('Thank you');
+	}
+	if (isset($_SESSION['user_add_data'])) {
+	    $nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
+	    unset($_SESSION['user_add_data']);
+	    $_SESSION['first_update'] = true;
+	    drupal_goto('node/' . $nid . '/edit');
+	} else {
+	    drupal_goto('<front>');
+	}
+    }
+}
+
+function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
+    
+    if ($view->name == 'machine_types' && $display_id == 'block_promo_lf') {
+	module_load_include('inc', 'webform', 'includes/webform.submissions');
+	
+	$webformId = (int)variable_get('looking_for_webform_id');
+	$webformCompId = (int)variable_get('looking_for_webform_key');
+	
+	$submissions = webform_get_submissions(array('nid'=> $webformId));
+	$ids = array();
+	foreach ( $submissions as $submission){
+	    $ids[] = $submission->data[$webformCompId][0];
+	}
+	$ids = array_unique($ids);
+	if(arg(0) == 'looking-for' && (arg(1) && is_numeric(arg(1)))) {
+	    $key = array_search(arg(1), $ids);
+	    if( $key !== false) {
+	    unset($ids[$key]);
+	    }
+	} 
+	$args = array(implode(',', $ids));
+    }
+    
+}
+
+function ak_mermix_tools_views_pre_render(&$view) {
+    global $user;
+    if ($view->name == 'machine_results') {
+     $result = $view->result;
+     //Add logic to log search arguments with number of results
+     if(is_object($result[0])) {
+	 $results_count = count($result);
+     } else {
+	 $results_count = 0;
+     }
+     //add data to log in database table
+     //use $_SESSION['search_criteria']
+     if(isset($_SESSION['search_criteria'])) {
+     $data_to_log = $_SESSION['search_criteria'];
+     $data_to_log['machine_type'] = $data_to_log['machine_type'] ? $data_to_log['machine_type'] : 0;
+     $place = $data_to_log['place'];
+     $data_to_log['coords'] = $data_to_log['distance'] > 10 ? $data_to_log['coords'] . ' ' . $data_to_log['distance'] : $data_to_log['coords'];
+     unset($data_to_log['distance']);
+     unset($data_to_log['place']);
+     $data_to_log['user'] = $user->uid;
+     $data_to_log['date_from'] = $data_to_log['date_from'] ? strtotime($data_to_log['date_from']) : null;
+     $data_to_log['date_to'] = $data_to_log['date_to'] ? strtotime($data_to_log['date_to']) : null;
+     
+     $hash = md5(serialize($data_to_log));
+     $data_to_log['place'] = $place;
+     $data_to_log['hash'] = $hash;
+     $data_to_log['searched'] = REQUEST_TIME;
+     $data_to_log['results'] = $results_count;
+     
+	db_insert('ak_mermix_tools_search_log')->fields($data_to_log)->execute();
+     }
+     //Insert data into db table
+     $prices = array();
+     foreach ($result as $row) {
+	 if(isset($row->_field_data['nid']['entity']->field_multiprice['und'])) {
+	    foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
+		$prices[] = $price['field_multiprice_value']['und'][0]['value'];
+	    }
+	 }
+      }
+      $min = (float)min($prices);
+      $max = (float)max($prices);
+      $settarr = array('better_exposed_filters' => array(
+	  'slider_options' => array('field_multiprice_field_multiprice_value_value' => array('min' => $min , 'max' => $max))
+      ));
+      drupal_add_js($settarr, 'setting');
+      drupal_add_js("jQuery(document).ready(function(){
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-min').val('');
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-max').val('');
+    jQuery('.views-exposed-form #edit-field-multiprice-field-multiprice-value-value-wrapper .views-widget').after('<div id=\"priceIndicator\"><span class=\"min\">". floor($min) ."</span><span class=\"max\">" . ceil($max) . "</span></div>');
+    });", array('type' => 'inline', 'scope' => 'header', 'weight' => -10));
+  }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function ak_mermix_tools_views_api()
+{
+    return array(
+        'api' => 3,
+        'path' => drupal_get_path('module', 'ak_mermix_tools') . '/includes/views',
+    );
+}
+
+/**
+ * Function to create an equipment type node with given data
+ */
+function mtools_create_node($data, $uid) {
+    global $language;
+    $coords = explode(',', $data['coords']);
+    $node = new stdClass();
+    $node->title = $data['machine_name'];
+    $node->type = 'apartment';
+    node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+    $node->language = $language->language; // Or e.g. 'en' if locale is enabled
+    $node->uid = $uid;
+    $node->status = 0; //(1 or 0): published or not
+    $node->promote = 0; //(1 or 0): promoted to front page
+
+    $node->field_address['und']['0'] = geofield_compute_values(
+	    array('lat' => $coords[0], 'lon' => $coords[1],), GEOFIELD_INPUT_LAT_LON);
+    // Term reference (taxonomy) field
+    $node->field_type['und'][0]['tid'] = $data['machine_type'];
+    foreach ($data['machine_cultivation'] as $key => $value) {
+	$node->field_cultivation['und'][$key]['tid'] = $value;
+    }
+    $node = node_submit($node); // Prepare node for saving
+    node_save($node);
+    return $node->nid;
+}

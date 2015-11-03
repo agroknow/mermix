@@ -1,7 +1,13 @@
   <div id="wrapper-outer" class="<?php if (!$page['triptych_bottom']): ?>no-triptych<?php endif; ?>">
 <div id="wrapper">
 <div id="wrapper-inner">
-    <?php if ($breadcrumb): ?>
+    <?php if (!empty($page['banner'])): ?>
+        <div class="banner-container" style="display: none">
+            <?php print render($page['banner']); ?>
+	    <span class="close-btn"></span>
+        </div>
+    <?php endif; ?>
+    <?php if (/*$breadcrumb*/false): ?>
         <div class="breadcrumb-wrapper">
             <div class="container">
                 <div class="row">
@@ -12,14 +18,13 @@
             </div><!-- /.container -->
         </div><!-- /.breadcrumb-wrapper -->
     <?php endif;?>
-
     <div id="header-wrapper">
         <div id="header">
             <div id="header-inner">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="navbar">
                         <div class="navbar-inner">
-                            <div class="row">
+                            <div class="row-fluid">
                                 <div class="span4">
                                     <a href="#nav" class="hidden-desktop" id="btn-nav"><?php print t('Toggle navigation'); ?></a>
 
@@ -45,15 +50,27 @@
                                       </div><!-- /.site-slogan -->
                                     <?php endif; ?>
                                 </div>
+				<div id="navigation" class="span8">
+				    <div class="container">
+					<?php if (!empty($page['navigation'])): ?>
+					<div class="navigation-wrapper pull-right">
+					    <div class="navigation clearfix">
+						<?php print render($page['navigation']); ?>
+					    </div>
+					    <!-- /.navigation -->
+					</div><!-- /.navigation-wrapper -->
+					<?php endif; ?>
+				    </div>
+				</div>
 
-                                <?php if (!empty($page['header_right'])): ?>
-                                    <div class="span3 pull-right">
+                                <?php if (/*!empty($page['header_right'])*/false): ?>
+                                    <div class="span6 pull-right">
                                         <?php print render($page['header_right']); ?>
                                     </div>
                                 <?php endif; ?>
 
-                                <?php if (!empty($page['header_middle'])): ?>
-                                    <div class="span5">
+                                <?php if (/*!empty($page['header_middle'])*/false): ?>
+                                    <div class="span2">
                                         <?php print render($page['header_middle']); ?>
                                     </div>
                                 <?php endif; ?>
@@ -71,19 +88,6 @@
         <!-- /#header -->
     </div>
     <!-- /#header-wrapper -->
-
-    <div id="navigation">
-        <div class="container">
-            <?php if (!empty($page['navigation'])): ?>
-            <div class="navigation-wrapper">
-                <div class="navigation clearfix">
-                    <?php print render($page['navigation']); ?>
-                </div>
-                <!-- /.navigation -->
-            </div><!-- /.navigation-wrapper -->
-            <?php endif; ?>
-        </div>
-    </div>
     <div id="map">
         <div class="container" style="position: relative;">
             <div class="row">
@@ -103,17 +107,16 @@
         <div class="container">
             <?php if ($page['highlighted']): ?>
                 <div class="row" id="highlighted">
-                    <div class="span9">
+                    <div class="<?php print ($page['highlighted_sidebar'])? 'span9' : 'span12' ?>">
                         <?php if ($page['highlighted']): ?>
                         <div class="highlighted"><?php print render($page['highlighted']); ?></div>
                         <?php endif; ?>
                     </div>
-
+		    <?php if ($page['highlighted_sidebar']): ?>
                     <div class="span3">
-                        <?php if ($page['highlighted_sidebar']): ?>
                         <?php print render($page['highlighted_sidebar']); ?>
-                        <?php endif; ?>
                     </div>
+		    <?php endif; ?>
                 </div><!-- /#highlighted -->                
             <?php endif; ?>
 

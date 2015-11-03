@@ -63,8 +63,9 @@ function template_preprocess_aviators_map_view(&$variables) {
 
   $markers = array();
   foreach ($field_renders as $delta => $field_render) {
-
-    list($latitude, $longitude) = explode(":", $field_render[$options['map_field']]);
+    $latlon = str_replace(' ', '', $field_render['field_address']);
+    list($latitude,$longitude) = explode(',', $latlon);
+    //list($latitude, $longitude) = explode(":", $field_render[$options['map_field']]);
 
     if (empty($latitude) || empty($longitude)) {
       continue;
@@ -98,7 +99,13 @@ function template_preprocess_aviators_map_view(&$variables) {
       $controls[$controlName] = TRUE;
     };
   }
-
+  if($view->name == 'machine_results') {
+      $resultOptions = array(
+	  'disableInfobox' => true,
+	  );
+  } else {
+      $resultOptions = array();
+  }
   $mapOptions = array_merge(
     array(
       'centerX' => $options['map_latitude'],
@@ -108,7 +115,8 @@ function template_preprocess_aviators_map_view(&$variables) {
       'mapTypeId' => GMAP3_TOOLS_MAP_TYPE_ID_ROADMAP,
       'scrollwheel' => FALSE,
     ),
-    $controls
+    $controls,
+    $resultOptions
   );
 
 

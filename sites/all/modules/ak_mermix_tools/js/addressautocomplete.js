@@ -1,0 +1,94 @@
+var pac_input = document.getElementById('edit-place');
+var submit = false;
+(function pacSelectFirst(input){
+    // store the original event binding function
+    var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+    function addEventListenerWrapper(type, listener) {
+    // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+    // and then trigger the original listener.
+
+    if (type == "keydown") {
+      var orig_listener = listener;
+      listener = function (event) {
+        var suggestion_selected = jQuery(".pac-item-selected").length > 0;
+        if ((event.which == 13 || event.which == 9)  && !suggestion_selected) {
+          var simulated_downarrow = jQuery.Event("keydown", {keyCode:40, which:40})
+          orig_listener.apply(input, [simulated_downarrow]);
+	  //google.maps.event.trigger(autocomplete, 'place_changed');
+        }
+	if(event.which == 13){
+	      event.preventDefault();
+	  }
+        orig_listener.apply(input, [event]);
+      };
+    }
+    // add the modified listener
+    _addEventListener.apply(input, [type, listener]);
+  }
+
+  if (input.addEventListener)
+    input.addEventListener = addEventListenerWrapper;
+  else if (input.attachEvent)
+    input.attachEvent = addEventListenerWrapper;
+})(pac_input);
+
+jQuery(function(){
+  var coords = document.getElementById('coords');
+  var distance = document.getElementById('distance');
+  //coords.value = '';
+  var autocomplete = new google.maps.places.Autocomplete(pac_input);
+  autocomplete.addListener('place_changed', fillInAddress);
+    function fillInAddress() {
+	var place = autocomplete.getPlace();
+    // Get the place details from the autocomplete object.
+    //lat,lon
+    //place.geometry.viewport.getNorthEast().lng();
+    coords.value = place.geometry.location.lat() + ',' + place.geometry.location.lng();
+    var km = getDistanceFromLatLonInKm(place.geometry.location.lat(),place.geometry.location.lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng());
+    distance.value = Math.round(km);
+  }
+  jQuery("#edit-place").keyup(function(){
+	if(jQuery(this).val() == "") {
+	 coords.value = '';
+	 distance.value = '';
+	}
+    }); 
+    //trigger focus to initialize datepickers
+    jQuery('.form-type-date-popup input').focus();
+    jQuery('.form-type-date-popup input').blur();
+    //change their onclose function
+    jQuery('input.hasDatepicker').each(function(){
+	var id = jQuery(this).attr('id');
+	var otherid = id.replace('from','to');
+	if(id.indexOf('from') > -1) {
+	    jQuery( "#" + id ).datepicker("option", "onClose", function( selectedDate ) {
+		if(selectedDate)
+		jQuery( "#" + otherid ).datepicker( "option", "minDate", selectedDate );
+	    });
+	    jQuery("#" + otherid).datepicker("option", "onClose", function( selectedDate ) {
+		if(selectedDate)
+		jQuery( "#" + id ).datepicker( "option", "maxDate", selectedDate );
+	    });
+	}
+	
+    });
+});
+      
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
