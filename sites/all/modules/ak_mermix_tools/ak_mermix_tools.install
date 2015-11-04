@@ -1023,10 +1023,10 @@ function ak_mermix_tools_update_7012(&$sandbox) {
 /**
  * Add the ak_mermix_tools_search_log table.
  */ 
-function ak_mermix_tools_update_7013() {
+/*function ak_mermix_tools_update_7013() {
   
   $schema = drupal_get_schema_unprocessed('ak_mermix_tools', 'ak_mermix_tools_search_log');
   db_create_table('ak_mermix_tools_search_log', $schema);
 
   return 'ak_mermix_tools_search_log table created.';
-}
+}*/
