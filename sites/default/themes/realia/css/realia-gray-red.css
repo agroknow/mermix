@@ -6283,3 +6283,6 @@ article.node-apartment footer .links.inline{
     }
 }
 
+.url-textfield{
+    display: none !important;
+}
