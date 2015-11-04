@@ -66,6 +66,11 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
+    if(jQuery(window).width() <= 964) {
+	var promobtn = jQuery('.navigation-wrapper').find('a.highlighted').clone();
+	jQuery('div.logo').parent().append( promobtn );
+    }
+    
     var scrollHeight = 200;
     if(jQuery('#map .banner').length == 1) {
 	scrollHeight = jQuery('#map .banner').offset().top + 700;
@@ -86,3 +91,16 @@ jQuery('.form-item').each(function(){
 	}
 	});
 });
+
+jQuery( window ).resize(function() {
+    //console.log(jQuery(window).width());
+    var logocontainer = jQuery('div.logo').parent();
+	if(jQuery(window).width() <= 964 ) {
+	    if( logocontainer.find('a.highlighted').length < 1 ) {
+	    var promobtn = jQuery('.navigation-wrapper').find('a.highlighted').clone();
+	    logocontainer.append( promobtn );
+	    }
+	} else {
+	logocontainer.find('a.highlighted').remove();   
+	}
+    });

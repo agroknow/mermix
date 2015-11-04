@@ -5900,6 +5900,18 @@ article.node-apartment footer .links.inline{
     font-size: 32px;
     font-weight: 400;
 }
+.navbar .span4 a.highlighted{
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    border: 1px solid;
+    float: right;
+    margin-top: 15px;
+}
+.navbar .span4 a.highlighted:hover{
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.16);
+}
 
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
@@ -6191,6 +6203,9 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (max-width: 480px) {
+     .navbar .span4 a.highlighted{
+    float: left;
+    }
     .banner-text .text-inner h1{
 	font-size: 28px;
 	line-height: 30px;
@@ -6246,6 +6261,9 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (max-width: 320px) {
+    .navbar .span4 a.highlighted{
+    float: left;
+    }
     .banner-text .text-inner h1{
 	font-size: 26px;
 	line-height: 28px;
