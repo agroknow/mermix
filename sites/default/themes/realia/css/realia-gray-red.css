@@ -5327,20 +5327,16 @@ html.js input.ui-autocomplete-loading {
 .inline-form .chzn-container .chzn-drop .chzn-search input{
     width: auto !important;
 }
+.inline-form .chzn-container .chzn-single span{
+    background: url('../img/tractor-small.png') no-repeat 5px center;
+}
 .inline-form .chzn-container .chzn-single{
     border: 1px solid #d5d5d5;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 /*Icons*/
-.inline-form .chzn-container .chzn-single:before{
-    content: "\f0d1";
-    font-family: FontAwesome;
-    position: absolute;
-    left: 13px;
-    font-size: 22px;
-    color: #555;
-}
+
 .inline-form > .form-item,.form-type-date-popup .form-type-textfield{
     position: relative;
 }
