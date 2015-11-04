@@ -5337,7 +5337,7 @@ html.js input.ui-autocomplete-loading {
     content: "\f0d1";
     font-family: FontAwesome;
     position: absolute;
-    left: 20px;
+    left: 13px;
     font-size: 22px;
     color: #555;
 }
@@ -5922,6 +5922,9 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (min-width: 980px) and (max-width: 1120px) {
+    .inline-form .container-inline-date .form-item input{
+	width: 160px;
+    }
     .block-webform .form-type-date-popup .form-type-textfield:before{
 	left: 18px;
     }

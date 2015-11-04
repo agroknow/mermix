@@ -35,7 +35,7 @@
             <?php print $label; ?>
           </th>
         <?php endforeach; ?>
-	  <th> Search url </th>
+	  <th> </th>
       </tr>
     </thead>
   <?php endif; ?>
@@ -55,7 +55,7 @@
             <?php print $content; ?>
           </td>
         <?php endforeach; ?>
-	  <td><?php print l('search again','machine-results/' . $path) ?></td>
+	  <td><?php print t('<a href="@url">Search again</a>', array( '@url' => url('machine-results/' . $path) ) ) ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>
