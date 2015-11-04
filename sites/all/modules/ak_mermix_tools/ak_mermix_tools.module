@@ -802,7 +802,7 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 	    $node = node_load($submission->nid);
 	    $submission->uid = $account->uid;
 	    webform_submission_insert($node, $submission);
-	    drupal_set_message('Thank you');
+	    drupal_set_message('Your submission was successfull! Thank you!');
 	}
 	if (isset($_SESSION['user_add_data'])) {
 	    $nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
