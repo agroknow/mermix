@@ -54,24 +54,20 @@ jQuery(function(){
 	 distance.value = '';
 	}
     }); 
-    //trigger focus to initialize datepickers
-    jQuery('.form-type-date-popup input').focus();
-    jQuery('.form-type-date-popup input').blur();
-    //change their onclose function
-    jQuery('input.hasDatepicker').each(function(){
-	var id = jQuery(this).attr('id');
-	var otherid = id.replace('from','to');
-	if(id.indexOf('from') > -1) {
-	    jQuery( "#" + id ).datepicker("option", "onClose", function( selectedDate ) {
-		if(selectedDate)
-		jQuery( "#" + otherid ).datepicker( "option", "minDate", selectedDate );
-	    });
-	    jQuery("#" + otherid).datepicker("option", "onClose", function( selectedDate ) {
-		if(selectedDate)
-		jQuery( "#" + id ).datepicker( "option", "maxDate", selectedDate );
-	    });
+    
+    jQuery('.form-type-date-popup input').on('click',function(){
+	var currid = jQuery(this).attr('id');
+	if(currid.indexOf('from') > -1) {
+	    var otherid = currid.replace('from','to');
+	    if(jQuery( "#" + otherid ).datepicker('getDate')) {
+		jQuery( "#" + currid ).datepicker( "option", "maxDate", jQuery( "#" + otherid ).datepicker('getDate') );
+	    }
+	} else {
+	    var otherid = currid.replace('to','from');
+	    if(jQuery( "#" + otherid ).datepicker('getDate')) {
+		jQuery( "#" + currid ).datepicker( "option", "minDate", jQuery( "#" + otherid ).datepicker('getDate') );
+	    }
 	}
-	
     });
 });
       
