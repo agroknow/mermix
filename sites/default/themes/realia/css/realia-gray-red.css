@@ -638,7 +638,8 @@ body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.he
         left: -70%;
         position: absolute;
         top: 0;
-        width: 70%
+        width: 70%;
+	overflow: hidden;
     }
 
     .navigation-wrapper .navigation .block-superfish {
