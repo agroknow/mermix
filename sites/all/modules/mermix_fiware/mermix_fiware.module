@@ -1,0 +1,8 @@
+<?php
+
+function mermix_fiware_node_update($node){
+
+	require_once('orion_fw/autoloader/autoloader.php');
+	
+	$OrionContextBroker = new Orion\ContextBroker("127.0.0.1");
+}
