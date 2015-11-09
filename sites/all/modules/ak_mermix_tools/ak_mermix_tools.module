@@ -435,12 +435,14 @@ function ak_mermix_tools_block_info() {
 	//'title' => t('Search machines'),
 	'region' => 'map',
 	'status' => 1,
+	'cache' => DRUPAL_NO_CACHE
     );
     $blocks['machinery_search_block'] = array(
 	'info' => t('Machinery search'),
 	//'title' => t('Search machines'),
 	'region' => 'content',
 	'status' => 1,
+	'cache' => DRUPAL_NO_CACHE
     );
 
     return $blocks;
