@@ -36,8 +36,11 @@ var submit = false;
 jQuery(function(){
   var coords = document.getElementById('coords');
   var distance = document.getElementById('distance');
+  var options = {
+  types: ['geocode']
+  };
   //coords.value = '';
-  var autocomplete = new google.maps.places.Autocomplete(pac_input);
+  var autocomplete = new google.maps.places.Autocomplete(pac_input,options);
   autocomplete.addListener('place_changed', fillInAddress);
     function fillInAddress() {
 	var place = autocomplete.getPlace();
