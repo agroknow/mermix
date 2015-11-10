@@ -1,6 +1,18 @@
 <?php
 
-function mermix_fiware_node_update($node){
+function mermix_fiware_init() {
+	drupal_add_js('jQuery(document).ready(function () { 
+	if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(savePosition);
+    }
+	});
+	function savePosition(position) {
+		jQuery.cookie("geolocation",position.coords.latitude +","+position.coords.longitude);
+	}
+	', 'inline');
+}
+
+function mermix_fiware_node_update($node) {
 
 	require_once('orion_fw/autoloader/autoloader.php');
 	
