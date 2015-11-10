@@ -1,0 +1,66 @@
+<?php
+
+require_once('orion_fw/autoloader/autoloader.php');
+
+function mfOrionConnect() {
+    $ip = "185.23.171.92";
+    return new Orion\ContextBroker($ip);
+}
+
+function mfGetUserAttributesArray( $orionUserId ) {
+    $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array());
+    
+    $OrionConnection = mfOrionConnect();
+    $QUERY = new Orion\Operations\queryContext();
+    $reqBody = $QUERY->addElement($orionUserId, "User", false)->getRequest();
+    $raw_return = $OrionConnection->queryContext($reqBody);
+    $Context = new Orion\Context\Context($raw_return);
+    $object = $Context->__toObject();
+
+    if (isset($object->errorCode->code) && $object->errorCode->code != "200") {
+        mfUpdateUser($orionUserId);
+    } else {
+        $contextResponses = $object->contextResponses;
+        foreach ($contextResponses as $contextElement) {
+            $attributes = $contextElement->contextElement->attributes;
+            foreach ($attributes as $attr) {
+                $AttributesArray[$attr->name] = (array) $attr->value;
+            }
+            
+        }
+    }
+    return $AttributesArray;
+}
+
+function mfUpdateUser( $orionUserId, $attributesArray = array(), $location = array()) {
+    
+    $OrionConnection = mfOrionConnect();
+    $UPDATE = new \Orion\Operations\updateContext();
+    $UPDATE->addElement($orionUserId, "User", false);
+    foreach ($attributesArray as $key => $value) {
+        $UPDATE->addAttrinbute($key, "T", $value);
+    }
+    if($location) {
+        $UPDATE->addGeolocation($location[0], $location[1]);
+    }
+    $UPDATE->setAction("APPEND"); // Use append - append acts as update if exists
+    $reqBody = $UPDATE->getRequest();
+    $raw_return = $OrionConnection->updateContext($reqBody);
+    return $raw_return;
+}
+
+function mfGetLocation($user) {
+    if($user->uid > 0) {
+        $user_data = user_load($user->uid);
+        $lat = isset($user_data->field_place['und']['0']['lat']) ? $user_data->field_place['und']['0']['lat'] : '';
+        $lon = isset($user_data->field_place['und']['0']['lon']) ? $user_data->field_place['und']['0']['lon'] : '';
+        if($lat && $lon) {
+            $location = array($lat,$lon);
+        } else {
+            $location = explode( ',', $_COOKIE['geolocation']);
+        }
+    } else {
+        $location = explode( ',', $_COOKIE['geolocation']);
+    }
+    return $location;
+}
