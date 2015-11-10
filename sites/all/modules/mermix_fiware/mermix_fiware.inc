@@ -7,6 +7,18 @@ function mfOrionConnect() {
     return new Orion\ContextBroker($ip);
 }
 
+function mfGetAllEntities($entityType) {
+    
+    $OrionConnection = mfOrionConnect();
+    $QUERY = new Orion\Operations\queryContext();
+    $reqBody = $QUERY->addElement(".*", $entityType, true)->getRequest();
+    $raw_return = $OrionConnection->queryContext($reqBody);
+    $Context = new Orion\Context\Context($raw_return);
+    $object = $Context->__toObject();
+
+    return $object;
+}
+
 function mfGetUserAttributesArray( $orionUserId ) {
     $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array());
     

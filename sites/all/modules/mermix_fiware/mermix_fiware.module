@@ -13,6 +13,79 @@ function mermix_fiware_init() {
 	', 'inline');
 }
 
+function mermix_fiware_menu() {
+    $items['tracked-data'] = array(
+    'title' => 'tracked data',
+    'page callback' => 'mermix_fiware_tracked',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function mermix_fiware_tracked() {
+    module_load_include('inc', 'mermix_fiware');
+    
+    $object = mfGetAllEntities('User');
+    $output = '';
+    if (isset($object->errorCode->code) && $object->errorCode->code != "200") {
+    //Something bad happens, maybe just not found.
+    $output .= "<h1>Server responds with Code:" . 
+            $object->errorCode->code .
+            "<h1> <h2>Message: " . 
+            $object->errorCode->reasonPhrase . "</h2>";
+    } else {
+    $contextResponses = $object->contextResponses; //Based on json response above using that a array will be returned
+//    $info = $contextResponses->statusCode; //Some info about this request
+    $info = $object->errorCode; //Some info about this request
+//    var_dump($object);
+//    var_dump($info);
+//    var_dump($contextResponses);
+
+
+    $output .= "<b>Found: </b><pre>";
+    foreach ($contextResponses as $contextElement) {
+        $output .= "============================================". PHP_EOL;
+        $output .= "Entity ID: ". $contextElement->contextElement->id. PHP_EOL;
+        // echo "Entity Type: ", $contextElement->contextElement->type, PHP_EOL;
+        // echo "isPattern: ", $contextElement->contextElement->isPattern, PHP_EOL;
+        $attributes = $contextElement->contextElement->attributes;
+
+        //echo "Attributes:", PHP_EOL;
+
+        foreach ($attributes as $attr) {
+            if($attr->name == 'searches') {
+            $output .= "Name: ". $attr->name. PHP_EOL;
+            //echo "Type: ", $attr->type, PHP_EOL;
+                foreach ($attr->value as $key => $value) {
+                    $output .= "timestamp : " . $key . " ";
+                    foreach ($value as $k => $v) {
+                        $output .= $k . ": " . $v . " ";
+                    }
+                    $output .= PHP_EOL;
+                }
+            } elseif($attr->name == 'position') {
+            $output .= $attr->name. PHP_EOL;
+            //echo "Value: ";//, //$attr->value, PHP_EOL;
+                foreach ($attr->value as $key => $value) {
+                    $output .= $value . PHP_EOL;
+                }
+            } else {
+                $output .= $attr->name. PHP_EOL;
+            //echo "Value: ";//, //$attr->value, PHP_EOL;
+                foreach ($attr->value as $key => $value) {
+                    $output .= $key . "  --> times viewed " . $value . PHP_EOL;
+                }
+            } 
+        }
+        $output .= "============================================". PHP_EOL;
+    }
+    $output .= "</pre>";
+    return $output;
+}
+
+}
+
 function mermix_fiware_views_pre_render(&$view) {
     module_load_include('inc', 'mermix_fiware');
     global $user;
@@ -28,7 +101,7 @@ function mermix_fiware_views_pre_render(&$view) {
     }
     
     if ($view->name == 'machine_results' && isset($_SESSION['search_criteria'])) {
-    	//get user search data
+        //get user search data
         $attrs = mfGetUserAttributesArray($userid);
         if(!isset($attrs['position'])) {
             $location = mfGetLocation($user);
@@ -37,13 +110,13 @@ function mermix_fiware_views_pre_render(&$view) {
         unset($attrs['cultivations']);
         unset($attrs['machines']);
         //append new data
-        $attrs['searches'][REQUEST_TIME] = array('type' => $_SESSION['search_criteria']['machine_type'],
-                                                 'coords' => $_SESSION['search_criteria']['coords'],
-                                                 'date_from' => $_SESSION['search_criteria']['date_from'],
-                                                 'date_to' => $_SESSION['search_criteria']['date_to'],
+        $attrs['searches'][REQUEST_TIME] = array('type' => ($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '-', 
+                                                 'coords' => ($_SESSION['search_criteria']['coords']) ? $_SESSION['search_criteria']['coords'] : '-' ,
+                                                 'date_from' => ($_SESSION['search_criteria']['date_from']) ? $_SESSION['search_criteria']['date_from'] : '-' ,
+                                                 'date_to' => ($_SESSION['search_criteria']['date_to']) ? $_SESSION['search_criteria']['date_to'] : '-',
                                                 );
         //update user context
-        var_dump(mfUpdateUser($userid, $attrs, $location));
+        mfUpdateUser($userid, $attrs, $location);
     }
 }
 
@@ -83,6 +156,6 @@ function mermix_fiware_node_view($node, $view_mode, $langcode) {
         }
         $index = 'nid_' . $node->nid;
         $attrs['machines'][$index] = isset($attrs['machines'][$index]) ? (int)$attrs['machines'][$index]+1 : 1;
-        var_dump(mfUpdateUser($userid, $attrs, $location));    
+        mfUpdateUser($userid, $attrs, $location);    
     }
 }
