@@ -6312,3 +6312,13 @@ article.node-apartment footer .links.inline{
 .url-textfield{
     display: none !important;
 }
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
+    .chzn-container .chzn-drop .chzn-search input {
+        background-image: url("../img/icons/search.png") !important;
+        background-position: 95% center;
+        background-repeat: no-repeat;
+        background-size: auto !important;
+        border: 1px solid #707070;
+        width: auto !important
+    }
+}
