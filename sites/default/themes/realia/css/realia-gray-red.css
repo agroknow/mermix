@@ -6513,7 +6513,7 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (max-width: 320px) {
-    #header-wrapper.fixed .navbar .span4{
+    #header-wrapper .navbar .span4{
         padding-left: 25px;
     }
     .navbar .span4 a.highlighted{
