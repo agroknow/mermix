@@ -5021,19 +5021,22 @@ body.header-light.front #header-wrapper #navigation .block-superfish a.highlight
     padding: 10px;
     top: 17px;
     border: 1px solid;
+    color: #fff !important;
     transition: background 0.2s ease-in;
+    background: #e63434;
 }
 body.header-light.front #header-wrapper #navigation .block-superfish a.highlighted:hover{
-    background: rgba(0, 0, 0, 0.6); 
+    background: #ce1919; 
 }
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.fixed #navigation .block-superfish a.highlighted{
     padding: 10px;
     top: 6px;
     border: 1px solid;
     transition: background 0.2s ease-in;
+    background: #e63434;
 }
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted:hover,body.header-light.not-front #header-wrapper #navigation .block-superfish a.highlighted:hover{
-   background: rgba(0, 0, 0, 0.16); 
+   background: #ce1919;  
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
