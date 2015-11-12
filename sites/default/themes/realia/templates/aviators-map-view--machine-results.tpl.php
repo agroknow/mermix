@@ -9,8 +9,23 @@
 <?php 
 drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/ak_mermix_scrolling.js');
 $pagination = array(); 
+if($user->uid > 0) {
+	$user_data = user_load($user->uid);
+	$lat = isset($user_data->field_place['und']['0']['lat']) ? $user_data->field_place['und']['0']['lat'] : '';
+	$lon = isset($user_data->field_place['und']['0']['lon']) ? $user_data->field_place['und']['0']['lon'] : '';
+}
 ?>
 <div class="row">
+    <div class="span12">
+    	<?php 
+    	if($user->uid > 0 && $lat && $lon) {
+    		print '<a class="btn btn-primary" href="' . url('machine-results/' . $lat . ',' . $lon) . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>';
+    	} else {
+    		print isset($_COOKIE['geolocation']) ? 
+    		'<a class="btn btn-primary" href="' . url('machine-results/' . $_COOKIE['geolocation']) . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>' : '<a class="btn btn-primary" href="#" onclick="geolocation(false)">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>' ;
+    	}
+    	?>
+    </div>
     <div class="span6">
 	<div id="<?php print $view_id ?>" style="width:<?php print $width; ?>; height:<?php print $height; ?>;"></div>
     </div>

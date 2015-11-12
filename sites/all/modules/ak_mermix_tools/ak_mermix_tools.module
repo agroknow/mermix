@@ -8,8 +8,9 @@ function ak_mermix_tools_init(){
     
     if(drupal_is_front_page()){
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_banner.js');
-    drupal_add_library('system', 'jquery.cookie');
     }
+    drupal_add_library('system', 'jquery.cookie');
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/user_location.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.validate.min.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js', array('scope' => 'footer'));
 }
