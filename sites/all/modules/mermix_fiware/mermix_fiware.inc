@@ -36,7 +36,7 @@ function mfGetUserAttributesArray( $orionUserId ) {
         foreach ($contextResponses as $contextElement) {
             $attributes = $contextElement->contextElement->attributes;
             foreach ($attributes as $attr) {
-                $AttributesArray[$attr->name] = (array) $attr->value;
+                $AttributesArray[$attr->name] = json_decode(json_encode($attr->value),true);
             }
             
         }
@@ -69,10 +69,10 @@ function mfGetLocation($user) {
         if($lat && $lon) {
             $location = array($lat,$lon);
         } else {
-            $location = explode( ',', $_COOKIE['geolocation']);
+            $location = isset($_COOKIE['geolocation']) ? explode( ',', $_COOKIE['geolocation']) : false;
         }
     } else {
-        $location = explode( ',', $_COOKIE['geolocation']);
+        $location = isset($_COOKIE['geolocation']) ? explode( ',', $_COOKIE['geolocation']) : false;
     }
     return $location;
 }
