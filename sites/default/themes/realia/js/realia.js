@@ -66,7 +66,7 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
-    if(jQuery(window).width() <= 964) {
+    if(jQuery(window).width() <= 1105) {
 	var promobtn = jQuery('.navigation-wrapper').find('a.highlighted').clone();
 	jQuery('div.logo').parent().append( promobtn );
     }
@@ -95,7 +95,7 @@ jQuery('.form-item').each(function(){
 jQuery( window ).resize(function() {
     //console.log(jQuery(window).width());
     var logocontainer = jQuery('div.logo').parent();
-	if(jQuery(window).width() <= 964 ) {
+	if(jQuery(window).width() <= 1105 ) {
 	    if( logocontainer.find('a.highlighted').length < 1 ) {
 	    var promobtn = jQuery('.navigation-wrapper').find('a.highlighted').clone();
 	    logocontainer.append( promobtn );
