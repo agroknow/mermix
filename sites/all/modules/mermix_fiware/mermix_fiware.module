@@ -1,7 +1,8 @@
 <?php
 
 function mermix_fiware_init() {
-    drupal_add_js('jQuery(document).ready(function () { geolocation(); });', 'inline');
+    drupal_add_js('jQuery(document).ready(function () { if(!jQuery.cookie("geolocation")) {geolocation();} });', 
+    array('type' => 'inline', 'scope' => 'footer', 'weight' => 5));
 }
 
 function mermix_fiware_menu() {
