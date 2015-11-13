@@ -1,5 +1,5 @@
 function geolocation(cookie) {
-    if (typeof cookie === 'undefined') cookie = true;
+    if (typeof cookie === 'undefined') {cookie = true;}
     if (navigator.geolocation) {
     var startPos;
     var geoOptions = {
@@ -9,10 +9,8 @@ function geolocation(cookie) {
     var geoSuccess = function(position) {
       startPos = position;
       if(cookie) {
-        console.log('cookie');
         jQuery.cookie("geolocation",startPos.coords.latitude +","+startPos.coords.longitude, { path: '/' });
       } else {
-        console.log('redirect');
         window.location.href = 'machine-results/' + startPos.coords.latitude +","+startPos.coords.longitude;
       }
     };
