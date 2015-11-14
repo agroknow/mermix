@@ -5497,7 +5497,7 @@ button.form-submit.field-add-more-submit{
     background: #fff;
     width: 20px;
     height: 20px;
-    margin-right: 5px;
+    margin: 5px;
     display: inline-block;
     text-decoration: none;
 }
@@ -5725,13 +5725,17 @@ a.flag.flag-action:hover:before{
     width: 200px;
 }
 .page-machine-results .views-exposed-form .views-exposed-widget{
-    margin-right: 25px;
+    margin-right: 15px;
 }
 .page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by{
     float: right;
     margin-right: 0;
-    padding-left: 40px;
+    padding-left: 30px;
     position: relative;
+    padding-right: 0;
+}
+.page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by .chzn-container{
+    width: 150px !important;
 }
 .page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by:before{
     content: "\f160";
@@ -5742,14 +5746,16 @@ a.flag.flag-action:hover:before{
     font-size: 25px;
 }
 .page-machine-results .views-exposed-form .views-exposed-widgets{
-    padding-left: 45px;
     position: relative;
 }
-.page-machine-results .views-exposed-form .views-exposed-widgets:before{
+.page-machine-results .views-exposed-form .views-exposed-widgets > div:first-child{
+    padding-left: 30px;
+}
+.page-machine-results .views-exposed-form .views-exposed-widgets > div:first-child:before{
     content: "\f0b0";
     font-family: FontAwesome;
     position: absolute;
-    top: 62%;
+    top: 40px;
     left: 0;
     font-size: 30px;
 }
@@ -5921,6 +5927,17 @@ article.node-apartment footer .links.inline{
     text-decoration: none;
     background: #ce1919;
 }
+#toggle-filters{
+    display: none;
+    cursor: pointer;
+}
+.center-align{
+    text-align: center;
+
+}
+.mtb20{
+    margin: 20px 0; 
+}
 
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
@@ -5947,6 +5964,9 @@ article.node-apartment footer .links.inline{
     }
     body.nav-open #wrapper-outer {
     overflow-x: hidden;
+    }
+    body.front #header{
+        background: none;
     }
     body.front #header-wrapper,body.nav-open #header-wrapper.fixed{
     position: static;
@@ -6051,6 +6071,9 @@ article.node-apartment footer .links.inline{
     }
     .region-sidebar-second .block-webform .container-inline-date{
 	width: 100%;
+    }
+    #dragger{
+        display: none;
     }
 }
 @media (min-width: 1200px) {
@@ -6159,6 +6182,42 @@ article.node-apartment footer .links.inline{
     body.front.nav-open #header-wrapper.fixed, body.front.nav-open #header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li ul{
 	background: none;
     }
+    /*Search page filters*/
+    .views-exposed-form .views-exposed-widget,.page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by{
+        float: none;
+        display: block;
+        clear: both;
+        padding: .5em 1em 0 0;
+        text-align: center;
+        margin-right: 15px;
+
+    }
+    .page-machine-results .views-exposed-form .views-exposed-widgets > div:first-child:before,.page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by:before{ 
+        content: "";
+    }
+    .page-machine-results .views-exposed-form .views-exposed-widget.views-widget-sort-by .chzn-container{
+        width: 220px !important;
+    }
+    .page-machine-results .views-exposed-form .views-exposed-widgets > div:first-child{
+        padding-left: 0;
+    }
+    .page-machine-results .views-exposed-form label,.page-machine-results .views-exposed-form .views-widget{
+        text-align: center;
+    }
+    .views-exposed-form .bef-slider,.views-exposed-form #priceIndicator{
+        width: 200px;
+        margin: 0 auto;
+    }
+    #edit-field-multiprice-field-multiprice-value-value-wrapper{
+        width: auto !important;
+    }
+    #toggle-filters{
+    display: block;
+    text-align: center;
+    }
+    .page-machine-results .view-filters form{
+        display: none;
+    }
 }
 @media (min-width: 768px) and (max-width: 979px) {
     
@@ -6182,10 +6241,10 @@ article.node-apartment footer .links.inline{
 .page-machine-results .webform-client-form .webform-component.webform-component--email{
     float: left;
     width: 100%;
-}
+    }
 .page-machine-results .webform-client-form .container-inline-date{
     width: 48%;
-}
+    }
     div#content .container{
 	padding:0 20px;
     }
@@ -6223,6 +6282,10 @@ article.node-apartment footer .links.inline{
 	height: 540px;
 	margin-top: 20px;
     }
+    .view-machine-results .views-field.views-field-field-multiprice{
+        bottom: 10px;
+        right: 5px;
+    }
 }
 @media (max-width: 600px) {
     .banner-text .text-inner h1{
@@ -6246,7 +6309,7 @@ article.node-apartment footer .links.inline{
     .page-machine-results .webform-client-form .container-inline-date{
     width: 45%;
     margin-right: 20px;
-}
+    }
     .node-apartment-form .field-name-field-multiprice-value input,.node-apartment-form .field-name-field-multiprice-unit .chzn-container{
 	width: 120px !important;
     }
@@ -6289,8 +6352,32 @@ article.node-apartment footer .links.inline{
     .container-inline-date .form-item input{
 	width: 93%;
     }
-    .machine-results-listing .result-item{
-	width: 46%;
+    .machine-results-listing .result-item,.machine-results-listing .result-item.odd{
+	width: 100%;
+    margin-right: 0;
+    }
+    /*Results one per row*/
+    .machine-results-listing {
+    height: 1080px;
+    margin-top: 20px;
+    }
+    .machine-results-listing .result-item div.views-field-field-image {
+    height: 150px;
+    float: left;
+    max-width: 45%;
+    }
+    .machine-results-listing .result-item div.views-field-title{
+    float: left;
+    min-width: 50%;
+    margin-left: 5px;
+    }
+    .machine-results-listing .views-field-field-location{
+    float: left;
+    margin-left: 5px;
+    }
+    .view-machine-results .views-field.views-field-field-multiprice {
+    bottom: 10px;
+    right: 20px;
     }
 }
 @media (max-width: 480px) {
@@ -6349,6 +6436,18 @@ article.node-apartment footer .links.inline{
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
 	width: 300px;
 	margin: 0 auto;
+    }
+    .span6.map-container{
+        padding-left: 25px;
+        background: #333;
+        position: relative;
+    }
+    #dragger{
+        transform: rotate(-90deg);
+        position: absolute;
+        top: 65px;
+        left: -47px;
+        color: #fff;
     }
 }
 @media (max-width: 320px) {
