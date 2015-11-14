@@ -2478,10 +2478,12 @@ body.nav-open #aviators-palette {
         padding-bottom:5px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-image, 
-    .panel-pane .view-content .views-row .views-field-field-image 
+    .region-sidebar-second .block-views .content .views-row .views-field-field-image
     {
         float: none
+    }
+    .panel-pane .view-content .views-row .views-field-field-image {
+        float: left;
     }
 
     .region-sidebar-second .block-views .content .views-row .views-field-field-image img, 
@@ -6273,6 +6275,10 @@ article.node-apartment footer .links.inline{
     .page-machine-results .view-filters form{
         display: none;
     }
+    /* User panel */
+    .panel-2col .panel-col-first,.panel-2col .panel-col-last{
+        width: 100%;
+    }
 }
 @media (min-width: 768px) and (max-width: 979px) {
     
@@ -6543,6 +6549,9 @@ article.node-apartment footer .links.inline{
     .inline-form input,
     .container-inline-date .form-item input{
 	width: 80%;
+    }
+    table .views-field.views-field-date-from,table .views-field.views-field-date-to{
+    display: none;
     }
 }
 
