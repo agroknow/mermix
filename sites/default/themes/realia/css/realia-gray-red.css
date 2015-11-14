@@ -2120,7 +2120,7 @@ body.nav-open #aviators-palette {
     }
 }
 
-.view-apartments .view-filters {
+.listing-grid .view-filters {
     -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
     box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
@@ -2130,20 +2130,20 @@ body.nav-open #aviators-palette {
     padding: 10px
 }
 
-.view-apartments .view-filters form {
+.listing-grid .view-filters form {
     float: right;
     margin: 0px
 }
 
-.view-apartments .view-filters form .views-exposed-widgets {
+.listing-grid .view-filters form .views-exposed-widgets {
     margin: 0px
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget {
     padding-top: 0px
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget label {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget label {
     color: #313131;
     display: inline-block;
     padding-right: 15px;
@@ -2151,7 +2151,7 @@ body.nav-open #aviators-palette {
     vertical-align: top
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget button {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget button {
     background-image: none;
     color: #ffffff;
     font-size: 16px;
@@ -2160,30 +2160,30 @@ body.nav-open #aviators-palette {
     padding: 7px 15px
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget select {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget select {
     width: 100px !important
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget .controls {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget .controls {
     display: inline
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget .chzn-container {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget .chzn-container {
     border: 1px solid #b5b5b5
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget .chzn-container .chzn-drop {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget .chzn-container .chzn-drop {
     border: 1px solid #b5b5b5;
     border-top: 0px;
     margin-left: -1px;
     width: 100px !important
 }
 
-.view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget.views-submit-button {
+.listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget.views-submit-button {
     padding-right: 0px
 }
 
-.view-apartments .item {
+.listing-grid .item {
     -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
     box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
@@ -2193,12 +2193,12 @@ body.nav-open #aviators-palette {
     position: relative
 }
 
-.view-apartments .item .views-field-field-image {
+.listing-grid .item .views-field-field-image {
     height: 169px;
     overflow: hidden
 }
 
-.view-apartments .item .views-field-field-image .field-content {
+.listing-grid .item .views-field-field-image .field-content {
     -webkit-transition: opacity 0.2s linear,width 0.2s linear;
     -moz-transition: opacity 0.2s linear,width 0.2s linear;
     -o-transition: opacity 0.2s linear,width 0.2s linear;
@@ -2206,17 +2206,17 @@ body.nav-open #aviators-palette {
     width: 100%
 }
 
-.view-apartments .item .views-field-field-image .field-content:hover {
+.listing-grid .item .views-field-field-image .field-content:hover {
     opacity: .8;
     width: 104%
 }
 
-.view-apartments .item .views-field-field-image .field-content:hover img {
+.listing-grid .item .views-field-field-image .field-content:hover img {
     margin-left: -2%;
     margin-top: -2%
 }
 
-.view-apartments .item .views-field-field-image img {
+.listing-grid .item .views-field-field-image img {
     -webkit-transition: margin-left 0.2s linear,margin-top 0.2s linear;
     -moz-transition: margin-left 0.2s linear,margin-top 0.2s linear;
     -o-transition: margin-left 0.2s linear,margin-top 0.2s linear;
@@ -2225,13 +2225,13 @@ body.nav-open #aviators-palette {
     width: 100%
 }
 
-.view-apartments .item h2 {
+.listing-grid .item h2 {
     line-height: 22px;
     margin: 10px 0px 0px 0px;
     padding: 0px 15px
 }
 
-.view-apartments .item h2 a {
+.listing-grid .item h2 a {
     -webkit-transition: color 0.1s ease-in;
     -moz-transition: color 0.1s ease-in;
     -o-transition: color 0.1s ease-in;
@@ -2241,20 +2241,20 @@ body.nav-open #aviators-palette {
     font-weight: normal
 }
 
-.view-apartments .item h2 a:hover {
+.listing-grid .item h2 a:hover {
     color: #ce1919;
     text-decoration: none
 }
 
-.view-apartments .item .content {
+.listing-grid .item .content {
     margin-right: 30px
 }
 
-.view-apartments .item .views-field-field-location {
+.listing-grid .item .views-field-field-location {
     padding: 0px 15px
 }
 
-.view-apartments .item .views-field-field-price,.result-item .views-field.views-field-field-multiprice {
+.listing-grid .item .views-field-field-price,.listing-grid .item .views-field-field-multiprice,.result-item .views-field.views-field-field-multiprice {
     background: none;
     color: #313131;
     font-size: 18px;
@@ -2266,29 +2266,29 @@ body.nav-open #aviators-palette {
 .view-machine-results .views-field.views-field-field-multiprice {
     bottom: 98px;
 }
-.view-apartments .item .views-field-field-area {
+.listing-grid .item .views-field-field-area {
     color: #313131;
     float: left;
     margin-top: 8px
 }
 
-.view-apartments .item .views-field-field-area .views-label {
+.listing-grid .item .views-field-field-area .views-label {
     display: inline;
     font-weight: bold;
     padding: 0px 0px 0px 15px
 }
 
-.view-apartments .item .views-field-field-area .field-content {
+.listing-grid .item .views-field-field-area .field-content {
     display: inline
 }
 
-.view-apartments .item .views-field-field-bedrooms {
+.listing-grid .item .views-field-field-bedrooms {
     float: right;
     margin-right: 10px;
     padding-top: 8px
 }
 
-.view-apartments .item .views-field-field-bedrooms .field-content {
+.listing-grid .item .views-field-field-bedrooms .field-content {
     background-image: url("../img/icons/bedrooms.png");
     background-position: left center;
     background-repeat: no-repeat;
@@ -2298,18 +2298,18 @@ body.nav-open #aviators-palette {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    .view-apartments .item .views-field-field-bedrooms .field-content {
+    .listing-grid .item .views-field-field-bedrooms .field-content {
         background-image: url("../img/icons/bedrooms@2x.png")
     }
 }
 
-.view-apartments .item .views-field-field-bathrooms {
+.listing-grid .item .views-field-field-bathrooms {
     float: right;
     margin-right: 15px;
     padding-top: 8px
 }
 
-.view-apartments .item .views-field-field-bathrooms .field-content {
+.listing-grid .item .views-field-field-bathrooms .field-content {
     background-image: url("../img/icons/bathrooms.png");
     background-position: left center;
     background-repeat: no-repeat;
@@ -2319,62 +2319,65 @@ body.nav-open #aviators-palette {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
-    .view-apartments .item .views-field-field-bathrooms .field-content {
+    .listing-grid .item .views-field-field-bathrooms .field-content {
         background-image: url("../img/icons/bathrooms@2x.png")
     }
 }
 
-.view-apartments .row .span12 .row:last-child .span3,.view-apartments .row .span9 .row:last-child .span3 {
+.listing-grid .row .span12 .row:last-child .span3,.listing-grid .row .span9 .row:last-child .span3 {
     margin-bottom: 0px
 }
 
 @media (min-width: 1200px) {
-    .view-apartments .views-field-field-image {
+    .listing-grid .views-field-field-image {
         height:205px
     }
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
-    .view-apartments .span3 h2 a {
+    .listing-grid .span3 h2 a {
         font-size:14px
     }
 
-    .view-apartments .span3 .views-field-field-bathrooms {
+    .listing-grid .span3 .views-field-field-bathrooms {
         float: left;
         margin-left: 10px
     }
 
-    .view-apartments .span3 .views-field-field-bedrooms {
+    .listing-grid .span3 .views-field-field-bedrooms {
         float: left;
         margin-left: 10px
     }
 
-    .view-apartments .span3 .views-field-field-area {
+    .listing-grid .span3 .views-field-field-area {
         display: none
     }
 }
 
 @media (max-width: 767px) {
-    .view-apartments {
+    .listing-grid {
         padding-left:20px;
         padding-right: 20px
     }
 
-    .view-apartments .view-filters form .views-exposed-widgets .views-exposed-widget label {
+    .listing-grid .view-filters form .views-exposed-widgets .views-exposed-widget label {
         display: none
     }
 
-    .view-apartments .span3 {
+    .listing-grid .span3 {
         margin-bottom: 30px;
         overflow: hidden
     }
 
-    .view-apartments .row .span9 .row:last-child .span3 {
+    .listing-grid .row .span9 .row:last-child .span3 {
         margin-bottom: 30px
     }
 }
 
-#block-views-apartments-block-2 .content .views-row,.region-sidebar-second .block-views .content .views-row {
+#block-views-apartments-block-2 .content .views-row,
+.region-sidebar-second .block-views .content .views-row,
+.panel-pane .view-content .views-row
+{
     overflow: hidden;
     *zoom:1;-webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
@@ -2383,89 +2386,132 @@ body.nav-open #aviators-palette {
     margin-bottom: 15px
 }
 
-#block-views-apartments-block-2 .content .views-row .views-field-field-image,.region-sidebar-second .block-views .content .views-row .views-field-field-image {
+#block-views-apartments-block-2 .content .views-row .views-field-field-image,
+.region-sidebar-second .block-views .content .views-row .views-field-field-image, 
+.panel-pane .view-content .views-row .views-field-field-image 
+{
     float: left;
     height: auto
 }
 
-#block-views-apartments-block-2 .content .views-row .views-field-field-image img,.region-sidebar-second .block-views .content .views-row .views-field-field-image img {
+#block-views-apartments-block-2 .content .views-row .views-field-field-image img,
+.region-sidebar-second .block-views .content .views-row .views-field-field-image img,
+.panel-pane .view-content .views-row .views-field-field-image img
+ {
     margin-right: 10px;
     width: 80px
 }
 
-#block-views-apartments-block-2 .content .views-row .views-field-title h3,.region-sidebar-second .block-views .content .views-row .views-field-title h3 {
+#block-views-apartments-block-2 .content .views-row .views-field-title h3,
+.region-sidebar-second .block-views .content .views-row .views-field-title h3,
+.panel-pane .view-content .views-row .views-field-title h3 {
     line-height: 18px;
     margin: 6px 0px 2px 0px
 }
 
-#block-views-apartments-block-2 .content .views-row .views-field-title h3 a,.region-sidebar-second .block-views .content .views-row .views-field-title h3 a {
+#block-views-apartments-block-2 .content .views-row .views-field-title h3 a,
+.region-sidebar-second .block-views .content .views-row .views-field-title h3 a, 
+.panel-pane .view-content .views-row .views-field-title h3 a 
+{
     font-size: 14px;
     text-decoration: none
 }
 
-#block-views-apartments-block-2 .content .views-row .views-field-field-price,.region-sidebar-second .block-views .content .views-row .views-field-field-price {
+#block-views-apartments-block-2 .content .views-row .views-field-field-price,
+.region-sidebar-second .block-views .content .views-row .views-field-field-price,
+.panel-pane .view-content .views-row .views-field-field-price 
+{
     display: none;
     color: #272727;
     font-weight: bold
 }
 
-#block-views-apartments-block-2 .content .views-row:last-child,.region-sidebar-second .block-views .content .views-row:last-child {
+#block-views-apartments-block-2 .content .views-row:last-child,
+.region-sidebar-second .block-views .content .views-row:last-child, 
+.panel-pane .view-content .views-row:last-child 
+{
     margin-bottom: 0px
 }
 
 @media (min-width: 1200px) {
-    .region-sidebar-second .block-views .content .views-row {
+    .region-sidebar-second .block-views .content .views-row,
+    .panel-pane .view-content .views-row
+     {
         font-size:14px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-image img {
+    .region-sidebar-second .block-views .content .views-row .views-field-field-image img,
+    .panel-pane .view-content .views-row .views-field-field-image img
+     {
         width: 100px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-title {
+    .region-sidebar-second .block-views .content .views-row .views-field-title,
+    .panel-pane .view-content .views-row .views-field-title
+     {
         margin-top: 10px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-title h3 {
+    .region-sidebar-second .block-views .content .views-row .views-field-title h3,
+    .panel-pane .view-content .views-row .views-field-title h3
+     {
         margin-top: -5px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-title h3 a {
+    .region-sidebar-second .block-views .content .views-row .views-field-title h3 a ,
+    .panel-pane .view-content .views-row .views-field-title h3 a 
+    {
         font-size: 14px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-price {
+    .region-sidebar-second .block-views .content .views-row .views-field-field-price, 
+    .panel-pane .view-content .views-row .views-field-field-price 
+    {
         display: block
     }
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
-    .region-sidebar-second .block-views .content .views-row {
+    .region-sidebar-second .block-views .content .views-row,
+    .panel-pane .view-content .views-row
+     {
         padding-bottom:5px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-image {
+    .region-sidebar-second .block-views .content .views-row .views-field-field-image, 
+    .panel-pane .view-content .views-row .views-field-field-image 
+    {
         float: none
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-image img {
+    .region-sidebar-second .block-views .content .views-row .views-field-field-image img, 
+    .panel-pane .view-content .views-row .views-field-field-image img 
+    {
         width: 100%
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-title {
+    .region-sidebar-second .block-views .content .views-row .views-field-title, 
+    .panel-pane .view-content .views-row .views-field-title 
+    {
         padding: 0px 10px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-title a {
+    .region-sidebar-second .block-views .content .views-row .views-field-title a, 
+    .panel-pane .view-content .views-row .views-field-title a 
+    {
         font-size: 14px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-location {
+    .region-sidebar-second .block-views .content .views-row .views-field-field-location, 
+    .panel-pane .view-content .views-row .views-field-field-location 
+    {
         font-size: 14px;
         padding: 0px 10px
     }
 
-    .region-sidebar-second .block-views .content .views-row .views-field-field-price {
+    .region-sidebar-second .block-views .content .views-row .views-field-field-price, 
+    .panel-pane .view-content .views-row .views-field-field-price 
+    {
         display: block;
         font-size: 14px;
         padding: 0px 10px
@@ -5715,7 +5761,7 @@ a.flag.unflag-action:hover:before{
 a.flag.flag-action:hover:before{
     content: "\f004";
 }
-.view-user-favorites .views-field-ops{position: relative}
+.view-user-favorites .views-row{position: relative}
 /* Filtering */
 .views-exposed-form .views-widget-filter-field_multiprice_field_multiprice_value_value .views-widget{
     display: none;
@@ -6358,7 +6404,8 @@ article.node-apartment footer .links.inline{
     }
     /*Results one per row*/
     .machine-results-listing {
-    height: 1080px;
+    height: auto;
+    max-height: 1080px;
     margin-top: 20px;
     }
     .machine-results-listing .result-item div.views-field-field-image {
