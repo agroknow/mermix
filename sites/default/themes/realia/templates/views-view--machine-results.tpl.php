@@ -48,6 +48,7 @@ if(is_object($results[0])) {
 
   <?php if ($exposed): ?>
     <div class="view-filters">
+      <div id="toggle-filters" class="hidden-filters"><i class="fa fa-align-justify"></i></div>
       <?php print $exposed; ?>
     </div>
   <?php endif; ?>

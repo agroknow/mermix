@@ -66,6 +66,9 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
+    jQuery('#toggle-filters').click(function() {
+        jQuery(this).next().slideToggle();
+    });
     if(jQuery(window).width() <= 1105) {
 	var promobtn = jQuery('.navigation-wrapper').find('a.highlighted').clone();
 	jQuery('div.logo').parent().append( promobtn );
@@ -81,6 +84,9 @@ jQuery(document).ready(function(){
 	} else {
 	    jQuery('#header-wrapper').removeClass('fixed');
 	}
+    if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
+        jQuery("#dragger").css("top",jQuery(window).scrollTop());
+        //jQuery("#dragger").animate({top: jQuery(window).scrollTop()}, 200);
 });
 jQuery('.form-item').each(function(){
 	var $description = jQuery(this).find('div.description');

@@ -16,7 +16,7 @@ if($user->uid > 0) {
 }
 ?>
 <div class="row">
-    <div class="span12">
+    <div class="span12 center-align mtb20">
     	<?php 
     	if($user->uid > 0 && $lat && $lon) {
     		print '<a class="btn btn-primary" href="' . url('machine-results/' . $lat . ',' . $lon) . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>';
@@ -26,7 +26,8 @@ if($user->uid > 0) {
     	}
     	?>
     </div>
-    <div class="span6">
+    <div class="span6 map-container">
+    <div id="dragger">Drag to scroll page</div>
 	<div id="<?php print $view_id ?>" style="width:<?php print $width; ?>; height:<?php print $height; ?>;"></div>
     </div>
     <div class="span6 machine-results-listing">
