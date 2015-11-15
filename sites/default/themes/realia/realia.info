@@ -58,9 +58,9 @@ stylesheets[all][] = css/realia-blue.css
 stylesheets[all][] = css/opentip.css
 stylesheets[all][] = css/font-awesome.min.css
 
-scripts[] = js/jquery.currency.js
+;scripts[] = js/jquery.currency.js
 scripts[] = js/jquery.ezmark.js
-scripts[] = js/retina.js
+;scripts[] = js/retina.js
 scripts[] = libraries/chosen/chosen/chosen.jquery.min.js
 scripts[] = js/opentip-jquery.min.js
 scripts[] = js/realia.js

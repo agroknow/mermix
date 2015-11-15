@@ -5886,6 +5886,7 @@ article.node-apartment footer .links.inline{
     width: 100%;
     height: 100%;
     z-index: 10;
+    text-decoration: none;
 }
 .view-machine-types .sub-item .views-field-name-i18n a span.name{
     position: absolute;
@@ -5986,6 +5987,9 @@ article.node-apartment footer .links.inline{
 .mtb20{
     margin: 20px 0; 
 }
+#dragger{
+        display: none;
+    }
 
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
@@ -6119,9 +6123,6 @@ article.node-apartment footer .links.inline{
     }
     .region-sidebar-second .block-webform .container-inline-date{
 	width: 100%;
-    }
-    #dragger{
-        display: none;
     }
 }
 @media (min-width: 1200px) {
@@ -6339,7 +6340,7 @@ article.node-apartment footer .links.inline{
         right: 5px;
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 604px) {
     .banner-text .text-inner h1{
 	font-size: 38px;
     }
