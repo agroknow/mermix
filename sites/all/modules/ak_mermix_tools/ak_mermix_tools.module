@@ -640,7 +640,7 @@ function machinery_search_form_submit($form, &$form_state) {
     $dates = date('Y-m-d', $dateFrom) . '--' . date('Y-m-d', $dateTo);
     }
     $machineType = $search_criteria['machine_type'] ? $search_criteria['machine_type'] : 'all';
-    if($coords == 'all' && $machineType == all && $dates == all){
+    if($coords == 'all' && $machineType == 'all' && $dates == 'all'){
     $form_state['redirect'] = 'machine-results';
     } else {
     $form_state['redirect'] = 'machine-results/' . $coords . '/' . $machineType . '/' . $dates;
