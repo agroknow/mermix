@@ -6072,6 +6072,16 @@ article.node-apartment footer .links.inline{
 	width: 100%;
     }
 }
+
+@media (min-width: 980px) {
+.page-machine-results .inline-form input{
+    width: 170px;
+    }
+.page-machine-results .container-inline-date .form-item input{
+    width: 150px;
+    }
+}
+
 @media (min-width: 1200px) {
     #header .row-fluid .span4{
 	width: 23%;
@@ -6084,12 +6094,10 @@ article.node-apartment footer .links.inline{
 	padding-left: 1em;
 	padding-right: 1em;
     }
-    
-}
-@media (min-width: 980px) {
-.page-machine-results .inline-form input,.page-machine-results .container-inline-date .form-item input{
-	width: 170px;
+    .page-machine-results .inline-form input,.page-machine-results .container-inline-date .form-item input{
+    width: 170px;
     }
+    
 }
 
 @media (max-width: 979px) {
