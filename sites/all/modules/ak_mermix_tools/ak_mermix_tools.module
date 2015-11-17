@@ -488,7 +488,7 @@ function machinery_search_form($form, &$form_state) {
 	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer'),
 	    drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js' => array('scope' => 'footer'),
     ));
-    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&sensor=false&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
+    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
 	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
     }
     $form['wrapper_start'] = array(

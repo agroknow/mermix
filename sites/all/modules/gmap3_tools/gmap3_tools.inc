@@ -118,7 +118,7 @@ function gmap3_tools_add_map($options) {
     $init = TRUE;
     // Visit https://code.google.com/apis/console and generate new api key if
     // you need it.
-    $lib_url = 'https://maps.googleapis.com/maps/api/js?&sensor=false';
+    $lib_url = 'https://maps.googleapis.com/maps/api/js?';
     if ($api_key = variable_get('gmap3_tools_api_key', 'AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places')) {
       $lib_url .= '&key=' . $api_key;
     }
