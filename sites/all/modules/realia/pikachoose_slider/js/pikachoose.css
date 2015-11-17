@@ -78,7 +78,7 @@
 }
 
 .pika-imgnav a.previous {
-  background: url(prev.png) no-repeat left 45%;
+  /*background: url(prev.png) no-repeat left 45%;*/
   height: 100%;
   width: 50px;
   top: 10px;
@@ -87,7 +87,7 @@
 }
 
 .pika-imgnav a.next {
-  background: url(next.png) no-repeat right 45%;
+  /*background: url(next.png) no-repeat right 45%;*/
   height: 100%;
   width: 50px;
   top: 10px;
@@ -96,7 +96,7 @@
 }
 
 .pika-imgnav a.play {
-  background: url(play.png) no-repeat 0% 50%;
+  /*background: url(play.png) no-repeat 0% 50%;*/
   height: 100px;
   width: 44px;
   top: 0;
@@ -106,7 +106,7 @@
 }
 
 .pika-imgnav a.pause {
-  background: url(pause.png) no-repeat 0% 50%;
+  /*background: url(pause.png) no-repeat 0% 50%;*/
   height: 100px;
   width: 44px;
   top: 0;
@@ -166,7 +166,7 @@
 
 /* If using user thumbnails there's a pause well the new large image loads. This is the loader for that */
 .pika-loader {
-  background: url(loading.gif) 3px 3px no-repeat #000;
+  /*background: url(loading.gif) 3px 3px no-repeat #000;*/
   background-color: rgba(0, 0, 0, 0.9);
   color: white;
   width: 60px;
