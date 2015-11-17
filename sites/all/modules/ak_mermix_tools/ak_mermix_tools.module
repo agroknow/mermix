@@ -329,7 +329,7 @@ function mtools_createTerms($terms, $vocabulary_name) {
 
     $voc = taxonomy_vocabulary_machine_name_load($vocabulary_name);
     $parent = 0;
-
+    $term = null;
     foreach (array_reverse($terms) as $elname => $enname) {
 	$found_terms = taxonomy_get_term_by_name($enname, $vocabulary_name);
 	if (empty($found_terms)) { //create term
