@@ -878,10 +878,13 @@ function ak_mermix_tools_views_pre_render(&$view) {
      $prices = array();
      foreach ($result as $row) {
 	 if(isset($row->_field_data['nid']['entity']->field_multiprice['und'])) {
-	    foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
-		$prices[] = $price['field_multiprice_value']['und'][0]['value'];
-	    }
-	 }
+		    foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
+			$prices[] = $price['field_multiprice_value']['und'][0]['value'];
+		    }
+	 	}
+      }
+      if(empty($prices)){
+      	$prices[] = 0;
       }
       $min = (float)min($prices);
       $max = (float)max($prices);
