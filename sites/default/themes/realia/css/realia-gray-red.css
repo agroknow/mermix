@@ -5899,6 +5899,18 @@ article.node-apartment footer .links.inline{
     font-weight: bold;
     
 }
+.view-machine-types .sub-item .views-field-name-i18n a span.add-it{
+    position: absolute;
+    top: 60%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 16px;
+    opacity: 0;
+}
+.view-machine-types .sub-item:hover .views-field-name-i18n a span.add-it{
+    opacity: 1;
+}
 .view-machine-types .sub-item.odd.odd .fields-wrapper.large, .view-machine-types .sub-item.even.even .fields-wrapper.large{
     height: 230px;
 }
