@@ -5918,10 +5918,15 @@ article.node-apartment footer .links.inline{
     border: 1px solid;
     float: right;
     margin-top: 15px;
+    background: #e63434;
+    color: #fff;
+}
+#header-wrapper.fixed .navbar .span4 a.highlighted{
+    margin-top: 5px;
 }
 .navbar .span4 a.highlighted:hover{
     text-decoration: none;
-    background: rgba(0, 0, 0, 0.16);
+    background: #ce1919;
 }
 #toggle-filters{
     display: none;
@@ -6455,6 +6460,9 @@ article.node-apartment footer .links.inline{
     }
 }
 @media (max-width: 320px) {
+    #header-wrapper.fixed .navbar .span4{
+        padding-left: 25px;
+    }
     .navbar .span4 a.highlighted{
     float: left;
     }
