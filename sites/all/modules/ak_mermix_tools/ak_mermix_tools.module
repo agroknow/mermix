@@ -189,7 +189,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	    }
 	}
     }
-    if (substr($form_id, 0, strrpos($form_id, '_')) == 'webform_client_form') {
+    if ($form_id == 'webform_client_form_' . variable_get('check_availability_webform_id', '299') || $form_id == 'webform_client_form_' . variable_get('looking_for_webform_id', '298')) {
 	foreach ($form['submitted'] as $key => $value) {
 	    if (in_array($key, array('location', 'comments'))) {
 		$form['submitted'][$key] = array_merge($value, array(
@@ -221,12 +221,14 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    //'#attach' => $attach,
 		));
 	    }
+	    $form['submitted'][$key]['#attributes']['placeholder'] = t($form['submitted'][$key]['#title']);
+	    $form['submitted'][$key]['#title_display'] = 'invisible';
 	}
     }
 }
 
 function ak_mermix_tools_webform_submission_presave($node, &$submission) {
-    if($node->title == 'Check availability') {    
+    if($node->nid == variable_get('check_availability_webform_id', '299')) {    
 	if(!user_is_logged_in()) {
 	    $_SESSION['availability_submission'] = $submission;
 	    drupal_goto('user/login');
