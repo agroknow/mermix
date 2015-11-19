@@ -5411,8 +5411,11 @@ html.js input.ui-autocomplete-loading {
     top: 7px;
     left: 7px;
 }
+.webform-client-form .form-type-date-popup .form-type-textfield:before{
+    font-size: 20px;
+}
 .webform-client-form .form-type-date-popup .form-type-textfield input{
-    padding-left: 20px;
+    padding-left: 30px;
 }
 .inline-form .form-type-date-popup .form-type-textfield:before{
     font-size: 20px;
@@ -5622,14 +5625,12 @@ button.form-submit.field-add-more-submit{
 }
 .page-machine-results #content .webform-client-form .container-inline-date{
     float: left;
-/*    width: 48%;*/
+    width: 33%;
     clear: none;
     display: inline-block;
 }
 .page-machine-results #content .webform-client-form button{
-    position: relative;
-    top: 25px;
-    
+    position: relative; 
 }
 /*.page-machine-results .webform-client-form .container-inline-date + .container-inline-date{
     float: right;
@@ -5902,11 +5903,17 @@ article.node-apartment footer .links.inline{
 .view-machine-types .sub-item .views-field-name-i18n a span.add-it{
     position: absolute;
     top: 60%;
-    left: 0;
+    left: 50%;
     right: 0;
     text-align: center;
     font-size: 16px;
+    width: 100px;
+    margin-left: -50px;
+    padding: 5px;
+    color: #fff;
+    background: #e63434;
     opacity: 0;
+    transition : all .3;
 }
 .view-machine-types .sub-item:hover .views-field-name-i18n a span.add-it{
     opacity: 1;
@@ -6002,6 +6009,67 @@ article.node-apartment footer .links.inline{
 #dragger{
         display: none;
     }
+
+/* Highlighted sidebar.*/
+.region-highlighted-sidebar .block-webform{
+
+}
+.region-highlighted-sidebar .block-webform form{
+
+}
+.region-highlighted-sidebar .block-webform form .form-textarea-wrapper textarea{
+    width: 220px;
+}
+.region-highlighted-sidebar .block-webform form .form-textarea-wrapper .grippie{
+    width: 218px;
+}
+.region-highlighted-sidebar .block-webform form .form-type-date-popup input{
+    width: 185px;
+    padding-left: 30px;
+}
+.region-highlighted-sidebar .block-webform form .btn.btn-primary{
+    margin-top: 25px;
+    width: 220px;
+}
+.region-highlighted-sidebar .block-webform form input{
+    height: 25px;
+}
+.region-highlighted-sidebar .block-webform form .form-type-date-popup .form-type-textfield:before{
+    top: 10px;
+}
+.region-highlighted-sidebar .block-webform form .container-inline-date{
+    margin-bottom: 20px;
+}
+form.webform-client-form .container-inline-date{
+    margin-bottom: 10px;
+}
+.region-highlighted-sidebar .block-webform form .webform-component{
+    margin-bottom: 20px;
+}
+.node-type-webform .form-textarea-wrapper textarea{
+    width: 220px;
+}
+.node-type-webform .form-textarea-wrapper .grippie{
+    width: 218px;
+}
+.node-type-webform .webform-client-form .form-type-date-popup .form-type-textfield input{
+    width: 183px;
+}
+/*.node-type-webform .webform-client-form .webform-component{
+    float: left;
+    width: 48%;
+    min-height: 50px;
+    text-align: center;
+}
+.node-type-webform .webform-client-form .container-inline-date{
+    float: left;
+    clear: none;
+    width: 48%;
+    text-align: center;
+}
+.node-type-webform .webform-client-form .form-textarea-wrapper{
+    display: inline-block;
+}*/
 
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
@@ -6111,6 +6179,9 @@ article.node-apartment footer .links.inline{
     .block-webform .form-type-date-popup .form-type-textfield:before{
 	left: 18px;
     }
+    .region-highlighted-sidebar .block-webform .form-type-date-popup .form-type-textfield:before{
+    left: 8px;
+    }
     .region-triptych-bottom{
 	padding-left: 20px;
     }
@@ -6197,7 +6268,7 @@ article.node-apartment footer .links.inline{
 	display: block;
 	width: 100%;
     }
-    .container-inline-date .form-item{
+    .inline-form .container-inline-date .form-item{
 	width: 100%;
     }
     .container-inline-date .form-item input{
@@ -6305,18 +6376,41 @@ article.node-apartment footer .links.inline{
     .region-sidebar-second .block-webform .container-inline-date{
 	width: auto;
     }
+    .region-highlighted-sidebar .block-webform form .form-textarea-wrapper textarea{
+    width: 166px;
+    }
+    .region-highlighted-sidebar .block-webform form .form-textarea-wrapper .grippie{
+    width: 164px;
+    }
+    .region-highlighted-sidebar .block-webform form .form-item input{
+    width: 150px;
+    }
+    .region-highlighted-sidebar .block-webform form .form-type-date-popup input{
+    width: 122px;
+    padding-left: 36px;
+    }
+    .region-highlighted-sidebar .block-webform form .btn.btn-primary{
+    margin-top: 25px;
+    width: 166px;
+    }
+    .region-highlighted-sidebar .block-webform form .chzn-container,.region-highlighted-sidebar .block-webform form .chzn-container .chzn-drop{
+        width: 166px !important;
+    }
+    .region-highlighted-sidebar .block-webform form .chzn-container .chzn-drop .chzn-search input{
+        width: 133px !important;
+    }
     
 }
 
 @media (max-width: 767px) {
-    .page-machine-results .webform-client-form .webform-component.webform-component--type,
-.page-machine-results .webform-client-form .webform-component.webform-component--location,
-.page-machine-results .webform-client-form .webform-component.webform-component--email{
+.page-machine-results #content .webform-client-form .webform-component.webform-component--type,
+.page-machine-results #content .webform-client-form .webform-component.webform-component--location,
+.page-machine-results #content .webform-client-form .webform-component.webform-component--email{
     float: left;
     width: 100%;
     }
-.page-machine-results .webform-client-form .container-inline-date{
-    width: 48%;
+.page-machine-results #content .webform-client-form .container-inline-date{
+    width: 100%;
     }
     div#content .container{
 	padding:0 20px;
@@ -6359,7 +6453,34 @@ article.node-apartment footer .links.inline{
         bottom: 10px;
         right: 5px;
     }
+    .region-highlighted-sidebar .block-webform form .webform-component{
+        float: left;
+        width: 48%;
+        min-height: 50px;
+        text-align: center;
+    }
+    .region-highlighted-sidebar .block-webform form .container-inline-date{
+        float: left;
+        clear: none;
+        width: 48%;
+        text-align: center;
+    }
+    .region-highlighted-sidebar .block-webform form .container-inline-date .form-item .form-item{
+        float: none;
+        width: auto;
+        display: inline-block;
+    }
+    .region-highlighted-sidebar .block-webform form .form-textarea-wrapper{
+        display: inline-block;
+    }
+    .region-highlighted-sidebar .block-webform form{
+        text-align: center;
+    }
+    .region-highlighted-sidebar .block-webform .block-title{
+        text-align: center;
+    }
 }
+
 @media (max-width: 604px) {
     .banner-text .text-inner h1{
 	font-size: 38px;
@@ -6390,7 +6511,7 @@ article.node-apartment footer .links.inline{
 	width: 75%;
     }
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
-	width: 480px;
+	width: 465px;
 	margin: 0 auto;
     }
     
@@ -6506,6 +6627,16 @@ article.node-apartment footer .links.inline{
     .inline-form input,
     .container-inline-date .form-item input{
 	width: 92%;
+    }
+    .region-highlighted-sidebar .block-webform form .webform-component,
+    .region-highlighted-sidebar .block-webform form .container-inline-date{
+    width: 100%;
+    }
+    .region-highlighted-sidebar .block-webform form .btn.btn-primary{
+        width: 220px;
+    }
+    .region-highlighted-sidebar .block-webform .form-type-date-popup .form-type-textfield:before{
+        left: 8px;
     }
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf {
 	width: 300px;
