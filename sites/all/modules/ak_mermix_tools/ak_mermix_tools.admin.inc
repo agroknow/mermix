@@ -13,7 +13,14 @@ function mermixtools_admin_settings() {
 	'#type' => 'textfield',
 	'#title' => t('Looking for webform id'),
 	'#required' => true,
-	'#default_value' => variable_get('looking_for_webform_id', ''),
+	'#default_value' => variable_get('looking_for_webform_id', '298'),
+	
+    );
+    $form['mermix_tools_settings']['check_availability_webform_id'] = array(
+	'#type' => 'textfield',
+	'#title' => t('check availability webform id'),
+	'#required' => true,
+	'#default_value' => variable_get('check_availability_webform_id', '299'),
 	
     );
     $form['mermix_tools_settings']['looking_for_webform_key'] = array(
