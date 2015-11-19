@@ -19,10 +19,10 @@ if($user->uid > 0) {
     <div class="span12 center-align mtb20">
     	<?php 
     	if($user->uid > 0 && $lat && $lon) {
-    		print '<a class="btn btn-primary" href="' . url('machine-results/' . $lat . ',' . $lon) . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>';
+    		print '<a class="btn btn-primary" href="' . url('machine-results/' . $lat . ',' . $lon . ' 50') . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>';
     	} else {
     		print isset($_COOKIE['geolocation']) ? 
-    		'<a class="btn btn-primary" href="' . url('machine-results/' . $_COOKIE['geolocation']) . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>' : '<a class="btn btn-primary" href="#" onclick="geolocation(false)">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>' ;
+    		'<a class="btn btn-primary" href="' . url('machine-results/' . $_COOKIE['geolocation'] . ' 50') . '">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>' : '<a class="btn btn-primary" href="#" onclick="geolocation(false)">' . t('Use your location') . '<i class="fa fa-map-marker"></i></a>' ;
     	}
     	?>
     </div>
