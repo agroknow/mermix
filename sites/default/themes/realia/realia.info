@@ -21,7 +21,8 @@ regions[carousel]                   = 'Carousel'
 regions[bottom]                     = 'Bottom'
 regions[map]                        = 'Map'
 regions[map_sidebar]                = 'Map Sidebar'
-regions[banner]			    = 'Banner'
+regions[banner]			    		= 'Banner'
+regions[pre_highlighted]			= 'Pre highlighted'
 
 ; TRIPTYCH
 regions[triptych_bottom]            = 'Bottom triptych'
