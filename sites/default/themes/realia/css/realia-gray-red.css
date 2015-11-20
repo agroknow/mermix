@@ -5972,14 +5972,11 @@ article.node-apartment footer .links.inline{
 .owl-carousel .sub-item .fields-wrapper .comments{
     display: block;
     font-size: 14px;
-    font-style: italic;
     margin-top: 10px;
     color: #707070;
     text-align: left;
 }
-.owl-carousel .sub-item .fields-wrapper .comments:before,.owl-carousel .sub-item .fields-wrapper .comments:after{
-    content: "\"";
-}
+
 .owl-carousel .sub-item .fields-wrapper .date-from{
     position: absolute;
     top: 70%;
