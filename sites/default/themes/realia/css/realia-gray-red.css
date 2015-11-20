@@ -6042,7 +6042,7 @@ article.node-apartment footer .links.inline{
 }
 .listing-grid .sub-item a.main-link .name{
     position: absolute;
-    top: 15%;
+    top: 15px;
     left: 0;
     right: 0;
     text-align: center;
