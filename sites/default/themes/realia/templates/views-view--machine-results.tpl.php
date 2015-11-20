@@ -32,6 +32,8 @@
 //drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_results.js');
 $results = $view->result;
 $searchform = drupal_get_form('machinery_search_form');
+$blockid = 'client-block-' . variable_get('looking_for_webform_id');
+$block = module_invoke('webform', 'block_view', $blockid);
 if(is_object($results[0])) {
 ?>
 <div class="<?php print $classes; ?>">
@@ -48,6 +50,7 @@ if(is_object($results[0])) {
 
   <?php if ($exposed): ?>
     <div class="view-filters">
+      <div id="toggle-filters" class="hidden-filters"><i class="fa fa-align-justify"></i></div>
       <?php print $exposed; ?>
     </div>
   <?php endif; ?>
@@ -98,13 +101,13 @@ if(is_object($results[0])) {
 <?php 
 print '<h2>' . t('Try a new search!') . '</h2>';
 print render($searchform); 
+print '<div class="looking-for-title"><h2>' . t('Or...<br /> tell us what you are looking for') . '</h2></div>';
+print render($block['content']);
 ?>
 <?php } else {
  print '<h2>' . t('Have not found what you are looking for; Try again..') . '</h2>';
  print render($searchform);
  print '<div class="looking-for-title"><h2>' . t('Or...<br /> tell us what you are looking for') . '</h2></div>';
- $blockid = 'client-block-' . variable_get('looking_for_webform_id');
- $block = module_invoke('webform', 'block_view', $blockid);
  print render($block['content']);
 } 
 unset($_SESSION['search_criteria']);

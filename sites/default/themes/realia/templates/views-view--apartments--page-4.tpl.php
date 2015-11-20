@@ -39,8 +39,7 @@
     </div>
   <?php endif; ?>
   <?php  $breadcrumb_array = drupal_get_breadcrumb(); ?>
-  <?php if(!$empty && count($breadcrumb_array) > 1) { 
-     
+  <?php if( $rows && count($breadcrumb_array) > 1 ) { 
      array_shift($breadcrumb_array);
      $breadcrumb = theme('breadcrumb', array('breadcrumb' => $breadcrumb_array));
      print $breadcrumb;

@@ -105,6 +105,13 @@
 
     <div id="content">
         <div class="container">
+            <?php if ($page['pre_highlighted']): ?>
+                <div class="row" id="pre-highlighted">
+                    <div class="span12">
+                        <div class="pre-highlighted"><?php print render($page['pre_highlighted']); ?></div>
+                    </div>
+                </div><!-- /#pre_highlighted --> 
+            <?php endif; ?>
             <?php if ($page['highlighted']): ?>
                 <div class="row" id="highlighted">
                     <div class="<?php print ($page['highlighted_sidebar'])? 'span9' : 'span12' ?>">
