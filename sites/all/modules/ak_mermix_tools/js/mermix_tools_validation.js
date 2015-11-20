@@ -1,4 +1,11 @@
 jQuery.validator.setDefaults({ ignore: ":hidden:not(select)" }); //for all select
+jQuery.validator.addMethod("eitherEmailPhone", function(value, element) {
+            isPhone = (this.optional(element) || /^\d+$/.test(value)) && this.getLength(jQuery.trim(value), element) <= 12 && this.getLength(jQuery.trim(value), element) >= 10 ;
+            isEmail = this.optional(element) || /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(value);
+
+            return isPhone || isEmail;
+
+        }, "Please enter either phone or e-mail");
 jQuery("#machinery-search-form").validate({
   rules: {
     'date_to[date]': {
@@ -27,6 +34,9 @@ jQuery(".webform-client-form").validate({
     },
     'submitted[type]' : {
 	required: true
+    },
+    'submitted[email_or_phone]' : {
+    eitherEmailPhone: true
     }
   }
 });

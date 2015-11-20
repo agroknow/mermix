@@ -222,6 +222,10 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    //'#attach' => $attach,
 		));
 	    }
+	    if($key == 'email_or_phone') {
+	    $form['submitted'][$key]['#access'] = ($user->uid > 1) ? false : true;
+	    $form['submitted'][$key]['#required'] = ($user->uid == 0) ? true : false;
+	    }
 	    if(is_array($value)) {
 	    $form['submitted'][$key]['#attributes']['placeholder'] = t($form['submitted'][$key]['#title']);
 	    $form['submitted'][$key]['#title_display'] = 'invisible';
