@@ -5880,8 +5880,9 @@ article.node-apartment footer .links.inline{
 .owl-carousel .sub-item .fields-wrapper .category{
     position: relative;
     height: 35%;
+    background: #ccc;
 }
-.owl-carousel .sub-item.after:after,.owl-carousel .sub-item .fields-wrapper .category:after{
+.owl-carousel .sub-item.after:after{
     content: " ";
     position: absolute;
     top: 5px;
@@ -5892,7 +5893,7 @@ article.node-apartment footer .links.inline{
     opacity: 0.4;
     transition: opacity 0.4s;
 }
-.owl-carousel .sub-item.after:hover:after,.owl-carousel .sub-item:hover .category:after{
+.owl-carousel .sub-item.after:hover:after{
     opacity: 0;
 }
 .owl-carousel .sub-item .views-field-name-i18n a{
