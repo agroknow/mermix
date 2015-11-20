@@ -189,9 +189,10 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	    }
 	}
     }
-    if ($form_id == 'webform_client_form_' . variable_get('check_availability_webform_id', '299') || $form_id == 'webform_client_form_' . variable_get('looking_for_webform_id', '298')) {
+    if ($form_id == 'webform_client_form_' . variable_get('check_availability_webform_id', '299') || 
+    	$form_id == 'webform_client_form_' . variable_get('looking_for_webform_id', '298')) {
 	foreach ($form['submitted'] as $key => $value) {
-	    if (in_array($key, array('location', 'comments'))) {
+		if (in_array($key, array('location', 'comments'))) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#title' => t($form['submitted'][$key]['#title']),
 		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
@@ -221,8 +222,12 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    //'#attach' => $attach,
 		));
 	    }
-	    $form['submitted'][$key]['#attributes']['placeholder'] = t($form['submitted'][$key]['#title']);
-	    $form['submitted'][$key]['#title_display'] = 'invisible';
+	    if(is_array($value)) {
+	    $form['submitted'][$key] = array_merge($value, array(
+	    	'#attributes' => array('placeholder' => t($form['submitted'][$key]['#title'])),
+	    	'#title_display' => 'invisible',
+	    	));
+		}
 	}
     }
 }
