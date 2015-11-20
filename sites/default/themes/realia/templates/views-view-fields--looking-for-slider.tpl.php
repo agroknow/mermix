@@ -25,7 +25,8 @@
  */
 $termObj = taxonomy_term_load($fields['value']->content);
 $termObj = i18n_taxonomy_localize_terms($termObj);
-$backgroundUrl = image_style_url('medium',$termObj->field_map_icon['und'][0]['uri']);
+$icon_uri = isset($termObj->field_map_icon['und'][0]['uri']) ? $termObj->field_map_icon['und'][0]['uri'] : 'public://default_images/unnamed.png'; 
+$backgroundUrl = image_style_url('medium',$icon_uri);
 $nameAddUrl = user_is_logged_in() ? url('node/add/apartment/' . $termObj->tid) : url('machinery-add/' . $termObj->tid) ;
 $fields['value']->content = '<div class="category" style="background-image: url(\'' .$backgroundUrl. '\')"></div>';
 	if(isset($fields['value_4'])){
