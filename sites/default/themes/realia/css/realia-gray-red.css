@@ -5857,11 +5857,6 @@ article.node-apartment footer .links.inline{
     background-position: center center;
     background-size: cover;
 }
-.owl-carousel .sub-item .fields-wrapper .category{
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-}
 .owl-carousel .sub-item{
     position: relative;
     
@@ -5873,15 +5868,7 @@ article.node-apartment footer .links.inline{
 .owl-carousel .sub-item .fields-wrapper.medium{
     height: 180px;
 }
-.owl-carousel .sub-item .fields-wrapper.midi{
-    height: 315px;
-    background: #f6f6f6;
-}
-.owl-carousel .sub-item .fields-wrapper .category{
-    position: relative;
-    height: 35%;
-    background: #ccc;
-}
+
 .owl-carousel .sub-item.after:after{
     content: " ";
     position: absolute;
@@ -5902,26 +5889,6 @@ article.node-apartment footer .links.inline{
     height: 100%;
     z-index: 10;
     text-decoration: none;
-}
-.owl-carousel .sub-item a.main-link{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
-    text-decoration: none;
-}
-.owl-carousel .sub-item a.main-link .name{
-    position: absolute;
-    top: 15%;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 23px;
-    color: #fff;
-    font-weight: bold;
-    text-shadow:0 0 7px rgba(0, 0, 0, 0.6);
 }
 .owl-carousel .sub-item .views-field-name-i18n a span.name{
     position: absolute;
@@ -5959,6 +5926,40 @@ article.node-apartment footer .links.inline{
     height: 330px;
 }
 /* New block users looking for (slider)*/
+.owl-carousel .sub-item .fields-wrapper .category{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.owl-carousel .sub-item .fields-wrapper .category{
+    position: relative;
+    height: 35%;
+    background: #ccc;
+}
+.owl-carousel .sub-item .fields-wrapper.midi{
+    height: 315px;
+    background: #f6f6f6;
+}
+.owl-carousel .sub-item a.main-link{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    text-decoration: none;
+}
+.owl-carousel .sub-item a.main-link .name{
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 23px;
+    color: #fff;
+    font-weight: bold;
+    text-shadow:0 0 7px rgba(0, 0, 0, 0.6);
+}
 .owl-carousel .sub-item .fields-wrapper .location{
     position: absolute;
     width: 100%;
@@ -6016,6 +6017,89 @@ article.node-apartment footer .links.inline{
     line-height: 14px;
     font-size: 13px;
 }
+/* /.New block users looking for (slider)*/
+/* looking for new block Grid */
+.listing-grid .sub-item .fields-wrapper .category{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.listing-grid .sub-item .fields-wrapper .category{
+    height: 70px;
+    background: #ccc;
+}
+.listing-grid .sub-item .fields-wrapper.midi{
+    background: #f6f6f6;
+}
+.listing-grid .sub-item a.main-link{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    text-decoration: none;
+}
+.listing-grid .sub-item a.main-link .name{
+    position: absolute;
+    top: 15%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 23px;
+    color: #fff;
+    font-weight: bold;
+    text-shadow:0 0 7px rgba(0, 0, 0, 0.6);
+}
+.listing-grid .sub-item .fields-wrapper .location{
+    text-align: center;
+    font-size: 21px;
+    color: #e63434;
+    padding: 11px 5px;
+    box-sizing: border-box;
+}
+.listing-grid .sub-item .fields-wrapper .comments{
+    display: block;
+    font-size: 14px;
+    margin-top: 10px;
+    color: #707070;
+    text-align: left;
+    padding: 10px 5px;
+}
+
+.listing-grid .sub-item .fields-wrapper .date-from{
+   
+}
+.listing-grid .sub-item .fields-wrapper .date-to{
+    
+}
+.listing-grid .sub-item .fields-wrapper .date-to span,.listing-grid .sub-item .fields-wrapper .date-from span{
+    display: inline-block;
+}
+.listing-grid .sub-item .fields-wrapper .date-to span.fa,.listing-grid .sub-item .fields-wrapper .date-from span.fa{
+    position: relative;
+    top: -11px;
+    margin-right: 10px;
+    font-size: 20px;
+}
+.listing-grid .sub-item .fields-wrapper span.date-label{
+    display: block;
+    line-height: 14px;
+    font-size: 13px;
+}
+.listing-grid .sub-item a.add-it{
+    text-align: center;
+    font-size: 16px;
+    padding: 5px;
+    color: #fff;
+    background: #ce1919;
+    margin-top: 1px;
+    display: block;
+}
+.view-looking-for-slider.listing-grid .item{
+    padding-bottom: 0;
+}
+/* /.looking for new block Grid */
 
 /*.view-machine-types.view-display-id-block_promo .owl-carousel .owl-item{
     height: auto;
