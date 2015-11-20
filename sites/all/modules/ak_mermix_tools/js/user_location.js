@@ -11,7 +11,7 @@ function geolocation(cookie) {
       if(cookie) {
         jQuery.cookie("geolocation",startPos.coords.latitude +","+startPos.coords.longitude, { path: '/' });
       } else {
-        window.location.href = 'machine-results/' + startPos.coords.latitude +","+startPos.coords.longitude+ " 50";
+        window.location.href = '/machine-results/' + startPos.coords.latitude +","+startPos.coords.longitude+ " 50";
       }
     };
     var geoError = function(error) {
