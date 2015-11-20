@@ -223,10 +223,8 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		));
 	    }
 	    if(is_array($value)) {
-	    $form['submitted'][$key] = array_merge($value, array(
-	    	'#attributes' => array('placeholder' => t($form['submitted'][$key]['#title'])),
-	    	'#title_display' => 'invisible',
-	    	));
+	    $form['submitted'][$key]['#attributes']['placeholder'] = t($form['submitted'][$key]['#title']);
+	    $form['submitted'][$key]['#title_display'] = 'invisible';
 		}
 	}
     }
