@@ -661,8 +661,9 @@ function machinery_add_form_submit($form, &$form_state) {
     $machine_data = array_intersect_key($form_state['values'], array_flip(array('machine_name', 'machine_type', 'place', 'coords', 'machine_cultivation')));
     //if not logged in save to session and redirect to login
     if (user_is_logged_in()) {
+	$_SESSION['first_update'] = true;
 	$nid = mtools_create_node($machine_data, $user->uid);
-	//may add here $_SESSION['user_add_data'] and $_SESSION['first_update']
+	//add first update if submitting this form
 	$form_state['redirect'] = 'node/' . $nid . '/edit';
     } else {
 	$_SESSION['user_add_data'] = $machine_data;
@@ -817,9 +818,9 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 	    drupal_set_message('Your submission was successfull! Thank you!');
 	}
 	if (isset($_SESSION['user_add_data'])) {
+		$_SESSION['first_update'] = true;
 	    $nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
 	    unset($_SESSION['user_add_data']);
-	    $_SESSION['first_update'] = true;
 	    drupal_goto('node/' . $nid . '/edit');
 	} else {
 	    drupal_goto('<front>');

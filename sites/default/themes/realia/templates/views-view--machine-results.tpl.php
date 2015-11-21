@@ -110,5 +110,7 @@ print render($block['content']);
  print '<div class="looking-for-title"><h2>' . t('Or...<br /> tell us what you are looking for') . '</h2></div>';
  print render($block['content']);
 } 
+if(isset($_SESSION['search_criteria'])) {
 unset($_SESSION['search_criteria']);
+}
 ?>
