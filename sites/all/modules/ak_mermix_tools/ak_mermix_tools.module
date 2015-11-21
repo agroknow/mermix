@@ -662,7 +662,8 @@ function machinery_add_form_submit($form, &$form_state) {
     //if not logged in save to session and redirect to login
     if (user_is_logged_in()) {
 	$nid = mtools_create_node($machine_data, $user->uid);
-	//may add here $_SESSION['user_add_data'] and $_SESSION['first_update']
+	//add first update if submitting this form
+	$_SESSION['first_update'] = true;
 	$form_state['redirect'] = 'node/' . $nid . '/edit';
     } else {
 	$_SESSION['user_add_data'] = $machine_data;
