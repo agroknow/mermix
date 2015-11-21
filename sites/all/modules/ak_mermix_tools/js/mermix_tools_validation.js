@@ -20,7 +20,7 @@ jQuery("#machinery-search-form").validate({
     }
   }
 });
-jQuery(".webform-client-form-301,webform-client-form-298,webform-client-form-294").validate({
+jQuery(".webform-client-form-301,.webform-client-form-298,.webform-client-form-294").validate({
   rules: {
     'submitted[date_to][date]': {
     required: function(element){
