@@ -6873,6 +6873,10 @@ form.webform-client-form .container-inline-date{
     display: none;
     }
 }
+/* Entity translation links */
+.page-node-edit.node-type-apartment #content .nav-pills{
+    display: none;
+}
 
 .url-textfield{
     display: none !important;
