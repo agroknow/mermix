@@ -64,9 +64,10 @@ function mermix_fiware_views_pre_view(&$view, &$display_id, &$args){
     if ($view->name == 'machines_history' && $display_id == 'block') {
         
         $attributes = mfGetUserAttributesArray($userid);
-        if($attributes = $attributes['machines']){
-        arsort($attributes);
-        $nodes = array_slice( array_keys( $attributes ), 0, 10 );
+        $machines = $attributes['machines'];
+        if($machines){
+        arsort($machines);
+        $nodes = array_slice( array_keys( $machines ), 0, 10 );
         $args = array(implode(',', $nodes));
         }
     }
@@ -82,9 +83,10 @@ function mermix_fiware_views_pre_view(&$view, &$display_id, &$args){
     if ($view->name == 'equipment' ) {
         
         $attributes = mfGetUserAttributesArray($userid);
-        if($attributes = $attributes['categories'] && count($attributes) >= 4){
-        arsort($attributes);
-        $categories = array_slice( array_keys( $attributes ), 0, 4 );
+        $categories = $attributes['categories'];
+        if( $categories && count($categories) >= 4){
+        arsort($categories);
+        $categories = array_slice( array_keys( $categories ), 0, 4 );
         $args = array(implode(',', $categories));
         }
     }
