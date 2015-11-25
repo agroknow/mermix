@@ -33,12 +33,14 @@ function mfGetUserAttributesArray( $orionUserId ) {
         mfUpdateUser($orionUserId);
     } else {
         $contextResponses = $object->contextResponses;
+
         foreach ($contextResponses as $contextElement) {
+            if(isset($contextElement->contextElement->attributes)) {
             $attributes = $contextElement->contextElement->attributes;
-            foreach ($attributes as $attr) {
-                $AttributesArray[$attr->name] = json_decode(json_encode($attr->value),true);
-            }
-            
+                foreach ($attributes as $attr) {
+                    $AttributesArray[$attr->name] = json_decode(json_encode($attr->value),true);
+                }
+            }   
         }
     }
     return $AttributesArray;
