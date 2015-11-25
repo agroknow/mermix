@@ -134,6 +134,7 @@ function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $accou
 
 function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     global $user;
+    global $language;
 
     if ($form_id == 'apartment_node_form') {
 	$is_admin = user_access('administer nodes', $user);
@@ -196,6 +197,16 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#title' => t($form['submitted'][$key]['#title']),
 		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
+		    '#access' => ($language->language == 'el' || $user->uid == 1) ? true : false,
+		    '#prefix' => ($user->uid == 1) ? '<label>Ελληνικά</label>' : '',
+		));
+	    }
+	    if (in_array($key, array('location_en', 'comments_en'))) {
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#title' => t($form['submitted'][$key]['#title']),
+		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
+		    '#access' => ($language->language == 'en' || $user->uid == 1) ? true : false,
+		    '#prefix' => ($user->uid == 1) ? '<label>English</label>' : '',
 		));
 	    }
 	    if ($key == 'type') {
