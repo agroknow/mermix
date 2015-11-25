@@ -1,4 +1,3 @@
-var autocomplete;
 var options = {
   types: ['geocode']
   };
@@ -37,20 +36,22 @@ function pacSelectFirst(input){
   else if (input.attachEvent)
     input.attachEvent = addEventListenerWrapper;
 
-    autocomplete = new google.maps.places.Autocomplete(input,options);
+    return new google.maps.places.Autocomplete(input,options);
 }
 
 jQuery(function(){
   var coords = document.getElementById('coords');
   var distance = document.getElementById('distance');
-  pacSelectFirst(document.getElementById('edit-place'));
-  pacSelectFirst(document.getElementById('edit-submitted-location'));
-  pacSelectFirst(document.getElementById('edit-submitted-location-en'));
-  //coords.value = '';
-  //var 
-  //var autocomplete2 = new google.maps.places.Autocomplete(pac_input2,options);
-  autocomplete.addListener('place_changed', fillInAddress);
-    function fillInAddress() {
+  if(document.getElementById('edit-place')){
+   var autocomplete = pacSelectFirst(document.getElementById('edit-place'));
+   autocomplete.addListener('place_changed', fillInAddress);
+  }
+  if(document.getElementById('edit-submitted-location'))
+   var autocomplete2 = pacSelectFirst(document.getElementById('edit-submitted-location'));
+  if(document.getElementById('edit-submitted-location-en'))
+   var autocomplete3 = pacSelectFirst(document.getElementById('edit-submitted-location-en'));
+
+   function fillInAddress() {
 	 var place = autocomplete.getPlace();
     // Get the place details from the autocomplete object.
     //lat,lon
@@ -59,14 +60,15 @@ jQuery(function(){
     var km = getDistanceFromLatLonInKm(place.geometry.location.lat(),place.geometry.location.lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng());
     distance.value = Math.round(km);
   }
+
   jQuery("#edit-place").keyup(function(){
 	if(jQuery(this).val() == "") {
 	 coords.value = '';
 	 distance.value = '';
 	}
-    }); 
+  }); 
     
-    jQuery('.form-type-date-popup input').on('click',function(){
+  jQuery('.form-type-date-popup input').on('click',function(){
 	var currid = jQuery(this).attr('id');
 	if(currid.indexOf('from') > -1) {
 	    var otherid = currid.replace('from','to');
