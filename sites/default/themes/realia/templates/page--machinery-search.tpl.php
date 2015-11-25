@@ -100,6 +100,7 @@
 
     <div id="content">
         <div class="container">
+            <?php print $messages; ?>
             <?php if ($page['pre_highlighted']): ?>
                 <div class="row" id="pre-highlighted">
                     <div class="span12">
@@ -137,8 +138,6 @@
                     <h1 class="page-header"><?php print $title; ?></h1>
                     <?php endif; ?>
                     <?php print render($title_suffix); ?>
-
-                    <?php print $messages; ?>
 
                     <?php if ($tabs): ?>
                     <?php print render($tabs); ?>
