@@ -884,6 +884,14 @@ function ak_mermix_tools_views_pre_render(&$view) {
      //Add logic to log search arguments with number of results
      if(is_object($result[0])) {
 	 $results_count = count($result);
+	 $prices = array();
+     foreach ($result as $row) {
+	 if(isset($row->_field_data['nid']['entity']->field_multiprice['und'])) {
+		    foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
+			$prices[] = $price['field_multiprice_value']['und'][0]['value'];
+		    }
+	 	}
+      }
      } else {
 	 $results_count = 0;
      }
@@ -906,17 +914,8 @@ function ak_mermix_tools_views_pre_render(&$view) {
      $data_to_log['searched'] = REQUEST_TIME;
      $data_to_log['results'] = $results_count;
      
-	db_insert('ak_mermix_tools_search_log')->fields($data_to_log)->execute();
+	db_insert('ak_mermix_tools_search_log')->fields($data_to_log)->execute();//Insert data into db table
      }
-     //Insert data into db table
-     $prices = array();
-     foreach ($result as $row) {
-	 if(isset($row->_field_data['nid']['entity']->field_multiprice['und'])) {
-		    foreach ($row->_field_data['nid']['entity']->field_multiprice['und'] as $price) {
-			$prices[] = $price['field_multiprice_value']['und'][0]['value'];
-		    }
-	 	}
-      }
       if(empty($prices)){
       	$prices[] = 0;
       }
