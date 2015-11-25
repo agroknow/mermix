@@ -260,6 +260,10 @@ function ak_mermix_tools_webform_submission_presave($node, &$submission) {
     }
 }
 
+function ak_mermix_tools_webform_submission_insert($node, $submission) {
+    $node->webform['confirmation'] = t($node->webform['confirmation']);
+}
+
 function ak_mermix_tools_date_popup_process_alter(&$element, &$form_state, $context) {
     unset($element['date']['#title']);
     unset($element['date']['#description']);
@@ -832,7 +836,7 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 	    $node = node_load($submission->nid);
 	    $submission->uid = $account->uid;
 	    webform_submission_insert($node, $submission);
-	    drupal_set_message('Your submission was successfull! Thank you!');
+	    drupal_set_message(t($node->webform['confirmation']));
 	}
 	if (isset($_SESSION['user_add_data'])) {
 		$_SESSION['first_update'] = true;
