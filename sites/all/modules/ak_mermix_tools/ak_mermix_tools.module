@@ -194,15 +194,16 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     	$form_id == 'webform_client_form_' . variable_get('looking_for_webform_id', '298')) {
     	$attach = array('js' => array(
 	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer','weight' => 200),
+	    'https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places' => array('type' => 'external', 'scope' => 'footer'),
     ));
-	foreach ($form['submitted'] as $key => $value) {
+    foreach ($form['submitted'] as $key => $value) {
 		if (in_array($key, array('location', 'comments'))) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#title' => t($form['submitted'][$key]['#title']),
 		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
 		    '#access' => ($language->language == 'el' || $user->uid == 1) ? true : false,
 		    '#prefix' => ($user->uid == 1) ? '<label>Ελληνικά</label>' : '',
-		    '#attach' => ($key == 'location') ? $attach : array(),
+		    '#attached' => ($key == 'location') ? $attach : array(),
 		));
 	    }
 	    if (in_array($key, array('location_en', 'comments_en'))) {
@@ -211,7 +212,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
 		    '#access' => ($language->language == 'en' || $user->uid == 1) ? true : false,
 		    '#prefix' => ($user->uid == 1) ? '<label>English</label>' : '',
-		    '#attach' => ($key == 'location_en') ? $attach : array(),
+		    '#attached' => ($key == 'location_en') ? $attach : array(),
 		));
 	    }
 	    if ($key == 'type') {
