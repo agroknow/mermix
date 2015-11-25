@@ -1,6 +1,11 @@
-var pac_input = document.getElementById('edit-place');
+var autocomplete;
+var options = {
+  types: ['geocode']
+  };
+//var pac_input = document.getElementById('edit-place');
+//var pac_input2 = document.getElementById('edit-submitted-location-en');
 var submit = false;
-(function pacSelectFirst(input){
+function pacSelectFirst(input){
     // store the original event binding function
     var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
 
@@ -31,19 +36,22 @@ var submit = false;
     input.addEventListener = addEventListenerWrapper;
   else if (input.attachEvent)
     input.attachEvent = addEventListenerWrapper;
-})(pac_input);
+
+    autocomplete = new google.maps.places.Autocomplete(input,options);
+}
 
 jQuery(function(){
   var coords = document.getElementById('coords');
   var distance = document.getElementById('distance');
-  var options = {
-  types: ['geocode']
-  };
+  pacSelectFirst(document.getElementById('edit-place'));
+  pacSelectFirst(document.getElementById('edit-submitted-location'));
+  pacSelectFirst(document.getElementById('edit-submitted-location-en'));
   //coords.value = '';
-  var autocomplete = new google.maps.places.Autocomplete(pac_input,options);
+  //var 
+  //var autocomplete2 = new google.maps.places.Autocomplete(pac_input2,options);
   autocomplete.addListener('place_changed', fillInAddress);
     function fillInAddress() {
-	var place = autocomplete.getPlace();
+	 var place = autocomplete.getPlace();
     // Get the place details from the autocomplete object.
     //lat,lon
     //place.geometry.viewport.getNorthEast().lng();
