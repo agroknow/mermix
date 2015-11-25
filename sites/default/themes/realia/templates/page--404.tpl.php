@@ -144,7 +144,10 @@
                         <strong>404</strong>
                         <h1>The page cannot be found.</h1>
                         <hr>
-                        <?php print render(drupal_get_form('search_block_form')); ?>
+                        <?php //Fix Strict warning: Only variables should be passed by reference
+                        $searchform = drupal_get_form('search_block_form');
+                        print render($searchform); 
+                        ?>
                         <p>
                             <?php print t('Please use search box or <a href="/">return back</a>'); ?>
                         </p>
