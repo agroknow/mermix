@@ -1,0 +1,4 @@
+name = Mermix Fiware
+description = Mermix Fiware integration module
+core = 7.x
+package = Agro Know
