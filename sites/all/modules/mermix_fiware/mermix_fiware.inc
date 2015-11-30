@@ -4,28 +4,32 @@ require_once('orion_fw/autoloader/autoloader.php');
 
 function mfOrionConnect() {
     $ip = "185.23.171.92";
-    return new Orion\ContextBroker($ip);
+    $connection = new Orion\ContextBroker($ip);
+    return $connection;
 }
 
 function mfGetAllEntities($entityType) {
     
-    $OrionConnection = mfOrionConnect();
+    $orionConection = mfOrionConnect();
+    if($orionConection->checkStatus()) {
     $QUERY = new Orion\Operations\queryContext();
     $reqBody = $QUERY->addElement(".*", $entityType, true)->getRequest();
-    $raw_return = $OrionConnection->queryContext($reqBody);
+    $raw_return = $orionConection->queryContext($reqBody);
     $Context = new Orion\Context\Context($raw_return);
     $object = $Context->__toObject();
 
     return $object;
+    }
 }
 
 function mfGetUserAttributesArray( $orionUserId ) {
     $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array());
     
-    $OrionConnection = mfOrionConnect();
+    $orionConection = mfOrionConnect();
+    if($orionConection->checkStatus()) {
     $QUERY = new Orion\Operations\queryContext();
     $reqBody = $QUERY->addElement($orionUserId, "User", false)->getRequest();
-    $raw_return = $OrionConnection->queryContext($reqBody);
+    $raw_return = $orionConection->queryContext($reqBody);
     $Context = new Orion\Context\Context($raw_return);
     $object = $Context->__toObject();
 
@@ -44,11 +48,13 @@ function mfGetUserAttributesArray( $orionUserId ) {
         }
     }
     return $AttributesArray;
+    }
 }
 
 function mfUpdateUser( $orionUserId, $attributesArray = array(), $location = array()) {
     
-    $OrionConnection = mfOrionConnect();
+    $orionConection = mfOrionConnect();
+    if($orionConection->checkStatus()) {
     $UPDATE = new \Orion\Operations\updateContext();
     $UPDATE->addElement($orionUserId, "User", false);
     foreach ($attributesArray as $key => $value) {
@@ -59,8 +65,9 @@ function mfUpdateUser( $orionUserId, $attributesArray = array(), $location = arr
     }
     $UPDATE->setAction("APPEND"); // Use append - append acts as update if exists
     $reqBody = $UPDATE->getRequest();
-    $raw_return = $OrionConnection->updateContext($reqBody);
+    $raw_return = $orionConection->updateContext($reqBody);
     return $raw_return;
+    }
 }
 
 function mfGetLocation($user) {
