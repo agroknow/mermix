@@ -1,0 +1,168 @@
+<?php
+
+function mermix_fiware_init() {
+    drupal_add_js('jQuery(document).ready(function () { if(!jQuery.cookie("geolocation")) {geolocation();} });', 
+    array('type' => 'inline', 'scope' => 'footer', 'weight' => 5));
+}
+
+function mermix_fiware_menu() {
+    $items['tracked-data'] = array(
+    'title' => 'tracked data',
+    'page callback' => 'mermix_fiware_tracked',
+    'access callback' => 'user_access',
+    'access arguments' => 'administer nodes',
+    'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function mermix_fiware_tracked() {
+    module_load_include('inc', 'mermix_fiware');
+    
+    $object = mfGetAllEntities('User');
+    $output = '';
+    if (isset($object->errorCode->code) && $object->errorCode->code != "200") {
+    //Something bad happens, maybe just not found.
+    $output .= "<h1>Server responds with Code:" . 
+            $object->errorCode->code .
+            "<h1> <h2>Message: " . 
+            $object->errorCode->reasonPhrase . "</h2>";
+    } else {
+    $contextResponses = $object->contextResponses; //Based on json response above using that a array will be returned
+    //$info = $contextResponses->statusCode; //Some info about this request
+    $info = $object->errorCode; //Some info about this request
+    $output .= "<pre>";
+    foreach ($contextResponses as $contextElement) {
+        $output .= "============================================". PHP_EOL;
+        $output .= "Entity ID: ". $contextElement->contextElement->id. PHP_EOL;
+        $attributes = $contextElement->contextElement->attributes;
+        foreach ($attributes as $attr) {
+            $output .= $attr->name;
+            $output .= '<pre>' . var_export( json_decode( json_encode( $attr->value), true ), true ) . '</pre>';            
+        }
+        $output .= "============================================". PHP_EOL;
+    }
+    $output .= "</pre>";
+    return $output;
+    }
+
+}
+
+function mermix_fiware_views_pre_view(&$view, &$display_id, &$args){
+    module_load_include('inc', 'mermix_fiware');
+    global $user;
+    global $_supercookie;
+
+    $userid = '';
+    
+    if($user->uid > 0) {
+        $userid = 'U'.$user->uid;
+    } else {
+        $userid = 'A'.$_supercookie->scid;
+    }
+    //user dashboard history -- recently viewed view
+    if ($view->name == 'machines_history' && $display_id == 'block') {
+        
+        $attributes = mfGetUserAttributesArray($userid);
+        $machines = $attributes['machines'];
+        if($machines){
+        arsort($machines);
+        $nodes = array_slice( array_keys( $machines ), 0, 10 );
+        $args = array(implode(',', $nodes));
+        }
+    }
+    //near you homepage block
+    if ($view->name == 'machines_history' && $display_id == 'block_1') {
+        
+        $location = mfGetLocation($user);
+        if($location){        
+        $args = array(implode(',', $location));
+        }
+    }
+    //front page content -- equipment view with proposed machines based on user preferences(most viewed categories)
+    if ($view->name == 'equipment' ) {
+        
+        $attributes = mfGetUserAttributesArray($userid);
+        $categories = $attributes['categories'];
+        if( $categories && count($categories) >= 4){
+        arsort($categories);
+        $categories = array_slice( array_keys( $categories ), 0, 4 );
+        $args = array(implode(',', $categories));
+        }
+    }
+
+}
+
+function mermix_fiware_views_pre_render(&$view) {
+    module_load_include('inc', 'mermix_fiware');
+    global $user;
+    global $_supercookie;
+
+    $userid = '';
+    $location = array();
+
+    if($user->uid > 0) {
+        $userid = 'U'.$user->uid;
+    } else {
+        $userid = 'A'.$_supercookie->scid;
+    }
+    
+    if ($view->name == 'machine_results' && isset($_SESSION['search_criteria'])) {
+        //get user search data
+        $attrs = mfGetUserAttributesArray($userid);
+        if(!isset($attrs['position']) && mfGetLocation($user)) {
+            $location = mfGetLocation($user);
+        }
+        unset($attrs['categories']);
+        unset($attrs['cultivations']);
+        unset($attrs['machines']);
+        //append new data
+        $attrs['searches'][REQUEST_TIME] = array('type' => ($_SESSION['search_criteria']['machine_type']) ? $_SESSION['search_criteria']['machine_type'] : '-', 
+                                                 'coords' => ($_SESSION['search_criteria']['coords']) ? $_SESSION['search_criteria']['coords'] : '-' ,
+                                                 'date_from' => ($_SESSION['search_criteria']['date_from']) ? $_SESSION['search_criteria']['date_from'] : '-' ,
+                                                 'date_to' => ($_SESSION['search_criteria']['date_to']) ? $_SESSION['search_criteria']['date_to'] : '-',
+                                                );
+        //update user context
+        mfUpdateUser($userid, $attrs, $location);
+    }
+}
+
+function mermix_fiware_node_view($node, $view_mode, $langcode) {
+    module_load_include('inc', 'mermix_fiware');
+    global $user;
+    global $_supercookie;
+
+    $userid = '';
+    $location = array();
+
+    if($user->uid > 0) {
+        $userid = 'U'.$user->uid;
+    } else {
+        $userid = 'A'.$_supercookie->scid;
+    }
+    
+    if($view_mode == 'full' && $node->type == 'apartment') {
+        //get user data
+        
+        $attrs = mfGetUserAttributesArray($userid);
+        if(!isset($attrs['position']) && mfGetLocation($user)) {
+            $location = mfGetLocation($user);
+        }
+        unset($attrs['searches']);
+                
+        $cultivations = field_get_items('node', $node, 'field_cultivation');
+        foreach ($cultivations as $key => $cultivation) {
+            $index = $cultivation['tid'];
+            $attrs['cultivations'][$index] = isset($attrs['cultivations'][$index]) ? (int)$attrs['cultivations'][$index]+1 : 1 ;
+        }
+        $categories = field_get_items('node', $node, 'field_type');
+        foreach ($categories as $key => $category) {
+            $index = $category['tid'];
+            $attrs['categories'][$index] = isset($attrs['categories'][$index]) ? (int)$attrs['categories'][$index]+1 : 1 ;
+        }
+        $index = $node->nid;
+        $attrs['machines'][$index]['date'] = REQUEST_TIME ;
+        $attrs['machines'][$index]['viewed'] = isset($attrs['machines'][$index]['viewed']) ? (int)$attrs['machines'][$index]['viewed']+1 : 1;
+        mfUpdateUser($userid, $attrs, $location);    
+    }
+}
