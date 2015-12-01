@@ -6246,7 +6246,55 @@ form.webform-client-form .container-inline-date{
 .node-type-webform .webform-client-form .form-textarea-wrapper{
     display: inline-block;
 }*/
+/* Facebook connect */
+#fbconnectWrap a{
+  padding: 0 48px 0 10px;
+  height: 45px;
+  background: none;
+  border: none;
+  display: block;
+  background-size: 45px 45px;
+  background-position: right center;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  color: white;
+  font-family: sans-serif;
+  font-size: 16px;
+  margin: 0 auto 15px;
+  width: auto;
+  max-width: 275px;
+  border-bottom: 2px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  box-shadow: 0 4px 2px -2px gray;
+  text-decoration: none;
+  text-shadow: rgba(0, 0, 0, 0.5) -1px -1px 0;
+}
 
+#fbconnectWrap a.facebook-connect{
+  border-color: #2d5073;
+  background-color: #3b5998;
+  background-image: url('../img/facebook-icon.png');
+  line-height: 45px;
+  text-align: center;
+}
+.right-separator{
+    padding-right: 10px;
+    border-right: 1px solid #e5e5e5;
+}
+.fb-block{
+    margin-top: 20px;
+}
+.fb-block.mtop-big{
+  margin-top: 200px;  
+}
+.fb-desc{
+    font-size: 13px;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid;
+    padding: 5px;
+}
 @media (max-width: 1199px) {
      #header .row-fluid .span4{
 	width: 23%;
@@ -6413,6 +6461,18 @@ form.webform-client-form .container-inline-date{
 }
 
 @media (max-width: 979px) {
+    .facebookbtn-page [class*="span"] {
+	display: block;
+	float: none;
+	width: 100%;
+    }
+    .right-separator{
+    padding-right: 0;
+    border-right: none;
+    }
+    .fb-block.mtop-big{
+      margin-top: 20px;  
+    }
     .region-triptych-bottom{
 	padding-left: 20px;
     }

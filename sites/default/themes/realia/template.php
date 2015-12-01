@@ -857,3 +857,15 @@ function realia_radio(&$variables) {
 }
 
 function realia_filter_tips_more_info() { return ''; }
+
+function realia_fboauth_action__connect($variables) {
+  $action = $variables['action'];
+  $link = $variables['properties'];
+  $url = url($link['href'], array('query' => $link['query']));
+  $link['attributes']['class'][] = 'facebook-action-connect facebook-connect';
+  $link['attributes']['rel'] = 'nofollow';
+  $attributes = isset($link['attributes']) ? drupal_attributes($link['attributes']) : '';
+  $title = isset($link['title']) ? check_plain($link['title']) : '';
+  $src = ($GLOBALS['is_https'] ? 'https' : 'http') . '://www.facebook.com/images/fbconnect/login-buttons/connect_light_medium_short.gif';
+  return '<div id="fbconnectWrap"><a ' . $attributes . ' href="' . $url . '">' . t('Connect with facebook') . '</a>';
+}
