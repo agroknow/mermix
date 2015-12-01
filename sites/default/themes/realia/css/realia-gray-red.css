@@ -6278,6 +6278,9 @@ form.webform-client-form .container-inline-date{
   line-height: 45px;
   text-align: center;
 }
+#edit-fboauth #fbconnectWrap,#edit-fboauth #fbconnectWrap a{
+    display: inline-block;
+} 
 .right-separator{
     padding-right: 10px;
     border-right: 1px solid #e5e5e5;
