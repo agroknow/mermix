@@ -5,7 +5,9 @@ form label {
 form .webform-component {
     margin-bottom: 10px
 }
-
+select {
+    width: 100%;
+}
 textarea,input[type=text],input[type=password],input[type=email] {
     -webkit-font-smoothing: antialiased;
     -webkit-appearance: none;
@@ -22,7 +24,13 @@ textarea,input[type=text],input[type=password],input[type=email] {
     border: 1px solid #d5d5d5;
     color: #707070;
     margin: 0px;
-    padding: 6px
+    padding: 10px;
+    height: auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+.container-inline-date .form-item, .container-inline-date .form-item input{
+    width: 100%;
 }
 
 textarea.error,input[type=text].error,input[type=password].error,input[type=email].error {
@@ -186,7 +194,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     background-position: 95% center;
     background-repeat: no-repeat;
     border: 1px solid #707070;
-    width: auto !important
+    /*width: auto !important*/
 }
 
 .chzn-container .chzn-drop .chzn-results .active-result {
@@ -5357,6 +5365,13 @@ html.js input.ui-autocomplete-loading {
 }
 .inline-form input[type=text]{
     padding: 10px 5px 10px 30px;
+    width: 240px;
+}
+.inline-form select{
+    width: 240px;
+}
+.inline-form .container-inline-date .form-item input{
+    width: 200px;
 }
 .inline-form .form-submit{
     padding-top: 11px;
@@ -6483,8 +6498,8 @@ form.webform-client-form .container-inline-date{
     .inline-form{
 	width: 95%;
     }
-    .inline-form input{
-	width: 90%;
+    .inline-form input[type=text]{
+	width: 100%;
 	margin: 0;
     }
     .region-map .banner form{
@@ -6517,13 +6532,19 @@ form.webform-client-form .container-inline-date{
 	float: none;
 	display: block;
     }
-    .inline-form .chzn-container-single{
+    .inline-form .container-inline-date .form-item input{
+	width: 100%;
+    }
+    .inline-form select{
+	width: 100%;
+    }
+/*    .inline-form .chzn-container-single{
 	width: 90% !important;
 	border: 1px solid #d5d5d5;
         padding: 0 15px 0 20px;
 	background: #fff;
     
-    }
+    }*/
     .inline-form .chzn-container .chzn-drop{
 	width: 100% !important;
 	
@@ -6775,13 +6796,13 @@ form.webform-client-form .container-inline-date{
 	width: 93%;
 	margin: 0;
     }
-    .inline-form .chzn-container-single{
+/*    .inline-form .chzn-container-single{
 	width: 93% !important;
 	border: 1px solid #d5d5d5;
         padding: 0 15px 0 20px;
 	background: #fff;
     
-    }
+    }*/
     .container-inline-date .form-item input{
 	width: 93%;
     }
@@ -6853,7 +6874,7 @@ form.webform-client-form .container-inline-date{
     .block-webform .form-type-date-popup .form-type-textfield:before{
 	left: 18px;
     }
-    .inline-form > .form-item:before, .form-type-date-popup .form-type-textfield:before{
+/*    .inline-form > .form-item:before, .form-type-date-popup .form-type-textfield:before{
 	left: 13px;
     }
     .inline-form .chzn-container-single{
@@ -6866,7 +6887,7 @@ form.webform-client-form .container-inline-date{
     .inline-form input,
     .container-inline-date .form-item input{
 	width: 92%;
-    }
+    }*/
     .region-highlighted-sidebar .block-webform form .webform-component,
     .region-highlighted-sidebar .block-webform form .container-inline-date{
     width: 100%;
@@ -6910,18 +6931,18 @@ form.webform-client-form .container-inline-date{
 	line-height: 20px;
 	font-weight: 400;
     }
-    .inline-form {
+/*    .inline-form {
     width: 90%;
     }
     .inline-form .form-submit{
 	width: 91%;
-    }
+    }*/
     .inline-form .form-type-date-popup .form-type-textfield:before,
     .block-webform .form-type-date-popup .form-type-textfield:before
     {
 	left: 15px;
     }
-    .inline-form .chzn-container-single{
+/*    .inline-form .chzn-container-single{
 	width: 80% !important;
 	border: 1px solid #d5d5d5;
         padding: 0 15px 0 20px;
@@ -6931,7 +6952,7 @@ form.webform-client-form .container-inline-date{
     .inline-form input,
     .container-inline-date .form-item input{
 	width: 80%;
-    }
+    }*/
     table .views-field.views-field-date-from,table .views-field.views-field-date-to{
     display: none;
     }
