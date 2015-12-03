@@ -99,6 +99,8 @@ jQuery('.form-item').each(function(){
 });
 
 jQuery( window ).resize(function() {
+    var width = jQuery('.chzn-container-single').prev().outerWidth();
+    jQuery('.chzn-container-single').css("width", width);
     //console.log(jQuery(window).width());
     var logocontainer = jQuery('div.logo').parent();
 	if(jQuery(window).width() <= 1105 ) {
