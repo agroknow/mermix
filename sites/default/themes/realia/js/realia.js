@@ -99,9 +99,11 @@ jQuery('.form-item').each(function(){
 });
 
 jQuery( window ).resize(function() {
-    var width = jQuery('.chzn-container-single').prev().outerWidth();
-    jQuery('.chzn-container-single').css("width", width);
-    //console.log(jQuery(window).width());
+    jQuery('.chzn-container-single').each(function(){
+    var width = jQuery(this).prev().parent().width();
+    jQuery(this).css("width", width);
+    });
+    
     var logocontainer = jQuery('div.logo').parent();
 	if(jQuery(window).width() <= 1105 ) {
 	    if( logocontainer.find('a.highlighted').length < 1 ) {
