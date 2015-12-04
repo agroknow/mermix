@@ -5725,10 +5725,8 @@ button.form-submit.field-add-more-submit{
 }
 .page-machine-results #content .webform-client-form .webform-component-textfield:nth-of-type(2n+1),
 .webform-horizontal .webform-client-form .webform-component-textfield:nth-of-type(2n+1),
-.region-highlighted-sidebar .block-webform form .webform-component-textfield:nth-of-type(2n+1),
 .page-machine-results #content .webform-client-form .container-inline-date:nth-of-type(2n+1),
-.webform-horizontal .webform-client-form .container-inline-date:nth-of-type(2n+1),
-.region-highlighted-sidebar .block-webform form .container-inline-date:nth-of-type(2n+1)
+.webform-horizontal .webform-client-form .container-inline-date:nth-of-type(2n+1)
 {
     margin-right: 2%; 
 }
@@ -6903,6 +6901,11 @@ form.webform-client-form .container-inline-date{
     }
     .region-sidebar-second .block-webform .container-inline-date{
 	width: 48%;
+    }
+    .region-highlighted-sidebar .block-webform form .webform-component-textfield:nth-of-type(2n+1),
+    .region-highlighted-sidebar .block-webform form .container-inline-date:nth-of-type(2n+1)
+    {
+	margin-right: 2%; 
     }
 }
 
