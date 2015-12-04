@@ -1,12 +1,24 @@
 form label {
-    font-weight: normal
+    font-weight: lighter;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+.form-item{
+    margin-bottom: 10px;
 }
 
 form .webform-component {
-    margin-bottom: 10px
+    margin-bottom: 15px
+}
+label.admin-label{
+    display: none;
+}
+.container-inline-date .form-item input, .container-inline-date .form-item select, .container-inline-date .form-item option{
+    margin-right: 0;
 }
 select {
     width: 100%;
+    padding: 0;
 }
 textarea,input[type=text],input[type=password],input[type=email] {
     -webkit-font-smoothing: antialiased;
@@ -19,15 +31,50 @@ textarea,input[type=text],input[type=password],input[type=email] {
     border-radius: 0px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     background-image: none;
     border: 1px solid #d5d5d5;
     color: #707070;
     margin: 0px;
-    padding: 10px;
+    padding: 15px 10px;
     height: auto;
     box-sizing: border-box;
     width: 100%;
+    font-size: 16px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: lighter;
+}
+
+.region-highlighted-sidebar .chzn-container-single{
+    box-sizing: border-box;
+    width: 100% !important;
+}
+.region-highlighted-sidebar .chzn-container .chzn-drop{
+    width: 100% !important;
+}
+.chzn-container-single .chzn-single span{
+    font-size: 16px;
+    font-weight: lighter;
+}
+.chzn-container .chzn-single{
+    padding: 6px;
+}
+.container-inline-date .date-padding,.container-inline-date .form-item .form-item{
+    float: none;
+}
+.inline-form .container-inline-date .date-padding,.inline-form .container-inline-date .form-item .form-item{
+    float: left;
+}
+.inline-form .chzn-container .chzn-single{
+    padding: 0;
+}
+.inline-form .chzn-container-single .chzn-single span{
+    font-size: 14px;
+    font-weight: lighter;
+}
+.inline-form textarea,.inline-form input[type=text],.inline-form input[type=password],.inline-form input[type=email] {
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid #f0f0f0;
 }
 .container-inline-date .form-item, .container-inline-date .form-item input{
     width: 100%;
@@ -108,6 +155,30 @@ button.form-submit {
     border: 0px;
     padding: 7px 32px 7px 15px
 }
+#user-login button.form-submit,#user-pass button.form-submit{
+    margin-top: 15px;
+    background-color: #e63434;
+    border-bottom: 2px solid #ce1919;
+}
+#user-login button.form-submit:hover, #user-pass button.form-submit:hover{
+    border-bottom: 2px solid #ce1919;
+    background-color: #ce1919;
+}
+button.form-submit.btn-primary:active,button.form-submit.btn-primary:focus{
+    background-color: #e63434;
+}
+button.form-submit{
+    display: block;
+    width: 100%;
+    padding-top: 15px;
+    margin-top: 20px;
+    padding-bottom: 15px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-size: 16px;
+}
+button.form-submit.btn-primary{
+border-bottom: 2px solid #ce1919;
+}
 
 button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     -webkit-box-shadow: none;
@@ -138,7 +209,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     padding-bottom: 7px
 }
 
-.chzn-container .chzn-single {
+.chzn-container .chzn-single,.chzn-container .chzn-choices {
     background-image: none;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
@@ -154,9 +225,23 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
     height: 40px;
     line-height: 40px
 }
-
+.chzn-container-multi .chzn-choices{
+    min-height: 40px;
+    padding: 6px;
+    border: 1px solid #d5d5d5;
+}
+.chzn-container-multi .chzn-choices .search-choice{
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 7px 25px 7px 10px;
+}
+.chzn-container-multi .chzn-choices .search-choice .search-choice-close{
+    top: 8px;
+    width: 15px;
+}
 .chzn-container .chzn-single.chzn-single-with-drop {
-    background-color: #ffffff
+    background-color: #ffffff;
 }
 
 .chzn-container .chzn-single div {
@@ -4368,7 +4453,8 @@ aside .block .content .nav li:last-child {
 }
 
 .btn.btn-primary:hover {
-    background-color: #ce1919
+    background-color: #ce1919;
+    border-bottom: 2px solid #ce1919;
 }
 
 .view-display-id-frontpage_slider {
@@ -5373,11 +5459,14 @@ html.js input.ui-autocomplete-loading {
 .inline-form .container-inline-date .form-item input{
     width: 200px;
 }
-.inline-form .form-submit{
+.inline-form button.form-submit{
     padding-top: 11px;
-    padding-bottom: 11px;
+    padding-bottom: 9px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    display: inline-block;
+    width: auto;
+    margin-top: 0;
 }
 .inline-form{
     display: inline-block;
@@ -5397,10 +5486,14 @@ html.js input.ui-autocomplete-loading {
 .inline-form .chzn-container .chzn-single span{
     background: url('../img/tractor-small.png') no-repeat 5px center;
 }
-.inline-form .chzn-container .chzn-single{
-    border: 1px solid #d5d5d5;
+.inline-form .chzn-container{
+    border: 1px solid #f0f0f0;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    background: #fff;
+}
+.inline-form .chzn-container .chzn-single{
+    margin-left: 10px;
 }
 /*Icons*/
 
@@ -5423,7 +5516,7 @@ html.js input.ui-autocomplete-loading {
     content: "\f073";
     font-family: FontAwesome;
     position: absolute;
-    top: 7px;
+    top: 15px;
     left: 7px;
 }
 .webform-client-form .form-type-date-popup .form-type-textfield:before{
@@ -5440,7 +5533,7 @@ html.js input.ui-autocomplete-loading {
     position: absolute;
     font-family: FontAwesome;
     left: 8px;
-    top: 5px;
+    top: 15px;
     font-size: 20px;
 }
 /* Webform */
@@ -5493,15 +5586,7 @@ button.form-submit.field-add-more-submit{
 .field-name-field-multiprice-value label,.field-name-field-multiprice-unit label{
     display: none;
 }
-.field-name-field-multiprice-value span.field-prefix{
-    position: relative;
-    left: 20px;
-    padding: 6px;
-    display: inline-block;
-    height: 22px;
-    background-color: #d5d5d5;
-    color: #333;
-}
+
 .field-name-field-multiprice-value input{
     padding-left: 20px;
 }
@@ -5617,9 +5702,8 @@ button.form-submit.field-add-more-submit{
 }
 
 .region-sidebar-second .block-webform .container-inline-date .form-item input{
-    width: 70%;
     margin-right: 0;
-    padding-left: 27px;
+    padding-left: 30px;
 }
 .region-sidebar-second .block-webform button{
     margin-top: 20px;
@@ -5629,22 +5713,51 @@ button.form-submit.field-add-more-submit{
     
 }
 .page-machine-results #content .webform-client-form .webform-component.webform-component--type,
-.page-machine-results #content .webform-client-form .webform-component.webform-component--location,
-.page-machine-results #content .webform-client-form .webform-component.webform-component--email{
+.page-machine-results #content .webform-client-form [class*="webform-component--location"],
+.page-machine-results #content .webform-client-form .webform-component.webform-component--email,
+.webform-horizontal .webform-client-form .webform-component.webform-component--type,
+.webform-horizontal .webform-client-form [class*="webform-component--location"],
+.webform-horizontal .webform-client-form .webform-component.webform-component--email
+{
     float: left;
-    width: 33%;
+    width: 49%;
+    min-height: 53px;
 }
-.page-machine-results #content .webform-client-form .webform-component.webform-component--comments{
+.page-machine-results #content .webform-client-form .webform-component-textfield:nth-of-type(2n+1),
+.webform-horizontal .webform-client-form .webform-component-textfield:nth-of-type(2n+1),
+.region-highlighted-sidebar .block-webform form .webform-component-textfield:nth-of-type(2n+1),
+.page-machine-results #content .webform-client-form .container-inline-date:nth-of-type(2n+1),
+.webform-horizontal .webform-client-form .container-inline-date:nth-of-type(2n+1),
+.region-highlighted-sidebar .block-webform form .container-inline-date:nth-of-type(2n+1)
+{
+    margin-right: 2%; 
+}
+
+.page-machine-results #content .webform-client-form .webform-component.webform-component--type,
+.webform-horizontal .webform-client-form .webform-component.webform-component--type
+{
+    margin-right: 2%;
+    max-height: 52px;
+}
+.page-machine-results #content .webform-client-form .webform-component.webform-component--comments,
+.webform-horizontal .webform-client-form .webform-component.webform-component--comments
+{
     clear: both;
     width: 100%;
 }
-.page-machine-results #content .webform-client-form .container-inline-date{
+.page-machine-results #content .webform-client-form .container-inline-date,
+.webform-horizontal .webform-client-form .container-inline-date
+{
     float: left;
-    width: 33%;
+    width: 49%;
     clear: none;
     display: inline-block;
+    min-height: 53px;
 }
-.page-machine-results #content .webform-client-form button{
+
+.page-machine-results #content .webform-client-form button,
+.webform-horizontal .webform-client-form button
+{
     position: relative; 
 }
 /*.page-machine-results .webform-client-form .container-inline-date + .container-inline-date{
@@ -6131,6 +6244,53 @@ article.node-apartment footer .links.inline{
 .node-apartment-form button.form-submit{
     margin-top: 20px;
 }
+.node-apartment-form .field-name-field-multiprice-value {
+    position: relative;
+    margin-right: 25px;
+}
+.node-apartment-form .field-name-field-multiprice-value .field-prefix{
+    position: absolute;
+    left: 0;
+    padding: 15px 5px;
+    display: inline-block;
+    top: 0;
+    background-color: #d5d5d5;
+    color: #333;
+    bottom: 0;
+}
+.node-apartment-form .field-name-field-multiprice-value .field-suffix{
+    position: absolute;
+    top: 15px;
+    right: -15px;
+}
+.node-apartment-form .field-name-field-multiprice-unit{
+    margin-right: 15px;
+}
+.node-apartment-form .field-name-field-address input,.node-apartment-form .field-name-field-address button{
+    max-width: 600px;
+}
+.node-apartment-form .field-multiple-table .form-actions{
+    margin: 0;
+    padding: 0;
+}
+.field-multiple-table button.form-submit{
+   margin-top: 0; 
+}
+.node-apartment-form #edit-preview,.node-apartment-form #edit-delete{
+    width: 49%;
+    float: left;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.node-apartment-form #edit-preview{
+    margin-right: 2%;
+}
+.node-apartment-form select{
+    min-width: 220px;
+}
+.node-apartment-form .field-multiple-table .form-item{
+    margin-bottom: 0;
+}
 /* User registration */
 .password-strength-text,.password-confirm,.password-suggestions{display: none;}
 .password-strength{
@@ -6202,7 +6362,7 @@ article.node-apartment footer .links.inline{
     }
 
 /* Highlighted sidebar.*/
-.region-highlighted-sidebar .block-webform{
+/*.region-highlighted-sidebar .block-webform{
 
 }
 .region-highlighted-sidebar .block-webform form{
@@ -6223,19 +6383,25 @@ article.node-apartment footer .links.inline{
     width: 220px;
 }
 .region-highlighted-sidebar .block-webform form input{
-    height: 25px;
+    height: auto;
+}*/
+.region-highlighted-sidebar .block-webform form .container-inline-date .date-padding{
+    float: none;
 }
 .region-highlighted-sidebar .block-webform form .form-type-date-popup .form-type-textfield:before{
-    top: 10px;
+    top: 15px;
 }
 .region-highlighted-sidebar .block-webform form .container-inline-date{
     margin-bottom: 20px;
 }
 form.webform-client-form .container-inline-date{
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
-.region-highlighted-sidebar .block-webform form .webform-component{
+.region-highlighted-sidebar .block-webform form .webform-component,.region-highlighted-sidebar .block-webform form .container-inline-date{
     margin-bottom: 20px;
+}
+.region-highlighted-sidebar .block-webform form .webform-component.webform-component--type{
+    max-height: 52px;
 }
 .node-type-webform .form-textarea-wrapper textarea{
     width: 220px;
@@ -6313,7 +6479,15 @@ form.webform-client-form .container-inline-date{
     border-bottom: 1px solid;
     padding: 5px;
 }
+.inline-form .chzn-container{
+    box-sizing: border-box;
+}
+.view-filters select {
+    min-width: 220px;
+}
+
 @media (max-width: 1199px) {
+    
      #header .row-fluid .span4{
 	width: 23%;
     }
@@ -6327,6 +6501,9 @@ form.webform-client-form .container-inline-date{
     }
     .machine-results-listing .result-item{
 	width: 46%;
+    }
+    .region-sidebar-second .block-webform .container-inline-date{
+	width: 100%;
     }
 }
 @media (min-width: 980px) and (max-width: 1120px) {
@@ -6418,9 +6595,6 @@ form.webform-client-form .container-inline-date{
     .inline-form .container-inline-date .form-item input{
 	width: 160px;
     }
-    .block-webform .form-type-date-popup .form-type-textfield:before{
-	left: 18px;
-    }
     .region-highlighted-sidebar .block-webform .form-type-date-popup .form-type-textfield:before{
     left: 8px;
     }
@@ -6455,9 +6629,9 @@ form.webform-client-form .container-inline-date{
 .page-machine-results .inline-form input{
     width: 170px;
     }
-.page-machine-results .container-inline-date .form-item input{
+/*.page-machine-results .container-inline-date .form-item input{
     width: 150px;
-    }
+    }*/
 }
 
 @media (min-width: 1200px) {
@@ -6472,9 +6646,9 @@ form.webform-client-form .container-inline-date{
 	padding-left: 1em;
 	padding-right: 1em;
     }
-    .page-machine-results .inline-form input,.page-machine-results .container-inline-date .form-item input{
+/*    .page-machine-results .inline-form input,.page-machine-results .container-inline-date .form-item input{
     width: 170px;
-    }
+    }*/
     
 }
 
@@ -6495,8 +6669,11 @@ form.webform-client-form .container-inline-date{
 	padding-left: 20px;
     }
     /* Search form */
-    .inline-form{
+    .region-map .inline-form{
 	width: 95%;
+    }
+    .inline-form{
+	width: 100%;
     }
     .inline-form input[type=text]{
 	width: 100%;
@@ -6525,9 +6702,6 @@ form.webform-client-form .container-inline-date{
     .inline-form .container-inline-date .form-item{
 	width: 100%;
     }
-    .container-inline-date .form-item input{
-	width: 90%;
-    }
     .inline-form .container-inline-date .date-padding{
 	float: none;
 	display: block;
@@ -6549,12 +6723,12 @@ form.webform-client-form .container-inline-date{
 	width: 100% !important;
 	
     }
-    .inline-form .chzn-container .chzn-single{
+    .inline-form .chzn-container{
 	border: none;
-	padding: 0;
+	padding: 1px;
 	border-radius: 0;
     }
-    .inline-form .form-submit{
+    .inline-form button.form-submit{
 	display: inline-block;
 	margin-left: 0;
 	width: 100%;
@@ -6625,18 +6799,10 @@ form.webform-client-form .container-inline-date{
 }
 @media (min-width: 768px) and (max-width: 979px) {
     
-    .block-webform .form-type-date-popup .form-type-textfield:before{
-    position: absolute;
-    font-family: FontAwesome;
-    left: 13px;
-    top: 5px;
-    font-size: 20px;
-    }
-
     .region-sidebar-second .block-webform .container-inline-date{
 	width: auto;
     }
-    .region-highlighted-sidebar .block-webform form .form-textarea-wrapper textarea{
+/*    .region-highlighted-sidebar .block-webform form .form-textarea-wrapper textarea{
     width: 166px;
     }
     .region-highlighted-sidebar .block-webform form .form-textarea-wrapper .grippie{
@@ -6658,20 +6824,11 @@ form.webform-client-form .container-inline-date{
     }
     .region-highlighted-sidebar .block-webform form .chzn-container .chzn-drop .chzn-search input{
         width: 133px !important;
-    }
+    }*/
     
 }
 
 @media (max-width: 767px) {
-.page-machine-results #content .webform-client-form .webform-component.webform-component--type,
-.page-machine-results #content .webform-client-form .webform-component.webform-component--location,
-.page-machine-results #content .webform-client-form .webform-component.webform-component--email{
-    float: left;
-    width: 100%;
-    }
-.page-machine-results #content .webform-client-form .container-inline-date{
-    width: 100%;
-    }
     div#content .container{
 	padding:0 20px;
     }
@@ -6681,10 +6838,7 @@ form.webform-client-form .container-inline-date{
     .container-inline-date .date-padding{
 	float: none;
     }
-    .region-sidebar-second .block-webform .container-inline-date .form-item input{
-	width: 85%;
-	padding-left: 35px;
-    }
+
     #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf,.block-owlcarousel {
 	width: 600px;
 	margin: 0 auto;
@@ -6715,29 +6869,29 @@ form.webform-client-form .container-inline-date{
     }
     .region-highlighted-sidebar .block-webform form .webform-component{
         float: left;
-        width: 48%;
-        min-height: 50px;
+        width: 49%;
         text-align: center;
+    }
+
+    .region-highlighted-sidebar .block-webform form .webform-component.webform-component-textarea{
+	width: 100%;
+	float: none;
+	clear: both;
     }
     .region-highlighted-sidebar .block-webform form .container-inline-date{
         float: left;
         clear: none;
-        width: 48%;
+        width: 49%;
         text-align: center;
-    }
-    .region-highlighted-sidebar .block-webform form .container-inline-date .form-item .form-item{
-        float: none;
-        width: auto;
-        display: inline-block;
-    }
-    .region-highlighted-sidebar .block-webform form .form-textarea-wrapper{
-        display: inline-block;
     }
     .region-highlighted-sidebar .block-webform form{
         text-align: center;
     }
     .region-highlighted-sidebar .block-webform .block-title{
         text-align: center;
+    }
+    .region-sidebar-second .block-webform .container-inline-date{
+	width: 48%;
     }
 }
 
@@ -6760,16 +6914,30 @@ form.webform-client-form .container-inline-date{
     top: auto;
     width: 100%;
     }
-    .page-machine-results .webform-client-form .container-inline-date{
-    width: 45%;
-    margin-right: 20px;
+.page-machine-results #content .webform-client-form .webform-component.webform-component--type,
+.page-machine-results #content .webform-client-form [class*="webform-component--location"],
+.page-machine-results #content .webform-client-form .webform-component.webform-component--email,
+.webform-horizontal .webform-client-form .webform-component.webform-component--type,
+.webform-horizontal .webform-client-form [class*="webform-component--location"],
+.webform-horizontal .webform-client-form .webform-component.webform-component--email
+{
+    float: left;
+    width: 100%;
     }
+    .page-machine-results #content .webform-client-form .container-inline-date,
+.webform-horizontal .webform-client-form .container-inline-date
+{
+    float: left;
+    width: 100%;
+    clear: none;
+    display: inline-block;
+}
+
+
     .node-apartment-form .field-name-field-multiprice-value input,.node-apartment-form .field-name-field-multiprice-unit .chzn-container{
 	width: 120px !important;
     }
-    .region-sidebar-second .block-webform .container-inline-date .form-item input{
-	width: 75%;
-    }
+    
      #block-views-machine-types-block-promo,#block-views-machine-types-block-promo-lf,.block-owlcarousel {
 	width: 465px;
 	margin: 0 auto;
@@ -6786,10 +6954,10 @@ form.webform-client-form .container-inline-date{
     .inline-form > div,.inline-form > .form-item, .inline-form .container-inline-date{
 	margin-bottom: 10px;
     }
-    .inline-form .form-submit{
+    .inline-form button.form-submit{
 	display: inline-block;
 	margin-left: 0;
-	width: 99%;
+	width: 100%;
 	margin-top: 10px;
     }
     .inline-form input{
@@ -6803,11 +6971,8 @@ form.webform-client-form .container-inline-date{
 	background: #fff;
     
     }*/
-    .container-inline-date .form-item input{
-	width: 93%;
-    }
     .machine-results-listing .result-item,.machine-results-listing .result-item.odd{
-	width: 100%;
+    width: 100%;
     margin-right: 0;
     }
     /*Results one per row*/
@@ -6865,15 +7030,10 @@ form.webform-client-form .container-inline-date{
     div#content .container{
 	padding:0 0 0 5px;
     }
-    .region-sidebar-second .block-webform .container-inline-date .form-item input{
-	width: 83%;
-    }
     .region-sidebar-second .block-webform .container-inline-date{
 	width: 100%;
     }
-    .block-webform .form-type-date-popup .form-type-textfield:before{
-	left: 18px;
-    }
+
 /*    .inline-form > .form-item:before, .form-type-date-popup .form-type-textfield:before{
 	left: 13px;
     }
@@ -6888,13 +7048,19 @@ form.webform-client-form .container-inline-date{
     .container-inline-date .form-item input{
 	width: 92%;
     }*/
+    .region-highlighted-sidebar .block-webform form .container-inline-date + .container-inline-date{
+	margin-left: 0;
+    }
+    .region-highlighted-sidebar .block-webform form .webform-component.webform-component--type{
+	margin-right: 0;
+    }
     .region-highlighted-sidebar .block-webform form .webform-component,
     .region-highlighted-sidebar .block-webform form .container-inline-date{
     width: 100%;
+    margin-left: 0;
+    margin-right: 0;
     }
-    .region-highlighted-sidebar .block-webform form .btn.btn-primary{
-        width: 220px;
-    }
+
     .region-highlighted-sidebar .block-webform .form-type-date-popup .form-type-textfield:before{
         left: 8px;
     }
@@ -6913,6 +7079,9 @@ form.webform-client-form .container-inline-date{
         top: 65px;
         left: -47px;
         color: #fff;
+    }
+    .chzn-container-single,.chzn-container-single .chzn-drop{
+	width: 100% !important;
     }
 }
 @media (max-width: 320px) {
@@ -6937,11 +7106,11 @@ form.webform-client-form .container-inline-date{
     .inline-form .form-submit{
 	width: 91%;
     }*/
-    .inline-form .form-type-date-popup .form-type-textfield:before,
+/*    .inline-form .form-type-date-popup .form-type-textfield:before,
     .block-webform .form-type-date-popup .form-type-textfield:before
     {
 	left: 15px;
-    }
+    }*/
 /*    .inline-form .chzn-container-single{
 	width: 80% !important;
 	border: 1px solid #d5d5d5;
