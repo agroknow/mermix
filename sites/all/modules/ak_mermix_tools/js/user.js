@@ -16,7 +16,7 @@ Drupal.behaviors.password = {
       innerWrapper.addClass('password-parent');
 
       // Add the password confirmation layer.
-      $('input.password-confirm', outerWrapper).parent().prepend('<div class="password-confirm">' + translate['confirmTitle'] + ' <span></span></div>').addClass('confirm-parent');
+      $('input.password-confirm', outerWrapper).parent().prepend('<div class="password-confirm"><span></span></div>').addClass('confirm-parent');
       var confirmInput = $('input.password-confirm', outerWrapper);
       var confirmResult = $('div.password-confirm', outerWrapper);
       var confirmChild = $('span', confirmResult);
@@ -73,8 +73,8 @@ Drupal.behaviors.password = {
           }
 
           // Fill in the success message and set the class accordingly.
-          var confirmClass = success ? 'ok' : 'error';
-          confirmChild.html(translate['confirm' + (success ? 'Success' : 'Failure')]).addClass(confirmClass);
+          var confirmClass = success ? 'ok fa fa-check' : 'error fa fa-times';
+          confirmChild.html(' ').addClass(confirmClass);
           this.confirmClass = confirmClass;
         }
         else {

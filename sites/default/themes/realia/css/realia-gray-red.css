@@ -5260,7 +5260,7 @@ html.js input.ui-autocomplete-loading {
     background-position: 100% -13px;
 }
 .password-indicator {
-    background-color: #C4C4C4;
+    background-color: #fff;
     height: 0.3em;
     width: 100%;
 }
@@ -6292,11 +6292,22 @@ article.node-apartment footer .links.inline{
     margin-bottom: 0;
 }
 /* User registration */
-.password-strength-text,.password-confirm,.password-suggestions{display: none;}
-.password-strength{
-    width: 220px;
-    float: right;
+.password-strength-text,.password-suggestions{display: none;}
+.form-item-pass-pass2.confirm-parent{position: relative}
+.form-item-pass-pass2 > div.password-confirm{
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    font-size: 18px;
 }
+.form-item-pass-pass2 > div.password-confirm .error{ color: #E24141 }
+.form-item-pass-pass2 > div.password-confirm .ok{ color: #318C46}
+.password-strength{
+    position: relative;
+    top: 25px;
+    margin: 0 1px;
+}
+.password-strength .password-strength-title{display: none;}
 .password-indicator .indicator.weak{background-color:#E24141}
 .password-indicator .indicator.fair{background-color:#FFA243}
 .password-indicator .indicator.good{background-color:#DDE01E}
