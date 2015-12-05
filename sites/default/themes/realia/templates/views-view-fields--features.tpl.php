@@ -22,18 +22,7 @@
 *
 * @ingroup views_templates
 */
-
-$dom = new DOMDocument;
-$dom->loadHTML($fields['body']->content);
-$xpath = new DOMXPath($dom);
-$nodes = $xpath->query('//a/@href');
-foreach($nodes as $href) {
-    $linkurl = $href->nodeValue;
-}
-$img = '<div><a href="'.$linkurl.'">' . strip_tags($fields['field_icon']->content, '<img>') . '</a></div>';
-$fields['field_icon']->content = $img;
 ?>
-
 <div class="row">
   <?php foreach ($fields as $id => $field): ?>
   <?php if (!empty($field->separator)): ?>
