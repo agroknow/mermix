@@ -257,7 +257,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 function ak_mermix_tools_webform_submission_presave($node, &$submission) {
     if($node->nid == variable_get('check_availability_webform_id', '299') || $node->nid == variable_get('looking_for_webform_id', '298')) {    
 		if(!user_is_logged_in()) {
-		    $_SESSION['webform_submission'] = $submission;
+		    $_SESSION['webform_submission_sub'] = $submission;
 		    drupal_goto('user/login');
 		}
     }
@@ -833,8 +833,8 @@ function ak_mermix_tools_user_login(&$edit, $account) {
     //ignore this hook for restws users
     $user_regex = variable_get('restws_basic_auth_user_regex', '/^restws.*/');
     if (!preg_match($user_regex, $account->name)) {
-	if (isset($_SESSION['webform_submission'])) {
-	    $submission = $_SESSION['webform_submission'];
+	if (isset($_SESSION['webform_submission_sub'])) {
+	    $submission = $_SESSION['webform_submission_sub'];
 	    module_load_include('inc', 'webform', 'includes/webform.submissions');
 	    $node = node_load($submission->nid);
 	    $submission->uid = $account->uid;
