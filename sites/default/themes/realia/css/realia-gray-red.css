@@ -3312,6 +3312,9 @@ body.node-type-apartment section .block-views {
 #block-views-features-features .span4 .views-field-field-icon img {
     width: 80%
 }
+#block-views-features-features .span4 .views-field-body a:hover{
+    text-decoration: none;
+}
 
 #block-views-features-features .span4 .views-field-body h3 {
     color: #313131;
