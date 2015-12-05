@@ -205,7 +205,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    '#title' => t($form['submitted'][$key]['#title']),
 		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
 		    '#access' => ($language->language == 'el' || $user->uid == 1) ? true : false,
-		    '#prefix' => ($user->uid == 1) ? '<label>Ελληνικά</label>' : '',
+		    '#prefix' => ($user->uid == 1) ? '<label class="admin-label">Ελληνικά</label>' : '',
 		    '#attached' => ($key == 'location') ? $attach : array(),
 		));
 	    }
@@ -214,7 +214,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    '#title' => t($form['submitted'][$key]['#title']),
 		    '#default_value' => (isset($_SESSION['search_criteria']['place']) && $key == 'location') ? $_SESSION['search_criteria']['place'] : $form['submitted'][$key]['#default_value'],
 		    '#access' => ($language->language == 'en' || $user->uid == 1) ? true : false,
-		    '#prefix' => ($user->uid == 1) ? '<label>English</label>' : '',
+		    '#prefix' => ($user->uid == 1) ? '<label class="admin-label">English</label>' : '',
 		    '#attached' => ($key == 'location_en') ? $attach : array(),
 		));
 	    }
