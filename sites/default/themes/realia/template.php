@@ -861,6 +861,8 @@ function realia_filter_tips_more_info() { return ''; }
 function realia_fboauth_action__connect($variables) {
   $action = $variables['action'];
   $link = $variables['properties'];
+  $currentDestination = drupal_get_destination();
+  $link['query']['redirect_uri'] .= '?destination=' . drupal_encode_path($currentDestination['destination']);
   $url = url($link['href'], array('query' => $link['query']));
   $link['attributes']['class'][] = 'facebook-action-connect facebook-connect';
   $link['attributes']['rel'] = 'nofollow';
