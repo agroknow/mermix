@@ -5,7 +5,6 @@
  * Implements hook_init
  */
 function ak_mermix_tools_init(){
-    
     if(drupal_is_front_page()){
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_banner.js');
     }
@@ -13,6 +12,43 @@ function ak_mermix_tools_init(){
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/user_location.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.validate.min.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js', array('scope' => 'footer'));
+}
+
+/**
+ * Implements hook_menu_link_alter().
+ */
+function ak_mermix_tools_menu_link_alter(&$item) {
+  // Flag a link to be altered by hook_translated_menu_link_alter().
+  // This is called only on menu rebuild, so we have to add this information
+  // manually to the database on install. Clearing caches also helps.
+  $paths = array('user/login', 'user/register', 'user');
+  if (in_array($item['link_path'], $paths)) {
+    $item['options']['alter'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_translated_menu_link_alter().
+ */
+function ak_mermix_tools_translated_menu_link_alter(&$item, $map) {
+  $paths = array('user/login', 'user/register', 'user');
+  // Append the current path to URL.
+  if ( in_array($item['link_path'], $paths) && user_is_anonymous() )
+  {
+    $item['localized_options']['query'] = drupal_get_destination();
+  }
+}
+
+/**
+ * Add destination param to user tabs if set.
+ * Implements HOOK_preprocess_menu_local_task()
+ */
+function ak_mermix_tools_preprocess_menu_local_task(&$variables) {
+    $link = &$variables['element']['#link'];
+    // check for $_GET['destination'] because drupal_get_destination() always contains at least the current page
+    if ($link['tab_root'] === 'user' && !empty($_GET['destination'])) {
+      $link['localized_options']['query'] = drupal_get_destination();
+    }
 }
 
 /**
@@ -252,13 +288,25 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		}
 	}
     }
+    if($form_id == 'user_profile_form') {
+	$form['#validate'][] = 'ak_mermix_tools_user_profile_validate';
+    }
+}
+
+function ak_mermix_tools_user_profile_validate($form, &$form_state) {
+
+    $user_email_array = explode('@', $form_state['values']['mail']);
+    $user_email_domain = $user_email_array[1];
+    if($user_email_domain == 'facebook.com' && !(trim($form_state['values']['field_phone_number']['und'][0]['value']))) {
+        form_set_error('field_phone_number', t('The Phone is required.'));
+    }
 }
 
 function ak_mermix_tools_webform_submission_presave($node, &$submission) {
     if($node->nid == variable_get('check_availability_webform_id', '299') || $node->nid == variable_get('looking_for_webform_id', '298')) {    
 		if(!user_is_logged_in()) {
 		    $_SESSION['webform_submission_sub'] = $submission;
-		    drupal_goto('user/login');
+		    drupal_goto('user/login', array('query'=>drupal_get_destination()));
 		}
     }
 }
@@ -846,8 +894,6 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 	    $nid = mtools_create_node($_SESSION['user_add_data'], $account->uid);
 	    unset($_SESSION['user_add_data']);
 	    drupal_goto('node/' . $nid . '/edit');
-	} else {
-	    drupal_goto('<front>');
 	}
     }
 }
