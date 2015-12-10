@@ -10,6 +10,11 @@
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+  <script type="text/javascript">
+    if (window.location.hash && window.location.hash == '#_=_') {
+        window.location.hash = '';
+    }
+  </script>
   <?php print $scripts; ?>
 </head>
 <body class="<?php print $classes; ?> header-light none red" <?php print $attributes;?>>
