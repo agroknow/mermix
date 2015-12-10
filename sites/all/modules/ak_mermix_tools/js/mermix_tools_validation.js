@@ -6,6 +6,11 @@ jQuery.validator.addMethod("eitherEmailPhone", function(value, element) {
             return isPhone || isEmail;
 
         }, "Please enter either phone or e-mail");
+jQuery.validator.addMethod("phoneNumber", function(value, element) {
+            isPhone = this.optional(element) || ( /^\d+$/.test(value) && this.getLength(jQuery.trim(value), element) <= 12 && this.getLength(jQuery.trim(value), element) >= 10 );
+            return isPhone;
+
+}, "Please enter valid phone number");
 jQuery("#machinery-search-form").validate({
   rules: {
     'date_to[date]': {
@@ -51,6 +56,13 @@ jQuery("#machinery-add-form").validate({
     },
     'machine_cultivation[]': {
     required: true
+    }
+  }
+});
+jQuery("#user-register-form,#user-profile-form").validate({
+  rules: {
+    'field_phone_number[und][0][value]': {
+    phoneNumber: true
     }
   }
 });
