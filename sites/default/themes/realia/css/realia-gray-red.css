@@ -458,14 +458,15 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 body.front #header,body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    background: rgba(0, 0, 0, 0.54);
+    background: rgba(0, 0, 0, 0.48);
 }
 
-body.front #header-wrapper.fixed #header,body.front #header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li ul {
+body.front #header-wrapper.fixed.white #header,body.front #header-wrapper.fixed.white .navigation-wrapper .navigation .block-superfish .content ul li ul {
     background: #fff;
 }
 body #header{
-    border-bottom: 2px solid #313131;
+/*    border-bottom: 2px solid #313131;*/
+    box-shadow: 0px -2px 7px #f0f0f0;
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul {
@@ -481,7 +482,7 @@ body #header{
     width: 220px !important
 }
 #header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    margin: 20px 0px 0px 0px;
+    margin: 15px 0px 0px 0px;
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul li {
@@ -573,10 +574,10 @@ body #header{
     -moz-box-shadow: none;
     box-shadow: none;
     float: right;
-    margin: 11px 0px 11px 0px
+    margin: 0
 }
 #header-wrapper.fixed .navigation-wrapper .navigation #block-realia-blocks-realia-language {
-    margin: 5px 0px 10px 0px;
+    margin: 0;
 }
 
 .navigation-wrapper .navigation #block-realia-blocks-realia-language .content .default {
@@ -3345,7 +3346,7 @@ body.node-type-apartment section .block-views {
     }
 }
 
-#header-wrapper,body.front #header-wrapper.fixed {
+#header-wrapper,body.front #header-wrapper.fixed.white {
     background-color: #fff
 }
 
@@ -5164,10 +5165,12 @@ body.header-light #navigation {
     background-color: #313131
 }
 body.header-light #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light #header-wrapper.fixed #navigation .block-superfish a,
+body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish a,
 body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
     color: #333 !important
 }
 body.header-light.front #navigation .block-superfish .nolink,body.header-light.front #navigation .block-superfish a,
+body.header-light.front #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed #navigation .block-superfish a,
 body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish a{
     color: #fff !important
 }
@@ -5186,6 +5189,7 @@ body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.hig
     padding: 10px;
     top: 6px;
     border: 1px solid;
+    color: #fff !important;
     transition: background 0.2s ease-in;
     background: #e63434;
 }
@@ -5208,7 +5212,7 @@ body.header-light.front #navigation .block-superfish .menuparent .menuparent>.no
         background-image: url("../img/arrow-right-white@2x.png") !important
     }
 }
-body.header-light.front #header-wrapper.fixed #navigation .block-superfish .menuparent>.nolink,body.header-light.front #header-wrapper.fixed #navigation .block-superfish .menuparent>a,
+body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .menuparent>.nolink,body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .menuparent>a,
 body.header-light.not-front #navigation .block-superfish .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent>a {
     background-image: url("../img/arrow-bottom-black.png") !important
 }
@@ -5780,26 +5784,26 @@ button.form-submit.field-add-more-submit{
 /* Language selection */
 #block-realia-blocks-realia-language .content ul{
     list-style-type: none;
-    margin: 5px 10px 0 0;
+    margin: 0 0 0 10px;
     display: block;
     float: left;
 }
 #header-wrapper.fixed #block-realia-blocks-realia-language .content ul{
-    margin: 0 5px 0 0;
+    margin: 0 0 0 10px;
 }
 #block-realia-blocks-realia-language .content ul li{
     float: left;
     margin-left: 20px;
 }
 #block-realia-blocks-realia-language .content ul li.last{
-    margin-left: 8px;
+    margin-left: 0;
 }
 #block-realia-blocks-realia-language .content ul li span{
     display: none;
 }
 body.front #block-realia-blocks-realia-language .content ul li a{
     float: none;
-    padding: 10px;
+    padding: 25px 8px;
     color: #ddd;
     text-decoration: none;
     display: block;
@@ -5807,36 +5811,44 @@ body.front #block-realia-blocks-realia-language .content ul li a{
     width: 20px;
     height: 20px;
     text-align: center;
-}
-body.front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover{
-    color: #fff;
-    background: #000;
-    border-radius: 100%;
+    text-transform: uppercase;
+    font-weight: lighter;
 }
 
-body.not-front #block-realia-blocks-realia-language .content ul li a,
-body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
+body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a,body.not-front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
+    padding: 15px 8px;
+}
+body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a{
+    color: #333;
+}
+body.front #block-realia-blocks-realia-language .content ul li.active a,body.front #block-realia-blocks-realia-language .content ul li a:hover{
+    color: #fff;
+    font-weight: normal;
+}
+
+body.not-front #block-realia-blocks-realia-language .content ul li a{
     float: none;
-    padding: 10px;
-    color: #000;
+    padding: 25px 8px;
+    color: #333;
     text-decoration: none;
     display: block;
     border: none;
     width: 20px;
     height: 20px;
     text-align: center;
-    transition: all 0.2s ease-in;
+    text-transform: uppercase;
+    font-weight: lighter;
 }
+
 body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a,body.front.nav-open #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
     color: #fff;
 }
 body.not-front #block-realia-blocks-realia-language .content ul li a:hover,
-body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a:hover,
+body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a:hover,
 body.not-front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover,
-body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li.active a,body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a:hover{
-    color: #fff;
-    background: #000;
-    border-radius: 100%;
+body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li.active a,body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a:hover{
+    color: #000;
+    font-weight: normal;
 }
 
 .region-header-right li a{
@@ -6507,7 +6519,7 @@ form.webform-client-form .container-inline-date{
     min-width: 220px;
 }
 
-.banner .inline-form .form-item.webform-component.webform-component-textarea.webform-component--comments {
+.banner .inline-form .form-item.webform-component.webform-component-textarea {
     display: none;
     visibility: hidden;
 }
@@ -6565,7 +6577,7 @@ form.webform-client-form .container-inline-date{
     body.front #header{
         background: none;
     }
-    body.front #header-wrapper,body.nav-open #header-wrapper.fixed{
+    body.front #header-wrapper,body.nav-open #header-wrapper.fixed.white{
     position: static;
     background: #fff;
     }
