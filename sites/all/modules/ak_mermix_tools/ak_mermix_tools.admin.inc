@@ -37,6 +37,12 @@ function mermixtools_admin_settings() {
 	'#default_value' => variable_get('mtools_banner_image', ''),
 	
     );
+    $form['mermix_tools_settings']['mtools_banner_form'] = array(
+	'#type'          => 'radios',
+	'#title'         => t('Select what form is shown in banner section'),
+	'#default_value' => variable_get('mtools_banner_form', 0),
+	'#options'       => array(1 => t('Looking for webform'), 0 => t('Machinery search form(default)')),
+    );
     $form['mermix_tools_settings']['mtools_banner_text'] = array(
 	'#type' => 'textarea',
 	'#title' => t('Banner text'),
