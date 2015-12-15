@@ -6507,6 +6507,31 @@ form.webform-client-form .container-inline-date{
     min-width: 220px;
 }
 
+.banner .inline-form .form-item.webform-component.webform-component-textarea.webform-component--comments {
+    display: none;
+    visibility: hidden;
+}
+.region-map .banner form.webform-client-form {
+    text-align: center;
+}
+.region-map .banner form.webform-client-form > div {
+    display: inline-block;
+}
+.inline-form .webform-client-form .form-type-date-popup .form-type-textfield:before,.inline-form .form-type-date-popup .form-type-textfield:before{
+    top: 10px;
+}
+.inline-form .webform-client-form [class*="--location"]{
+    position: relative;
+}
+.inline-form .webform-client-form [class*="--location"]:before{
+        content: "\f041";
+	position: absolute;
+	font-family: FontAwesome;
+	left: 7px;
+	font-size: 22px;
+	top: 10px;
+	color: #555;
+}
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{
@@ -6690,7 +6715,8 @@ form.webform-client-form .container-inline-date{
 	padding-left: 20px;
     }
     /* Search form */
-    .region-map .inline-form{
+    
+    .region-map .inline-form,.inline-form form.webform-client-form > div{
 	width: 95%;
     }
     .inline-form{
@@ -6703,11 +6729,12 @@ form.webform-client-form .container-inline-date{
     .region-map .banner form{
 	margin: -205px auto 0
     }
-    .inline-form > div{
+    .inline-form > div, .inline-form form.webform-client-form > div .webform-component,.inline-form form.webform-client-form > div .container-inline-date{
 	float: left;
 	width: 49%;
     }
-    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date{
+    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date,
+    .inline-form form.webform-client-form > div .webform-component:first-child,.inline-form form.webform-client-form > div .form-item + div.container-inline-date{
 	margin-right: 2%;
     }
     .inline-form .form-item div{
@@ -6919,9 +6946,15 @@ form.webform-client-form .container-inline-date{
     {
 	margin-right: 2%; 
     }
+    .inline-form form.webform-client-form .container-inline-date{
+	margin-bottom: 10px;
+    }
 }
 
 @media (max-width: 604px) {
+    .region-map .banner{
+	text-align: center;
+    }
     .banner-text .text-inner h1{
 	font-size: 38px;
     }
@@ -6968,16 +7001,17 @@ form.webform-client-form .container-inline-date{
 	width: 465px;
 	margin: 0 auto;
     }
-    
-    .inline-form > div{
+    .inline-form > div, .inline-form form.webform-client-form > div .webform-component,.inline-form form.webform-client-form > div .container-inline-date{
 	float: left;
 	width: 100%;
     }
-    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date{
+    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date,
+    .inline-form form.webform-client-form > div .webform-component:first-child,.inline-form form.webform-client-form > div .form-item + div.container-inline-date{
 	margin-right: 0;
     }
     
-    .inline-form > div,.inline-form > .form-item, .inline-form .container-inline-date{
+    .inline-form > div,.inline-form > .form-item, .inline-form .container-inline-date,
+    .inline-form form.webform-client-form > div .webform-component{
 	margin-bottom: 10px;
     }
     .inline-form button.form-submit{
