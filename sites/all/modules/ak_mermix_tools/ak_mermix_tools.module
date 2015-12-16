@@ -344,6 +344,7 @@ function ak_mermix_tools_form_user_register_form_alter(&$form, &$form_state) {
     }
 
     $form['autoassignrole_user']['user_roles']["#options"] = $options;
+    $form['autoassignrole_user']["#weight"] = 90;
     $form['terms_of_use'] = array(
     '#type' => 'checkbox',
     '#title' => t('I agree with the website\'s <a href="@tos" >terms and conditions</a>', array('@tos' => url('node/257'))),
