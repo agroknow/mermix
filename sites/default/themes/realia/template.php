@@ -509,6 +509,15 @@ function realia_preprocess_html(&$variables) {
  * @param $variables
  */
 function realia_preprocess_page(&$variables) {
+  if(arg(0) == 'node' && arg(2) == 'edit' && isset($variables['node'])) {
+      $nodeObj = $variables['node'];
+      if($nodeObj->type == 'apartment') {
+      drupal_set_title(t('Edit Machinery @title', array('@title' => $nodeObj->title)));
+      }
+  }
+  if(current_path() == 'node/add/apartment') {
+      drupal_set_title(t('Add your machine'));
+  }
   $status = drupal_get_http_header("status");
   if ($status == "404 Not Found") {
     $variables['theme_hook_suggestions'][] = 'page__404';

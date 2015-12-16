@@ -458,14 +458,16 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 body.front #header,body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    background: rgba(0, 0, 0, 0.54);
+    background: rgba(0, 0, 0, 0.48);
 }
 
-body.front #header-wrapper.fixed #header,body.front #header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li ul {
+body.front #header-wrapper.fixed.white #header,body.front #header-wrapper.fixed.white .navigation-wrapper .navigation .block-superfish .content ul li ul {
     background: #fff;
 }
 body #header{
-    border-bottom: 2px solid #313131;
+/*  border-bottom: 2px solid #313131;
+    box-shadow: 0px -2px 7px #f0f0f0;
+*/
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul {
@@ -481,7 +483,7 @@ body #header{
     width: 220px !important
 }
 #header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    margin: 20px 0px 0px 0px;
+    margin: 15px 0px 0px 0px;
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul li {
@@ -573,10 +575,10 @@ body #header{
     -moz-box-shadow: none;
     box-shadow: none;
     float: right;
-    margin: 11px 0px 11px 0px
+    margin: 0
 }
 #header-wrapper.fixed .navigation-wrapper .navigation #block-realia-blocks-realia-language {
-    margin: 5px 0px 10px 0px;
+    margin: 0;
 }
 
 .navigation-wrapper .navigation #block-realia-blocks-realia-language .content .default {
@@ -3345,7 +3347,7 @@ body.node-type-apartment section .block-views {
     }
 }
 
-#header-wrapper,body.front #header-wrapper.fixed {
+#header-wrapper,body.front #header-wrapper.fixed.white {
     background-color: #fff
 }
 
@@ -4460,7 +4462,8 @@ aside .block .content .nav li:last-child {
 }
 
 .btn.btn-primary {
-    background-color: #e63434
+    background-color: #e63434;
+    border-bottom: 2px solid #ce1919;
 }
 
 .btn.btn-primary:hover {
@@ -5163,10 +5166,12 @@ body.header-light #navigation {
     background-color: #313131
 }
 body.header-light #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light #header-wrapper.fixed #navigation .block-superfish a,
+body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish a,
 body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
     color: #333 !important
 }
 body.header-light.front #navigation .block-superfish .nolink,body.header-light.front #navigation .block-superfish a,
+body.header-light.front #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed #navigation .block-superfish a,
 body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish a{
     color: #fff !important
 }
@@ -5174,22 +5179,26 @@ body.header-light.front #header-wrapper #navigation .block-superfish a.highlight
     padding: 10px;
     top: 17px;
     border: 1px solid;
-    color: #fff !important;
+/*    color: #fff !important;*/
     transition: background 0.2s ease-in;
-    background: #e63434;
+/*    background: #e63434;*/
 }
 body.header-light.front #header-wrapper #navigation .block-superfish a.highlighted:hover{
-    background: #ce1919; 
+/*    background: #ce1919; */
 }
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.fixed #navigation .block-superfish a.highlighted{
     padding: 10px;
     top: 6px;
     border: 1px solid;
+    color: #fff !important;
     transition: background 0.2s ease-in;
-    background: #e63434;
+/*    background: #e63434;*/
+}
+body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.fixed.white #navigation .block-superfish a.highlighted{
+    color: #333 !important;
 }
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted:hover,body.header-light.not-front #header-wrapper #navigation .block-superfish a.highlighted:hover{
-   background: #ce1919;  
+/*   background: #ce1919;  */
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
@@ -5207,7 +5216,7 @@ body.header-light.front #navigation .block-superfish .menuparent .menuparent>.no
         background-image: url("../img/arrow-right-white@2x.png") !important
     }
 }
-body.header-light.front #header-wrapper.fixed #navigation .block-superfish .menuparent>.nolink,body.header-light.front #header-wrapper.fixed #navigation .block-superfish .menuparent>a,
+body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .menuparent>.nolink,body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .menuparent>a,
 body.header-light.not-front #navigation .block-superfish .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent>a {
     background-image: url("../img/arrow-bottom-black.png") !important
 }
@@ -5779,26 +5788,26 @@ button.form-submit.field-add-more-submit{
 /* Language selection */
 #block-realia-blocks-realia-language .content ul{
     list-style-type: none;
-    margin: 5px 10px 0 0;
+    margin: 0 0 0 10px;
     display: block;
     float: left;
 }
 #header-wrapper.fixed #block-realia-blocks-realia-language .content ul{
-    margin: 0 5px 0 0;
+    margin: 0 0 0 10px;
 }
 #block-realia-blocks-realia-language .content ul li{
     float: left;
     margin-left: 20px;
 }
 #block-realia-blocks-realia-language .content ul li.last{
-    margin-left: 8px;
+    margin-left: 0;
 }
 #block-realia-blocks-realia-language .content ul li span{
     display: none;
 }
 body.front #block-realia-blocks-realia-language .content ul li a{
     float: none;
-    padding: 10px;
+    padding: 25px 8px;
     color: #ddd;
     text-decoration: none;
     display: block;
@@ -5806,36 +5815,47 @@ body.front #block-realia-blocks-realia-language .content ul li a{
     width: 20px;
     height: 20px;
     text-align: center;
-}
-body.front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover{
-    color: #fff;
-    background: #000;
-    border-radius: 100%;
+    text-transform: uppercase;
+    font-weight: lighter;
 }
 
-body.not-front #block-realia-blocks-realia-language .content ul li a,
-body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
+body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a,body.not-front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
+    padding: 15px 8px;
+}
+body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a{
+    color: #333;
+}
+body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a{ color: #ddd; }
+body.front #block-realia-blocks-realia-language .content ul li.active a,body.front #block-realia-blocks-realia-language .content ul li a:hover,
+body.not-front.nav-open #block-realia-blocks-realia-language .content ul li.active a,body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a:hover
+{
+    color: #fff;
+    font-weight: normal;
+}
+
+body.not-front #block-realia-blocks-realia-language .content ul li a{
     float: none;
-    padding: 10px;
-    color: #000;
+    padding: 25px 8px;
+    color: #333;
     text-decoration: none;
     display: block;
     border: none;
     width: 20px;
     height: 20px;
     text-align: center;
-    transition: all 0.2s ease-in;
+    text-transform: uppercase;
+    font-weight: lighter;
 }
+
 body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a,body.front.nav-open #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
     color: #fff;
 }
 body.not-front #block-realia-blocks-realia-language .content ul li a:hover,
-body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a:hover,
+body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a:hover,
 body.not-front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover,
-body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li.active a,body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a:hover{
-    color: #fff;
-    background: #000;
-    border-radius: 100%;
+body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li.active a,body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a:hover{
+    color: #000;
+    font-weight: normal;
 }
 
 .region-header-right li a{
@@ -6356,8 +6376,8 @@ article.node-apartment footer .links.inline{
     border: 1px solid;
     float: right;
     margin-top: 15px;
-    background: #e63434;
-    color: #fff;
+/*    background: #e63434;
+    color: #fff;*/
 }
 #header-wrapper.fixed .navbar .span4 a.highlighted{
     margin-top: 5px;
@@ -6506,6 +6526,75 @@ form.webform-client-form .container-inline-date{
     min-width: 220px;
 }
 
+.banner .inline-form .form-item.webform-component.webform-component-textarea {
+    display: block;
+    clear: both;
+    width: 100%;
+}
+.banner .inline-form form.webform-client-form .webform-submit{
+    clear: both;
+    border-radius: 0;
+    width: 100%;
+    margin-top: 15px;
+}
+.banner .inline-form form.webform-client-form .form-item-submitted-date-to input{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.region-map .banner form.webform-client-form {
+    text-align: center;
+    margin-top: -300px;
+}
+.region-map .banner form.webform-client-form > div {
+    display: inline-block;
+}
+.inline-form .webform-client-form .form-type-date-popup .form-type-textfield:before,.inline-form .form-type-date-popup .form-type-textfield:before{
+    top: 10px;
+}
+.inline-form .webform-client-form [class*="--location"]{
+    position: relative;
+}
+.inline-form .webform-client-form [class*="--location"]:before{
+        content: "\f041";
+	position: absolute;
+	font-family: FontAwesome;
+	left: 7px;
+	font-size: 22px;
+	top: 10px;
+	color: #555;
+}
+/* Action button */
+.btn.large-btn{
+    padding: 20px;
+    display: block;
+    font-size: 20px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: lighter;
+}
+.block.member-action{
+    margin-top: 45px;
+    border: 1px dashed #ddd;
+    padding: 8px;
+}
+/* Hide lat lon */
+.form-item-field-address-und-0-geom-lat,.form-item-field-address-und-0-geom-lon{
+    display: none;
+}
+.banner-block{
+    display: inline-block;
+    width: 50%;
+}
+.block-holder{
+    display: block;
+    position: relative;
+    top: 75%;
+    text-align: center;
+}
+.btn.btn-primary.highlighted {
+    border: 1px solid #fff;
+    box-shadow: 0 13px 8px -6px #2B2828;
+    font-weight: bold;
+}
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{
@@ -6514,6 +6603,7 @@ form.webform-client-form .container-inline-date{
     #header .row-fluid .span8{
 	width: 77%;
 	margin: 0;
+	margin-top: -30px;
     }
     .navigation-wrapper .navigation .block-superfish .content ul li .nolink, .navigation-wrapper .navigation .block-superfish .content ul li a{
 	padding-left: 0.6em;
@@ -6539,7 +6629,7 @@ form.webform-client-form .container-inline-date{
     body.front #header{
         background: none;
     }
-    body.front #header-wrapper,body.nav-open #header-wrapper.fixed{
+    body.front #header-wrapper,body.nav-open #header-wrapper.fixed.white{
     position: static;
     background: #fff;
     }
@@ -6689,7 +6779,8 @@ form.webform-client-form .container-inline-date{
 	padding-left: 20px;
     }
     /* Search form */
-    .region-map .inline-form{
+    
+    .region-map .inline-form,.inline-form form.webform-client-form > div{
 	width: 95%;
     }
     .inline-form{
@@ -6702,11 +6793,12 @@ form.webform-client-form .container-inline-date{
     .region-map .banner form{
 	margin: -205px auto 0
     }
-    .inline-form > div{
+    .inline-form > div, .inline-form form.webform-client-form > div .webform-component,.inline-form form.webform-client-form > div .container-inline-date{
 	float: left;
 	width: 49%;
     }
-    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date{
+    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date,
+    .inline-form form.webform-client-form > div .webform-component:first-child,.inline-form form.webform-client-form > div .form-item + div.container-inline-date{
 	margin-right: 2%;
     }
     .inline-form .form-item div{
@@ -6918,9 +7010,15 @@ form.webform-client-form .container-inline-date{
     {
 	margin-right: 2%; 
     }
+    .inline-form form.webform-client-form .container-inline-date{
+	margin-bottom: 10px;
+    }
 }
 
 @media (max-width: 604px) {
+    .region-map .banner{
+	text-align: center;
+    }
     .banner-text .text-inner h1{
 	font-size: 38px;
     }
@@ -6967,16 +7065,17 @@ form.webform-client-form .container-inline-date{
 	width: 465px;
 	margin: 0 auto;
     }
-    
-    .inline-form > div{
+    .inline-form > div, .inline-form form.webform-client-form > div .webform-component,.inline-form form.webform-client-form > div .container-inline-date{
 	float: left;
 	width: 100%;
     }
-    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date{
+    .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date,
+    .inline-form form.webform-client-form > div .webform-component:first-child,.inline-form form.webform-client-form > div .form-item + div.container-inline-date{
 	margin-right: 0;
     }
     
-    .inline-form > div,.inline-form > .form-item, .inline-form .container-inline-date{
+    .inline-form > div,.inline-form > .form-item, .inline-form .container-inline-date,
+    .inline-form form.webform-client-form > div .webform-component{
 	margin-bottom: 10px;
     }
     .inline-form button.form-submit{

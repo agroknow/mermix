@@ -1,5 +1,6 @@
 var options = {
-  types: ['geocode']
+  types: ['geocode'],
+  componentRestrictions: {country: "gr"}
   };
 //var pac_input = document.getElementById('edit-place');
 //var pac_input2 = document.getElementById('edit-submitted-location-en');

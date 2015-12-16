@@ -53,6 +53,6 @@ $fields['value']->content = '<div class="category"></div>';
   <?php print $field->wrapper_suffix; ?>
 <?php endforeach; ?>
 <a class="main-link" href="<?php print $nameAddUrl ?>"><span class="name"><?php print $termObj->name ?></span></a>
-<a class="add-it" href="<?php print $nameAddUrl ?>"><span class="name"><?php print t('Add it') ?></span></a>
+<a class="add-it" href="<?php print $nameAddUrl ?>"><span class="name"><?php print t('Meet the demand') ?></span></a>
 </div>
 </div>

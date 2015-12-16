@@ -74,15 +74,21 @@ jQuery(document).ready(function(){
 	jQuery('div.logo').parent().append( promobtn );
     }
     
-    var scrollHeight = 200;
+    var scrollHeight = 50;
+    var scrollHeight2 = 50;
     if(jQuery('#map .banner').length == 1) {
-	scrollHeight = jQuery('#map .banner').offset().top + 700;
+	scrollHeight2 = jQuery('#map .banner').offset().top + 600;
     }
     jQuery(window).bind('scroll', function () {
 	if (jQuery(window).scrollTop() > scrollHeight) {
 	    jQuery('#header-wrapper').addClass('fixed');
 	} else {
 	    jQuery('#header-wrapper').removeClass('fixed');
+	}
+	if (jQuery(window).scrollTop() > scrollHeight2) {
+	    jQuery('#header-wrapper').addClass('white');
+	} else {
+	    jQuery('#header-wrapper').removeClass('white');
 	}
     if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
         jQuery("#dragger").css("top",jQuery(window).scrollTop());
