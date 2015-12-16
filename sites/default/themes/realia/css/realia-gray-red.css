@@ -6593,6 +6593,7 @@ form.webform-client-form .container-inline-date{
 .btn.btn-primary.highlighted {
     border: 1px solid #fff;
     box-shadow: 0 13px 8px -6px #2B2828;
+    font-weight: bold;
 }
 @media (max-width: 1199px) {
     
