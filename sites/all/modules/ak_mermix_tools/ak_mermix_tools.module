@@ -300,6 +300,12 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	}
     }
     if($form_id == 'user_profile_form') {
+	
+	$form['account']['fboauth']['#weight'] = 87;
+	$form['picture']['#weight'] = 88;
+	$form['locale']['#weight'] = 90;
+	$form['mimemail']['#weight'] = 102;
+	$form['timezone']['#weight'] = 103;
 	$form['#validate'][] = 'ak_mermix_tools_user_profile_validate';
     }
 }
