@@ -339,7 +339,16 @@ function ak_mermix_tools_date_popup_process_alter(&$element, &$form_state, $cont
     unset($element['time']['#description']);
 }
 
+function ak_mermix_tools_form_user_login_alter(&$form, &$form_state) {
+   drupal_set_title(t('Log in')); 
+}
+
+function ak_mermix_tools_form_user_pass_alter(&$form, &$form_state) {
+    drupal_set_title(t('Request new password'));
+}
+
 function ak_mermix_tools_form_user_register_form_alter(&$form, &$form_state) {
+    drupal_set_title(t('Create new account'));
     $replacements = array('Owner' => t('Machinery owner'),
 	'Renter' => t('Renter'),
 	'Professional' => t('Machinery renter and owner')
