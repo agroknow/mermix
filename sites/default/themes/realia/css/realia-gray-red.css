@@ -6561,7 +6561,10 @@ form.webform-client-form .container-inline-date{
     border: 1px dashed #ddd;
     padding: 8px;
 }
-
+/* Hide lat lon */
+.form-item-field-address-und-0-geom-lat,.form-item-field-address-und-0-geom-lon{
+    display: none;
+}
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{
