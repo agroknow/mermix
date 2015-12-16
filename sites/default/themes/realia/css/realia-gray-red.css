@@ -6524,11 +6524,23 @@ form.webform-client-form .container-inline-date{
 }
 
 .banner .inline-form .form-item.webform-component.webform-component-textarea {
-    display: none;
-    visibility: hidden;
+    display: block;
+    clear: both;
+    width: 100%;
+}
+.banner .inline-form form.webform-client-form .webform-submit{
+    clear: both;
+    border-radius: 0;
+    width: 100%;
+    margin-top: 15px;
+}
+.banner .inline-form form.webform-client-form .form-item-submitted-date-to input{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .region-map .banner form.webform-client-form {
     text-align: center;
+    margin-top: -300px;
 }
 .region-map .banner form.webform-client-form > div {
     display: inline-block;
@@ -6567,12 +6579,17 @@ form.webform-client-form .container-inline-date{
 }
 .banner-block{
     display: inline-block;
+    width: 50%;
 }
 .block-holder{
     display: block;
     position: relative;
     top: 75%;
     text-align: center;
+}
+.btn.btn-primary.highlighted {
+    border: 1px solid #fff;
+    box-shadow: 0 13px 8px -6px #2B2828;
 }
 @media (max-width: 1199px) {
     
