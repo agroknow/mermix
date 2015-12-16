@@ -695,7 +695,7 @@ function machinery_add_form($form, &$form_state) {
     $form['machine_name'] = array(
 	'#type' => 'textfield',
 	'#title' => t('Machine name'),
-	'#attributes' => array('placeholder' => 'Enter the name of the machine e.g. Tractor'),
+	'#attributes' => array('placeholder' => t('Enter the name of the machine e.g. Tractor')),
 	'#required' => true,
 	'#default_value' => '',
     );
