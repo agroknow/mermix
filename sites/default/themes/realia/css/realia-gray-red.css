@@ -6582,13 +6582,15 @@ form.webform-client-form .container-inline-date{
 }
 .banner-block{
     display: inline-block;
-    width: 50%;
+    min-width: 50%;
+    max-width: 90%;
 }
 .block-holder{
     display: block;
-    position: relative;
-    top: 75%;
+    position: absolute;
+    top: 500px;
     text-align: center;
+    width: 100%;
 }
 .btn.btn-primary.highlighted {
     border: 1px solid #fff;
