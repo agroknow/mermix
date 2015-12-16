@@ -465,8 +465,9 @@ body.front #header-wrapper.fixed.white #header,body.front #header-wrapper.fixed.
     background: #fff;
 }
 body #header{
-/*    border-bottom: 2px solid #313131;*/
+/*  border-bottom: 2px solid #313131;
     box-shadow: 0px -2px 7px #f0f0f0;
+*/
 }
 
 .navigation-wrapper .navigation .block-superfish .content ul li ul {
@@ -6547,6 +6548,20 @@ form.webform-client-form .container-inline-date{
 	top: 10px;
 	color: #555;
 }
+/* Action button */
+.btn.large-btn{
+    padding: 20px;
+    display: block;
+    font-size: 20px;
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: lighter;
+}
+.block.member-action{
+    margin-top: 45px;
+    border: 1px dashed #ddd;
+    padding: 8px;
+}
+
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{
