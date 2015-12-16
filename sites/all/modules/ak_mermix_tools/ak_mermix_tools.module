@@ -584,10 +584,13 @@ function ak_mermix_tools_block_content() {
 
 function ak_mermix_tools_block_content_banner() {
     //TODO add option here for image
-    if(variable_get('mtools_banner_form', 0)) {
+    if(variable_get('mtools_banner_form', 0) == 1) {
 	$webformid = variable_get('looking_for_webform_id', '298');
 	$block = module_invoke('webform', 'block_view', 'client-block-'.$webformid);
 	$search_form = array('#markup' => '<div class="inline-form">' . $block['content'] . '</div>');
+    } elseif(variable_get('mtools_banner_form', 0) == 2) {
+	$block = module_invoke('block', 'block_view', variable_get('mtools_banner_block', ''));
+	$search_form = array('#markup' => '<div class="block-holder"><div class="banner-block">' . $block['content'] . '</div></div>');
     } else {
 	$search_form = drupal_get_form('machinery_search_form');
     }

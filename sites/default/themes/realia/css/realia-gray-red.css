@@ -6565,6 +6565,15 @@ form.webform-client-form .container-inline-date{
 .form-item-field-address-und-0-geom-lat,.form-item-field-address-und-0-geom-lon{
     display: none;
 }
+.banner-block{
+    display: inline-block;
+}
+.block-holder{
+    display: block;
+    position: relative;
+    top: 75%;
+    text-align: center;
+}
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{

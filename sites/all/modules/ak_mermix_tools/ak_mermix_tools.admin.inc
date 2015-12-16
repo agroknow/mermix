@@ -41,7 +41,14 @@ function mermixtools_admin_settings() {
 	'#type'          => 'radios',
 	'#title'         => t('Select what form is shown in banner section'),
 	'#default_value' => variable_get('mtools_banner_form', 0),
-	'#options'       => array(1 => t('Looking for webform'), 0 => t('Machinery search form(default)')),
+	'#options'       => array(2 => t('Custom block'), 1 => t('Looking for webform'), 0 => t('Machinery search form(default)')),
+    );
+    $form['mermix_tools_settings']['mtools_banner_block'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Enter the block id to render in banner'),
+	'#required' => false,
+	'#default_value' => variable_get('mtools_banner_block', ''),
+	
     );
     $form['mermix_tools_settings']['mtools_banner_text'] = array(
 	'#type' => 'textarea',
