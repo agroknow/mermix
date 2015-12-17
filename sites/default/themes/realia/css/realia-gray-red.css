@@ -6582,7 +6582,7 @@ form.webform-client-form .container-inline-date{
 }
 .banner-block{
     display: inline-block;
-    width: 90%;
+    width: 65%;
     max-width: 700px;
 }
 .block-holder{
@@ -6609,7 +6609,6 @@ form.webform-client-form .container-inline-date{
     border: 1px solid #fff;
     box-shadow: 0 13px 8px -6px #2B2828;
     font-weight: bold;
-    min-width: 250px;
 }
 
 .large-btn.highlighted{
