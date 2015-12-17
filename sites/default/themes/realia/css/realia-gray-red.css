@@ -6582,8 +6582,8 @@ form.webform-client-form .container-inline-date{
 }
 .banner-block{
     display: inline-block;
-    min-width: 50%;
-    max-width: 90%;
+    width: 65%;
+    max-width: 700px;
 }
 .block-holder{
     display: block;
@@ -6592,10 +6592,27 @@ form.webform-client-form .container-inline-date{
     text-align: center;
     width: 100%;
 }
-.btn.btn-primary.highlighted {
+.block-holder .btn{
+    display: inline-block;
+    float: right;
+}
+.block-holder .btn.btn-primary{
+    float: left;
+}
+.btn.highlighted{
+    color: #333;
+}
+.btn.btn-primary.highlighted{
+    color: #fff;
+}
+.btn.btn-primary.highlighted,.btn.highlighted {
     border: 1px solid #fff;
     box-shadow: 0 13px 8px -6px #2B2828;
     font-weight: bold;
+}
+
+.large-btn.highlighted{
+    padding: 25px;
 }
 @media (max-width: 1199px) {
     
@@ -6745,6 +6762,7 @@ form.webform-client-form .container-inline-date{
     width: 150px;
     }*/
 }
+
 
 @media (min-width: 1200px) {
     #header .row-fluid .span4{
@@ -6943,6 +6961,7 @@ form.webform-client-form .container-inline-date{
 }
 
 @media (max-width: 767px) {
+
     div#content .container{
 	padding:0 20px;
     }
@@ -7018,6 +7037,15 @@ form.webform-client-form .container-inline-date{
 }
 
 @media (max-width: 604px) {
+    .block-holder .btn,.block-holder .btn.btn-primary{
+    display: block;
+    float: none;
+    margin-bottom: 20px;
+}
+.block-holder{
+    top: 500px;
+}
+
     .region-map .banner{
 	text-align: center;
     }
