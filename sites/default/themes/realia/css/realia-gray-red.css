@@ -5488,7 +5488,7 @@ html.js input.ui-autocomplete-loading {
     width: auto;
     margin-top: 0;
 }
-.region-bottom .inline-form button.form-submit{
+.region-map .inline-form button.form-submit{
     background: none;
     color: #333;
     border-bottom: none;
