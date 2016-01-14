@@ -71,10 +71,10 @@ jQuery("#user-register-form,#user-profile-form").validate({
 });
 jQuery(document).ready(function(){
 
-    jQuery('#field-multiprice-values .field-name-field-multiprice-unit select').each(function(index,value){
-	jQuery(this).find('option').eq(index+1).prop('selected',true);
-	jQuery(this).trigger("liszt:updated");
-    });
+ //    jQuery('#field-multiprice-values .field-name-field-multiprice-unit select').each(function(index,value){
+	// jQuery(this).find('option').eq(index+1).prop('selected',true);
+	// jQuery(this).trigger("liszt:updated");
+ //    });
     jQuery('#field-multiprice-values tr.draggable').each(function(index,value){
 	var elem_to_remove = jQuery(this).find('td:eq(1)');
 	if(elem_to_remove.text().length == 0)
