@@ -5488,6 +5488,12 @@ html.js input.ui-autocomplete-loading {
     width: auto;
     margin-top: 0;
 }
+.region-map .inline-form button.form-submit{
+    background: none;
+    color: #333;
+    border-bottom: none;
+    border: 1px solid;
+}
 .inline-form{
     display: inline-block;
 }
