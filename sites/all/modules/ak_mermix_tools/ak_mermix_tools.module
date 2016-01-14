@@ -243,6 +243,10 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     	$attach = array('js' => array(
 	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer','weight' => 200),
     ));
+    if($form_id == 'webform_client_form_' . variable_get('check_availability_webform_id', '299')) {
+    	$form['actions']['submit']['#value'] = t('Παζάρεψέ το');
+    	$form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+    }
     if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
 	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
     }
