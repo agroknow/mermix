@@ -5709,7 +5709,7 @@ button.form-submit.field-add-more-submit{
 .region-sidebar-second .block-webform {
     text-align: center;
     padding: 15px 5px 0 5px;
-    border: 1px solid #E63434;
+    /* border: 1px solid #E63434; */
     margin-top: 25px;
 }
 .region-sidebar-second .block-webform .container-inline-date .form-item, .region-sidebar-second .block-webform .container-inline-date .form-item input{
@@ -5733,6 +5733,7 @@ button.form-submit.field-add-more-submit{
 }
 .region-sidebar-second .block-webform button{
     margin-top: 20px;
+    font-weight: bold;
 }
 /* page-machine-results */
 .page-machine-results .webform-client-form .webform-component{
