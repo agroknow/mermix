@@ -6583,14 +6583,36 @@ form.webform-client-form .container-inline-date{
     border: 1px dashed #ddd;
     padding: 8px;
 }
+
+/* Two action buttons */
+.btns-2{
+    text-align: justify;
+}
+.btns-2 .btn.large-btn{
+    display: inline-block;
+}
+.btns-2:after {
+    content: '';
+    width: 100%;
+    display: inline-block;
+}
+.btn.highlighted{
+    color: #333;
+}
+.btn.btn-primary.highlighted{
+    color: #fff;
+}
+
 /* Hide lat lon */
 .form-item-field-address-und-0-geom-lat,.form-item-field-address-und-0-geom-lon{
     display: none;
 }
 .banner-block{
     display: inline-block;
-    min-width: 50%;
-    max-width: 90%;
+/*    min-width: 50%;
+    max-width: 90%;*/
+width: 75%;
+max-width: 700px;
 }
 .block-holder{
     display: block;
@@ -6599,7 +6621,7 @@ form.webform-client-form .container-inline-date{
     text-align: center;
     width: 100%;
 }
-.btn.btn-primary.highlighted {
+.btn.btn-primary.highlighted,.btn.highlighted {
     border: 1px solid #fff;
     box-shadow: 0 13px 8px -6px #2B2828;
     font-weight: bold;
@@ -7215,6 +7237,10 @@ form.webform-client-form .container-inline-date{
     }
     .chzn-container-single,.chzn-container-single .chzn-drop{
 	width: 100% !important;
+    }
+    .btns-2 .btn.large-btn{
+	display: block;
+	margin-bottom: 20px;
     }
 }
 @media (max-width: 320px) {
