@@ -156,8 +156,9 @@
                     <div class="row facebookbtn-page">
 		    <div class="span5 right-separator">
                     <?php print render($page['content']); ?>
+			<span class="option-separator"><span class="option-text"><?php print t('Or') ?></span></span>
 		    </div>
-		    <div class="span3">
+		    <div class="span3 pl20">
 			<div class="fb-block">
 			<p class="fb-desc"><?php print t('Not a mermix User? Connect using your facebook account'); ?></p>
 			<?php print fboauth_action_display('connect'); ?>
