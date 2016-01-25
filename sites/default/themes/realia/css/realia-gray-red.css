@@ -6612,8 +6612,8 @@ form.webform-client-form .container-inline-date{
     display: inline-block;
 /*    min-width: 50%;
     max-width: 90%;*/
-width: 75%;
-max-width: 700px;
+width: 90%;
+max-width: 1000px;
 }
 .block-holder{
     display: block;
@@ -6818,6 +6818,18 @@ max-width: 700px;
 }
 
 @media (max-width: 979px) {
+    .banner-block {
+    display: inline-block;
+    width: 75%;
+    max-width: 600px;
+    }
+    .btns-2 .btn.large-btn{
+	display: block;
+	margin-bottom: 20px;
+    }
+    .block-holder{
+	top: 500px;
+    }
     .facebookbtn-page [class*="span"] {
 	display: block;
 	float: none;
@@ -7285,12 +7297,12 @@ max-width: 700px;
     .chzn-container-single,.chzn-container-single .chzn-drop{
 	width: 100% !important;
     }
-    .btns-2 .btn.large-btn{
-	display: block;
-	margin-bottom: 20px;
-    }
 }
 @media (max-width: 320px) {
+    .banner-block {
+    display: inline-block;
+    width: 95%;
+    }
     #header-wrapper .navbar .span4{
         padding-left: 25px;
     }
