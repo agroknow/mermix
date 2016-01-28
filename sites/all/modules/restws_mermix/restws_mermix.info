@@ -1,0 +1,6 @@
+name = Mermix restws
+description = Mermix restws configuration from AK
+core = 7.x
+package = Agro Know
+
+dependencies[] = restws

@@ -472,112 +472,6 @@ function mtools_createTerms($terms, $vocabulary_name) {
     return $term ? $term->tid : $parent;
 }
 
-/**
- * Alter the outgoing response.
- *
- * @param mixed $response
- *   The response data being returned by the REST service (not yet serialized).
- * @param string $function
- *   The function being called on the REST service.
- * @param string $format
- *   The name of the format serializing the response.
- * @param RestWSResourceControllerInterface $resourceController
- *   The resource controller.
- */
-function ak_mermix_tools_restws_response_alter(&$response, $function, $formatName, $resourceController) {
-    if ($function == 'queryResource' && $formatName == 'json') {
-	//e.g. node.json?type=apartment&limit=10
-	foreach ($response['list'] as $key => $listitem) {
-	    //get the file url from id
-	    $fid = isset($listitem['field_image']) && isset($listitem['field_image'][0]) ? $listitem['field_image'][0]['file']['id'] : 0;
-	    if ($fid != 0) {
-		  $file = file_load($fid);
-		  $uri = $file->uri; //create the uri
-		  $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-		  $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
-	    } else if (isset($listitem['field_image'])) {
-		  $response['list'][$key]['field_image'] = "";
-	    }
-	    //get vocabulary name from id
-	    $vocabularyid = isset($listitem['vocabulary']) ? $listitem['vocabulary']['id'] : 0;
-	    if ($vocabularyid != 0) {
-		  $response['list'][$key]['vocabulary'] = taxonomy_vocabulary_load($vocabularyid)->machine_name;
-	    } else if (isset($listitem['vocabulary'])) {
-		  $response['list'][$key]['vocabulary'] = "";
-	    }
-        //get taxonomy term's translation
-        if(isset($listitem['vocabulary']) && isset($listitem['tid'])){
-            $response['list'][$key]['name'] = _restws_load_term_translation(intval($listitem['tid']));
-        }
-        //configure field_multiprice
-        if(isset($listitem['field_multiprice']) && !empty($listitem['field_multiprice'])){
-            $response['list'][$key]['field_multiprice'] = _restws_load_multi_price($listitem['nid']);
-        }
-	}
-    } else if ($function == 'viewResource' && $formatName == 'json') {
-	//e.g. node/204.json
-	if (isset($response['field_image'])) {
-	    //get the file id
-	    $fid = isset($response['field_image'][0]) ? $response['field_image'][0]['file']['id'] : 0;
-	    if ($fid != 0) {
-		$file = file_load($fid);
-		$uri = $file->uri; //create the uri
-		$mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-		$response['field_image'] = $mediumUrl; //replace the original response
-	    } else {
-		$response['field_image'] = "";
-	    }
-	}
-    }
-}
-
-function ak_mermix_tools_restws_user(){
-  drupal_add_http_header('Content-Type', 'application/json');
-  global $user;
-  $output = array(
-	"uid" =>$user->uid,
-	"name" =>$user->name,
-	"mail" =>$user->mail,
-	"roles" =>$user->roles
-  );
-  drupal_json_output($output);
-  drupal_exit();
-}
-
-function _restws_load_multi_price($nid){
-    $multifield = array();
-    $query = new EntityFieldQuery();
-    
-    $query->entityCondition('entity_type', 'node')
-        ->propertyCondition('nid', $nid);
-    $result = $query->execute();
-
-    if (isset($result['node'])) {
-        $stories = $result['node'];
-        field_attach_load('node', $stories, FIELD_LOAD_CURRENT);
-
-    // Get values of our node field
-    // throws error entitymalformedexception, check reports/dblog
-      //$output = field_get_items('node', $stories, 'field_multiprice');
-  
-        foreach ($stories[$nid]->field_multiprice['und'] as $key => $fielditem) {
-            $multifield[$key]['value'] = isset($fielditem['field_multiprice_value']['und'][0]) ? $fielditem['field_multiprice_value']['und'][0]['value'] : '';
-            $multifield[$key]['unit'] = array();
-            $multifield[$key]['unit']['tid'] = isset($fielditem['field_multiprice_unit']['und'][0]) ? $fielditem['field_multiprice_unit']['und'][0]['tid'] : -1;
-            if($multifield[$key]['unit']['tid'] > -1){
-                $multifield[$key]['unit']['name'] = _restws_load_term_translation($multifield[$key]['unit']['tid']);
-            }
-        }
-    }
-    
-    return ($multifield);
-}
-
-function _restws_load_term_translation($tid){
-    $term = taxonomy_term_load($tid);
-    $translated_term = module_exists('i18n_taxonomy') ? i18n_taxonomy_localize_terms($term) : $term;
-    return $translated_term->name;
-}
 
 /*
  * Implement hook_js_alter
@@ -891,11 +785,7 @@ function ak_mermix_tools_menu() {
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
-    $items['restws/user'] = array(
-    'page callback' => 'ak_mermix_tools_restws_user',
-    'access callback' => 'user_is_logged_in',
-    'type' => MENU_CALLBACK,
-    );
+    
     return $items;
 }
 
