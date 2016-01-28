@@ -6589,7 +6589,7 @@ form.webform-client-form .container-inline-date{
 .btns-2{
     text-align: justify;
 }
-.btns-2 .btn.large-btn{
+.btns-2 .btntext{
     display: inline-block;
 }
 .btns-2:after {
@@ -6613,7 +6613,7 @@ form.webform-client-form .container-inline-date{
 /*    min-width: 50%;
     max-width: 90%;*/
 width: 90%;
-max-width: 1000px;
+max-width: 980px;
 }
 .block-holder{
     display: block;
@@ -6631,11 +6631,17 @@ max-width: 1000px;
     font-size: 26px;
     letter-spacing: 2px;
 }
-.btn .subtext{
+.subtext{
+    color: #000;
     display: block;
     font-size: 16px;
     margin-top: 5px;
     letter-spacing: normal;
+}
+span.or-separator{
+    font-size: 45px;
+    text-transform: lowercase;
+    color: #000;
 }
 
 .option-separator {
@@ -6832,13 +6838,6 @@ max-width: 1000px;
     display: inline-block;
     width: 75%;
     max-width: 600px;
-    }
-    .btns-2 .btn.large-btn{
-	display: block;
-	margin-bottom: 20px;
-    }
-    .block-holder{
-	top: 500px;
     }
     .facebookbtn-page [class*="span"] {
 	display: block;
@@ -7041,6 +7040,11 @@ max-width: 1000px;
 }
 
 @media (max-width: 767px) {
+    .banner-block {
+    display: inline-block;
+    width: 90%;
+    max-width: 600px;
+    }
     div#content .container{
 	padding:0 20px;
     }
@@ -7116,6 +7120,23 @@ max-width: 1000px;
 }
 
 @media (max-width: 604px) {
+    .block-holder{
+	top: 350px;
+    }
+    .banner-block {
+    display: inline-block;
+    width: 75%;
+    max-width: 600px;
+    }
+    .btns-2 .btntext{
+	display: block;
+	margin-bottom: 20px;
+	text-align: center;
+    }
+    span.or-separator{
+    margin-top: 10px;
+    display: inline-block;
+    }
     .region-map .banner{
 	text-align: center;
     }
