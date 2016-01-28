@@ -167,6 +167,14 @@ class RestWSEntityResourceController implements RestWSQueryResourceControllerInt
 
     try {
       $wrapper = entity_property_values_create_entity($this->entityType, $values);
+      //******https://www.drupal.org/files/issues/restws-1720602-58.patch******* 
+      // Check that the user is allowed to create this entity. We could not do
+      // it earlier as an entity object is required.
+      if (!$this->access('create', $wrapper)) {
+        watchdog('access denied', check_plain($_GET['q']), NULL, WATCHDOG_WARNING);
+        throw new RestWSException(t('Not authorized to create the entity.'), 403);
+      }
+      //******************************************************************************
       // Get the ID and bundle property names.
       $entity_keys = array_intersect_key($entity_info['entity keys'], array('id' => 1, 'bundle' => 1));
 
@@ -332,6 +340,13 @@ class RestWSEntityResourceController implements RestWSQueryResourceControllerInt
   }
 
   public function access($op, $id) {
+    //******https://www.drupal.org/files/issues/restws-1720602-58.patch*******
+    // The "create" operation requires an existing entity to check access.
+    // See https://www.drupal.org/node/1780646
+    if ($op == 'create' && empty($id)) {
+      return TRUE;
+    }
+    //******************************************************************************
     return entity_access($op, $this->entityType, isset($id) ? $this->wrapper($id)->value() : NULL);
   }
 

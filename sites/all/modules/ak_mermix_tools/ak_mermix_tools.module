@@ -531,6 +531,19 @@ function ak_mermix_tools_restws_response_alter(&$response, $function, $formatNam
     }
 }
 
+function ak_mermix_tools_restws_user(){
+  drupal_add_http_header('Content-Type', 'application/json');
+  global $user;
+  $output = array(
+	"uid" =>$user->uid,
+	"name" =>$user->name,
+	"mail" =>$user->mail,
+	"roles" =>$user->roles
+  );
+  drupal_json_output($output);
+  drupal_exit();
+}
+
 function _restws_load_multi_price($nid){
     $multifield = array();
     $query = new EntityFieldQuery();
@@ -877,6 +890,11 @@ function ak_mermix_tools_menu() {
 	'page arguments' => array(1),
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
+    );
+    $items['restws/user'] = array(
+    'page callback' => 'ak_mermix_tools_restws_user',
+    'access callback' => 'user_is_logged_in',
+    'type' => MENU_CALLBACK,
     );
     return $items;
 }
