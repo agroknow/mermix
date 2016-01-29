@@ -3859,8 +3859,8 @@ body.node-type-apartment section .block-views {
 }
 
 #footer-wrapper #footer-top .webform-client-form .form-item input[type=text],#footer-wrapper #footer-top .webform-client-form .form-item input[type=email] {
-    height: 34px;
-    line-height: 34px
+/*    height: 34px;
+    line-height: 34px*/
 }
 
 #footer-wrapper #footer-top .webform-client-form .form-item input[type=text],#footer-wrapper #footer-top .webform-client-form .form-item input[type=email],#footer-wrapper #footer-top .webform-client-form .form-item textarea {
@@ -3877,7 +3877,8 @@ body.node-type-apartment section .block-views {
     box-sizing: border-box;
     border: 1px solid #272727;
     resize: none;
-    width: 100%
+    width: 100%;
+    padding: 10px;
 }
 
 #footer-wrapper #footer-top .webform-client-form .form-item input[type=text]:focus,#footer-wrapper #footer-top .webform-client-form .form-item input[type=text]:active,#footer-wrapper #footer-top .webform-client-form .form-item input[type=email]:focus,#footer-wrapper #footer-top .webform-client-form .form-item input[type=email]:active,#footer-wrapper #footer-top .webform-client-form .form-item textarea:focus,#footer-wrapper #footer-top .webform-client-form .form-item textarea:active {
@@ -6391,7 +6392,7 @@ article.node-apartment footer .links.inline{
 }
 .navbar .span4 a.highlighted:hover{
     text-decoration: none;
-    background: #ce1919;
+/*    background: #ce1919;*/
 }
 #toggle-filters{
     display: none;
@@ -6632,16 +6633,21 @@ max-width: 980px;
     letter-spacing: 2px;
 }
 .subtext{
-    color: #000;
+    color: #fff;
     display: block;
     font-size: 16px;
-    margin-top: 5px;
+    margin-top: 10px;
     letter-spacing: normal;
+    font-weight: bold;
 }
 span.or-separator{
     font-size: 45px;
     text-transform: lowercase;
-    color: #000;
+    color: #fff;
+    font-weight: bold;
+}
+.btntext .btn{
+    font-weight: bold;
 }
 
 .option-separator {
@@ -6674,7 +6680,8 @@ span.or-separator{
     #header .row-fluid .span8{
 	width: 77%;
 	margin: 0;
-	margin-top: -30px;
+	/*margin-top: -30px;*/
+	float: none;
     }
     .navigation-wrapper .navigation .block-superfish .content ul li .nolink, .navigation-wrapper .navigation .block-superfish .content ul li a{
 	padding-left: 0.6em;
@@ -6836,8 +6843,7 @@ span.or-separator{
 @media (max-width: 979px) {
     .banner-block {
     display: inline-block;
-    width: 75%;
-    max-width: 600px;
+    max-width: 750px;
     }
     .facebookbtn-page [class*="span"] {
 	display: block;
@@ -7042,8 +7048,8 @@ span.or-separator{
 @media (max-width: 767px) {
     .banner-block {
     display: inline-block;
-    width: 90%;
-    max-width: 600px;
+    width: 92%;
+    max-width: 640px;
     }
     div#content .container{
 	padding:0 20px;
