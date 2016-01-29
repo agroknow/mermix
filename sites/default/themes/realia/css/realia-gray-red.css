@@ -6583,6 +6583,7 @@ form.webform-client-form .container-inline-date{
 .btntext .large-btn{
     min-width: 265px;
     padding: 30px;
+    font-size: 36px;
 }
 .block.member-action{
     margin-top: 45px;
@@ -6640,7 +6641,7 @@ max-width: 980px;
 .subtext{
     color: #fff;
     display: block;
-    font-size: 16px;
+    font-size: 18px;
     margin-top: 10px;
     letter-spacing: normal;
     font-weight: bold;
