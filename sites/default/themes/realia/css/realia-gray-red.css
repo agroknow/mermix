@@ -6580,6 +6580,10 @@ form.webform-client-form .container-inline-date{
     font-family: 'Roboto', 'Arial', sans-serif;
     font-weight: lighter;
 }
+.btntext .large-btn{
+    min-width: 265px;
+    padding: 30px;
+}
 .block.member-action{
     margin-top: 45px;
     border: 1px dashed #ddd;
@@ -6592,6 +6596,7 @@ form.webform-client-form .container-inline-date{
 }
 .btns-2 .btntext{
     display: inline-block;
+    text-align: center;
 }
 .btns-2:after {
     content: '';
@@ -6619,7 +6624,7 @@ max-width: 980px;
 .block-holder{
     display: block;
     position: absolute;
-    top: 545px;
+    top: 470px;
     text-align: center;
     width: 100%;
 }
@@ -6868,6 +6873,10 @@ span.or-separator{
     display: inline-block;
     max-width: 750px;
     }
+    .btntext .large-btn{
+    min-width: 225px;
+    padding: 30px;
+    }
     .facebookbtn-page [class*="span"] {
 	display: block;
 	float: none;
@@ -7072,7 +7081,10 @@ span.or-separator{
     .banner-block {
     display: inline-block;
     width: 92%;
-    max-width: 640px;
+    max-width: 680px;
+    }
+    .btntext .large-btn {
+    min-width: 180px;
     }
     div#content .container{
 	padding:0 20px;
@@ -7150,7 +7162,7 @@ span.or-separator{
 
 @media (max-width: 604px) {
     .block-holder{
-	top: 350px;
+	top: 320px;
     }
     .banner-block {
     display: inline-block;
