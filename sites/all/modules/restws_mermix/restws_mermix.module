@@ -95,7 +95,7 @@ function _restws_load_multi_price($nid){
 
     // Get values of our node field
     // throws error entitymalformedexception, check reports/dblog
-      //$output = field_get_items('node', $stories, 'field_multiprice');
+    //  $output = field_get_items('node', $stories, 'field_multiprice');
   
         foreach ($stories[$nid]->field_multiprice['und'] as $key => $fielditem) {
             $multifield[$key]['value'] = isset($fielditem['field_multiprice_value']['und'][0]) ? $fielditem['field_multiprice_value']['und'][0]['value'] : '';
