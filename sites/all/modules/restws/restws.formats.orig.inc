@@ -331,12 +331,6 @@ watchdog('restws', 'property_name=%name', array("%name"=>$name));
       }
       return reset($ids);
     }
-    //**************https://www.drupal.org/files/issues/2301237-9.patch********
-    else
-    {
-      return $reference;
-    }
-    //**************************************************************************
 
     throw new RestWSException('Invalid value for resource reference given.', 406);
   }
