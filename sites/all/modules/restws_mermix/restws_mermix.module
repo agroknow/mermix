@@ -50,6 +50,9 @@ function restws_mermix_restws_response_alter(&$response, $function, $formatName,
         if(isset($listitem['field_multiprice']) && !empty($listitem['field_multiprice'])){
             $response['list'][$key]['field_multiprice'] = _restws_load_multi_price($listitem['nid']);
         }
+	if(isset($listitem['field_location']['id'])) {
+	    $response['list'][$key]['field_location']['name'] = _restws_load_term_translation($listitem['field_location']['id']); 
+	}
 	}
     } else if ($function == 'viewResource' && $formatName == 'json') {
 	//e.g. node/204.json
