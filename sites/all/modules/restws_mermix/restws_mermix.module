@@ -13,8 +13,8 @@ function restws_mermix_menu() {
     );
     $items['restws/create-user'] = array(
     'page callback' => 'restws_create_user',
-    'access callback' => 'user_access',
-    'access arguments' => array('administer users'),
+    'access callback' => TRUE,
+    //'access arguments' => array('administer users'),
     'type' => MENU_CALLBACK,
     );
     return $items;
