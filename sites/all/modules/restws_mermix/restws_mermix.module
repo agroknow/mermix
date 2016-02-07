@@ -6,6 +6,17 @@ function restws_mermix_menu() {
     'access callback' => 'user_is_logged_in',
     'type' => MENU_CALLBACK,
     );
+    $items['restws/book-equipment'] = array(
+    'page callback' => 'restws_mermix_restws_book',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    );
+    $items['restws/create-user'] = array(
+    'page callback' => 'restws_create_user',
+    'access callback' => 'user_access',
+    'access arguments' => array('administer users'),
+    'type' => MENU_CALLBACK,
+    );
     return $items;
 }
 
@@ -82,6 +93,98 @@ function restws_mermix_restws_user(){
   );
   drupal_json_output($output);
   drupal_exit();
+}
+
+function restws_mermix_restws_book() {
+    $payload = file_get_contents('php://input');
+    if(empty($payload)){
+	drupal_json_output(array('status' => 'error', 'message' => t('No payload sent')));
+	drupal_exit();
+    }
+    $payload_array = json_decode($payload,true);
+    $webform_nid = variable_get('check_availability_webform_id', '299');
+    $node = node_load($webform_nid);
+    $data = array(
+	'machine' => $payload_array['nid'],
+	'tel' => $payload_array['tel']
+    );
+    module_load_include('inc', 'webform', 'webform.module');
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $data = _webform_client_form_submit_flatten($node, $data);
+    $data = webform_submission_data($node, $data);
+    
+    $submission = (object) array(
+    'nid' => $webform_nid,
+    'uid' => $payload_array['uid'],
+    'sid' => NULL,
+    'submitted' => REQUEST_TIME,
+    'completed' => REQUEST_TIME,
+    'remote_addr' => ip_address(),
+    'is_draft' => FALSE,
+    'data' => $data,
+  );
+
+  $sid = webform_submission_insert($node, $submission);
+  drupal_json_output(array(
+      'status' => 'success',
+      'message' => $node->webform['confirmation']
+      ));
+  drupal_exit();
+    
+}
+
+function restws_create_user() {
+    $payload = file_get_contents('php://input');
+    if(empty($payload)){
+	drupal_json_output(array('status' => 'error', 'message' => t('No payload sent')));
+	drupal_exit();
+    }
+    $payload_array = json_decode($payload,true);
+    
+    $customroles = explode(',', $payload_array['roles']);
+    $customroles[] = 'authenticated user';
+    
+    $roles = array_intersect(user_roles(),$customroles);
+    $new_user = array(
+	'name' => $payload_array['username'],
+	'pass' => $payload_array['password'],
+	'mail' => $payload_array['email'],
+	'status' => 1,
+	'roles' => $roles,
+	'field_first_name' => array(
+	'und' => array(
+	    0 => array(
+	    'value' => $payload_array['firstname'],
+	    ),
+	    )),
+	'field_last_name' => array(
+	    'und' => array(
+	    0 => array(
+	    'value' => $payload_array['lastname'],
+	    ),
+	    )),
+	'field_phone_number' => array(
+	    'und' => array(
+	    0 => array(
+	    'value' => $payload_array['phonenumber'],
+	    ),
+	    )),
+	);
+	if($account = user_load_by_name($new_user['name']) == false) {
+	    $account= user_save(NULL, $new_user);
+	    drupal_json_output(array(
+	    'status' => 'success',
+	    'created_user' => $account->uid,
+	    'message' => t('Thank you for registering on mermix.gr')
+	    ));
+	    drupal_exit();
+	} else {
+	    drupal_json_output(array(
+	    'status' => 'error',
+	    'message' => t('User with username @uname already exists', array('@uname' => $new_user['name']))
+	    ));
+	    drupal_exit();
+	}
 }
 
 function _restws_load_multi_price($nid){
