@@ -1441,7 +1441,7 @@ body.nav-open #aviators-palette {
     border-left: 0px;
     display: inline-block;
     margin: 0px 0px 0px -5px;
-    padding: 6px 15px;
+    padding: 15px;
     vertical-align: top;
     text-indent: -9999px
 }
@@ -4655,7 +4655,7 @@ ul.pager li:first-child a,ul.pager li:last-child a {
     border-left: 0px;
     display: inline-block;
     margin: 0px 0px 0px -5px;
-    padding: 6px 15px;
+    padding: 15px;
     vertical-align: top;
     text-indent: -9999px
 }
@@ -6700,6 +6700,16 @@ span.or-separator{
 }
 .pl20{
     padding-left: 20px;
+}
+.form-item-terms-of-use {
+    padding: 15px;
+    border: 1px solid #333;
+}
+.form-item-terms-of-use.error{
+    border-color:#E63333; 
+}
+.element-invisible,button.element-invisible,.element-invisible.btn {
+    display: none !important;
 }
 @media (max-width: 1199px) {
     
