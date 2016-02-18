@@ -37,15 +37,26 @@ function restws_mermix_restws_response_alter(&$response, $function, $formatName,
 	//e.g. node.json?type=apartment&limit=10
 	foreach ($response['list'] as $key => $listitem) {
 	    //get the file url from id
-	    $fid = isset($listitem['field_image']) && isset($listitem['field_image'][0]) ? $listitem['field_image'][0]['file']['id'] : 0;
-	    if ($fid != 0) {
-		  $file = file_load($fid);
-		  $uri = $file->uri; //create the uri
-		  $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-		  $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
-	    } else if (isset($listitem['field_image'])) {
-		  $response['list'][$key]['field_image'] = "";
+	    if(isset($listitem['field_image'])) {
+		$urls_array = array();
+		foreach ($listitem['field_image'] as $image_element) {
+		    $fid = $image_element['file']['id'];
+		    $file = file_load($fid);
+		    $uri = $file->uri; //create the uri
+		    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		    $urls_array[] = $mediumUrl;
+		}
+		$response['list'][$key]['field_image'] = $urls_array;
 	    }
+	    //$fid = isset($listitem['field_image']) && isset($listitem['field_image'][0]) ? $listitem['field_image'][0]['file']['id'] : 0;
+//	    if ($fid != 0) {
+//		  $file = file_load($fid);
+//		  $uri = $file->uri; //create the uri
+//		  $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+//		  $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
+//	    } else if (isset($listitem['field_image'])) {
+//		  $response['list'][$key]['field_image'] = "";
+//	    }
 	    //get vocabulary name from id
 	    $vocabularyid = isset($listitem['vocabulary']) ? $listitem['vocabulary']['id'] : 0;
 	    if ($vocabularyid != 0) {
