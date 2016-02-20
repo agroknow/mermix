@@ -166,3 +166,18 @@ function mermix_fiware_node_view($node, $view_mode, $langcode) {
         mfUpdateUser($userid, $attrs, $location);    
     }
 }
+
+function mermix_fiware_node_update($node) {
+    if($node->type == 'apartment' && $node->status) {
+	$attributes = array();
+	
+	module_load_include('inc', 'mermix_fiware');
+	$nid = $node->nid;
+	$location = array($node->field_address['und'][0]['lat'],$node->field_address['und'][0]['lon']);
+	$attributes['type'] = $node->field_type['und'][0]['tid'];
+	$attributes['location'] = $node->field_location['und'][0]['tid'];
+	$attributes['cultivation'] = $node->field_cultivation['und'][0]['tid'];
+	mfUpdateMachine($nid,$attributes,$location);
+    }
+    
+}

@@ -4,7 +4,7 @@ require_once('orion_fw/autoloader/autoloader.php');
 
 function mfOrionConnect() {
     $ip = "185.23.171.92";
-    $connection = new Orion\ContextBroker($ip);
+    $connection = new Orion\ContextBroker($ip,1099);
     return $connection;
 }
 
@@ -57,6 +57,25 @@ function mfUpdateUser( $orionUserId, $attributesArray = array(), $location = arr
     if($orionConection->checkStatus()) {
     $UPDATE = new \Orion\Operations\updateContext();
     $UPDATE->addElement($orionUserId, "User", false);
+    foreach ($attributesArray as $key => $value) {
+        $UPDATE->addAttrinbute($key, "T", $value);
+    }
+    if($location) {
+        $UPDATE->addGeolocation($location[0], $location[1]);
+    }
+    $UPDATE->setAction("APPEND"); // Use append - append acts as update if exists
+    $reqBody = $UPDATE->getRequest();
+    $raw_return = $orionConection->updateContext($reqBody);
+    return $raw_return;
+    }
+}
+
+function mfUpdateMachine( $machineId, $attributesArray = array(), $location = array()) {
+    
+    $orionConection = mfOrionConnect();
+    if($orionConection->checkStatus()) {
+    $UPDATE = new \Orion\Operations\updateContext();
+    $UPDATE->addElement($machineId, "Machine", false);
     foreach ($attributesArray as $key => $value) {
         $UPDATE->addAttrinbute($key, "T", $value);
     }
