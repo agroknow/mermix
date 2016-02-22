@@ -23,7 +23,7 @@ function mfGetAllEntities($entityType) {
 }
 
 function mfGetUserAttributesArray( $orionUserId ) {
-    $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array());
+    $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array(), 'lasttype' => '');
     
     $orionConection = mfOrionConnect();
     if($orionConection->checkStatus()) {

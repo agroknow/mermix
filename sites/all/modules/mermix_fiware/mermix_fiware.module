@@ -160,6 +160,7 @@ function mermix_fiware_node_view($node, $view_mode, $langcode) {
             $index = $category['tid'];
             $attrs['categories'][$index] = isset($attrs['categories'][$index]) ? (int)$attrs['categories'][$index]+1 : 1 ;
         }
+	$attrs['lasttype'] = $index;
         $index = $node->nid;
         $attrs['machines'][$index]['date'] = REQUEST_TIME ;
         $attrs['machines'][$index]['viewed'] = isset($attrs['machines'][$index]['viewed']) ? (int)$attrs['machines'][$index]['viewed']+1 : 1;
@@ -174,7 +175,8 @@ function mermix_fiware_node_update($node) {
 	module_load_include('inc', 'mermix_fiware');
 	$nid = $node->nid;
 	$location = array($node->field_address['und'][0]['lat'],$node->field_address['und'][0]['lon']);
-	$attributes['type'] = $node->field_type['und'][0]['tid'];
+	$attributes['created'] = $node->created;
+	$attributes['machinetype'] = $node->field_type['und'][0]['tid'];
 	$attributes['location'] = $node->field_location['und'][0]['tid'];
 	$attributes['cultivation'] = $node->field_cultivation['und'][0]['tid'];
 	mfUpdateMachine($nid,$attributes,$location);
