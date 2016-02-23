@@ -48,24 +48,9 @@ function restws_mermix_restws_response_alter(&$response, $function, $formatName,
 		}
 		$response['list'][$key]['field_image'] = $urls_array;
 	    }
-	    //$fid = isset($listitem['field_image']) && isset($listitem['field_image'][0]) ? $listitem['field_image'][0]['file']['id'] : 0;
-//	    if ($fid != 0) {
-//		  $file = file_load($fid);
-//		  $uri = $file->uri; //create the uri
-//		  $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
-//		  $response['list'][$key]['field_image'] = $mediumUrl; //replace the original response
-//	    } else if (isset($listitem['field_image'])) {
-//		  $response['list'][$key]['field_image'] = "";
-//	    }
-	    //get vocabulary name from id
-	    $vocabularyid = isset($listitem['vocabulary']) ? $listitem['vocabulary']['id'] : 0;
-	    if ($vocabularyid != 0) {
-		  $response['list'][$key]['vocabulary'] = taxonomy_vocabulary_load($vocabularyid)->machine_name;
-	    } else if (isset($listitem['vocabulary'])) {
-		  $response['list'][$key]['vocabulary'] = "";
-	    }
-        //get taxonomy term's translation
-        if(isset($listitem['vocabulary']) && isset($listitem['tid'])){
+        //get taxonomy term's vocabulary name & translation
+        if(isset($listitem['tid'])){
+            $response['list'][$key]['vocabulary'] = _restws_load_term_vocabulary_name($listitem['tid']);
             $response['list'][$key]['name'] = _restws_load_term_translation(intval($listitem['tid']));
         }
         //configure field_multiprice
@@ -231,4 +216,9 @@ function _restws_load_term_translation($tid){
     $term = taxonomy_term_load($tid);
     $translated_term = module_exists('i18n_taxonomy') ? i18n_taxonomy_localize_terms($term) : $term;
     return $translated_term->name;
+}
+
+function _restws_load_term_vocabulary_name($tid){
+    $term = taxonomy_term_load($tid);
+    return taxonomy_vocabulary_load($term->vid)->machine_name;
 }
