@@ -3,8 +3,9 @@
 require_once('orion_fw/autoloader/autoloader.php');
 
 function mfOrionConnect() {
-    $ip = "185.23.171.92";
-    $connection = new Orion\ContextBroker($ip,1099);
+    $ip = variable_get('orion_ip', '185.23.171.92');
+    $port = variable_get('orion_port', '1026');
+    $connection = new Orion\ContextBroker($ip,$port);
     return $connection;
 }
 
