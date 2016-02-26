@@ -3,8 +3,9 @@
 require_once('orion_fw/autoloader/autoloader.php');
 
 function mfOrionConnect() {
-    $ip = "185.23.171.92";
-    $connection = new Orion\ContextBroker($ip);
+    $ip = variable_get('orion_ip', '185.23.171.92');
+    $port = variable_get('orion_port', '1026');
+    $connection = new Orion\ContextBroker($ip,$port);
     return $connection;
 }
 
@@ -23,7 +24,7 @@ function mfGetAllEntities($entityType) {
 }
 
 function mfGetUserAttributesArray( $orionUserId ) {
-    $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array());
+    $AttributesArray = array('searches' => array(), 'categories' => array(), 'cultivations' => array(), 'machines' => array(), 'lasttype' => '');
     
     $orionConection = mfOrionConnect();
     if($orionConection->checkStatus()) {
@@ -57,6 +58,25 @@ function mfUpdateUser( $orionUserId, $attributesArray = array(), $location = arr
     if($orionConection->checkStatus()) {
     $UPDATE = new \Orion\Operations\updateContext();
     $UPDATE->addElement($orionUserId, "User", false);
+    foreach ($attributesArray as $key => $value) {
+        $UPDATE->addAttrinbute($key, "T", $value);
+    }
+    if($location) {
+        $UPDATE->addGeolocation($location[0], $location[1]);
+    }
+    $UPDATE->setAction("APPEND"); // Use append - append acts as update if exists
+    $reqBody = $UPDATE->getRequest();
+    $raw_return = $orionConection->updateContext($reqBody);
+    return $raw_return;
+    }
+}
+
+function mfUpdateMachine( $machineId, $attributesArray = array(), $location = array()) {
+    
+    $orionConection = mfOrionConnect();
+    if($orionConection->checkStatus()) {
+    $UPDATE = new \Orion\Operations\updateContext();
+    $UPDATE->addElement($machineId, "Machine", false);
     foreach ($attributesArray as $key => $value) {
         $UPDATE->addAttrinbute($key, "T", $value);
     }
