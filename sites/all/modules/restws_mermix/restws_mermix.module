@@ -1,0 +1,224 @@
+<?php
+
+function restws_mermix_menu() {
+    $items['restws/user'] = array(
+    'page callback' => 'restws_mermix_restws_user',
+    'access callback' => 'user_is_logged_in',
+    'type' => MENU_CALLBACK,
+    );
+    $items['restws/book-equipment'] = array(
+    'page callback' => 'restws_mermix_restws_book',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    );
+    $items['restws/create-user'] = array(
+    'page callback' => 'restws_create_user',
+    'access callback' => TRUE,
+    //'access arguments' => array('administer users'),
+    'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+/**
+ * Alter the outgoing response.
+ *
+ * @param mixed $response
+ *   The response data being returned by the REST service (not yet serialized).
+ * @param string $function
+ *   The function being called on the REST service.
+ * @param string $format
+ *   The name of the format serializing the response.
+ * @param RestWSResourceControllerInterface $resourceController
+ *   The resource controller.
+ */
+function restws_mermix_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+    if ($function == 'queryResource' && $formatName == 'json') {
+	//e.g. node.json?type=apartment&limit=10
+	foreach ($response['list'] as $key => $listitem) {
+	    //get the file url from id
+	    if(isset($listitem['field_image'])) {
+		$urls_array = array();
+		foreach ($listitem['field_image'] as $image_element) {
+		    $fid = $image_element['file']['id'];
+		    $file = file_load($fid);
+		    $uri = $file->uri; //create the uri
+		    $mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		    $urls_array[] = $mediumUrl;
+		}
+		$response['list'][$key]['field_image'] = $urls_array;
+	    }
+        //get taxonomy term's vocabulary name & translation
+        if(isset($listitem['tid'])){
+            $response['list'][$key]['vocabulary'] = _restws_load_term_vocabulary_name($listitem['tid']);
+            $response['list'][$key]['name'] = _restws_load_term_translation(intval($listitem['tid']));
+        }
+        //configure field_multiprice
+        if(isset($listitem['field_multiprice']) && !empty($listitem['field_multiprice'])){
+            $response['list'][$key]['field_multiprice'] = _restws_load_multi_price($listitem['nid']);
+        }
+	if(isset($listitem['field_location']['id'])) {
+	    $response['list'][$key]['field_location']['name'] = _restws_load_term_translation($listitem['field_location']['id']); 
+	}
+	}
+    } else if ($function == 'viewResource' && $formatName == 'json') {
+	//e.g. node/204.json
+	if (isset($response['field_image'])) {
+	    //get the file id
+	    $fid = isset($response['field_image'][0]) ? $response['field_image'][0]['file']['id'] : 0;
+	    if ($fid != 0) {
+		$file = file_load($fid);
+		$uri = $file->uri; //create the uri
+		$mediumUrl = image_style_url('mobile', $uri); // use a style from /admin/config/media/image-styles machine name
+		$response['field_image'] = $mediumUrl; //replace the original response
+	    } else {
+		$response['field_image'] = "";
+	    }
+	}
+    }
+}
+
+function restws_mermix_restws_user(){
+  drupal_add_http_header('Content-Type', 'application/json');
+  global $user;
+  $output = array(
+	"uid" =>$user->uid,
+	"name" =>$user->name,
+	"mail" =>$user->mail,
+	"roles" =>$user->roles
+  );
+  drupal_json_output($output);
+  drupal_exit();
+}
+
+function restws_mermix_restws_book() {
+    $payload = file_get_contents('php://input');
+    if(empty($payload)){
+	drupal_json_output(array('status' => 'error', 'message' => t('No payload sent')));
+	drupal_exit();
+    }
+    $payload_array = json_decode($payload,true);
+    $webform_nid = variable_get('check_availability_webform_id', '299');
+    $node = node_load($webform_nid);
+    $data = array(
+	'machine' => $payload_array['nid'],
+	'tel' => $payload_array['tel']
+    );
+    module_load_include('inc', 'webform', 'webform.module');
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $data = _webform_client_form_submit_flatten($node, $data);
+    $data = webform_submission_data($node, $data);
+    
+    $submission = (object) array(
+    'nid' => $webform_nid,
+    'uid' => $payload_array['uid'],
+    'sid' => NULL,
+    'submitted' => REQUEST_TIME,
+    'completed' => REQUEST_TIME,
+    'remote_addr' => ip_address(),
+    'is_draft' => FALSE,
+    'data' => $data,
+  );
+
+  $sid = webform_submission_insert($node, $submission);
+  drupal_json_output(array(
+      'status' => 'success',
+      'message' => $node->webform['confirmation']
+      ));
+  drupal_exit();
+    
+}
+
+function restws_create_user() {
+    $payload = file_get_contents('php://input');
+    if(empty($payload)){
+	drupal_json_output(array('status' => 'error', 'message' => t('No payload sent')));
+	drupal_exit();
+    }
+    $payload_array = json_decode($payload,true);
+    
+    $customroles = explode(',', $payload_array['roles']);
+    $customroles[] = 'authenticated user';
+    
+    $roles = array_intersect(user_roles(),$customroles);
+    $new_user = array(
+	'name' => $payload_array['username'],
+	'pass' => $payload_array['password'],
+	'mail' => $payload_array['email'],
+	'status' => 1,
+	'roles' => $roles,
+	'field_first_name' => array(
+	'und' => array(
+	    0 => array(
+	    'value' => $payload_array['firstname'],
+	    ),
+	    )),
+	'field_last_name' => array(
+	    'und' => array(
+	    0 => array(
+	    'value' => $payload_array['lastname'],
+	    ),
+	    )),
+	'field_phone_number' => array(
+	    'und' => array(
+	    0 => array(
+	    'value' => $payload_array['phonenumber'],
+	    ),
+	    )),
+	);
+	if($account = user_load_by_name($new_user['name']) == false) {
+	    $account= user_save(NULL, $new_user);
+	    drupal_json_output(array(
+	    'status' => 'success',
+	    'created_user' => $account->uid,
+	    'message' => t('Thank you for registering on mermix.gr')
+	    ));
+	    drupal_exit();
+	} else {
+	    drupal_json_output(array(
+	    'status' => 'error',
+	    'message' => t('User with username @uname already exists', array('@uname' => $new_user['name']))
+	    ));
+	    drupal_exit();
+	}
+}
+
+function _restws_load_multi_price($nid){
+    $multifield = array();
+    $query = new EntityFieldQuery();
+    
+    $query->entityCondition('entity_type', 'node')
+        ->propertyCondition('nid', $nid);
+    $result = $query->execute();
+
+    if (isset($result['node'])) {
+        $stories = $result['node'];
+        field_attach_load('node', $stories, FIELD_LOAD_CURRENT);
+
+    // Get values of our node field
+    // throws error entitymalformedexception, check reports/dblog
+    //  $output = field_get_items('node', $stories, 'field_multiprice');
+  
+        foreach ($stories[$nid]->field_multiprice['und'] as $key => $fielditem) {
+            $multifield[$key]['value'] = isset($fielditem['field_multiprice_value']['und'][0]) ? $fielditem['field_multiprice_value']['und'][0]['value'] : '';
+            $multifield[$key]['unit'] = array();
+            $multifield[$key]['unit']['tid'] = isset($fielditem['field_multiprice_unit']['und'][0]) ? $fielditem['field_multiprice_unit']['und'][0]['tid'] : -1;
+            if($multifield[$key]['unit']['tid'] > -1){
+                $multifield[$key]['unit']['name'] = _restws_load_term_translation($multifield[$key]['unit']['tid']);
+            }
+        }
+    }
+    
+    return ($multifield);
+}
+
+function _restws_load_term_translation($tid){
+    $term = taxonomy_term_load($tid);
+    $translated_term = module_exists('i18n_taxonomy') ? i18n_taxonomy_localize_terms($term) : $term;
+    return $translated_term->name;
+}
+
+function _restws_load_term_vocabulary_name($tid){
+    $term = taxonomy_term_load($tid);
+    return taxonomy_vocabulary_load($term->vid)->machine_name;
+}
