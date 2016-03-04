@@ -147,7 +147,7 @@ function restws_create_user() {
 	'mail' => $payload_array['email'],
 	'status' => 1,
 	'roles' => $roles,
-	'field_first_name' => array(
+	'field_first_name_' => array(
 	'und' => array(
 	    0 => array(
 	    'value' => $payload_array['firstname'],
@@ -166,21 +166,28 @@ function restws_create_user() {
 	    ),
 	    )),
 	);
-	if($account = user_load_by_name($new_user['name']) == false) {
-	    $account= user_save(NULL, $new_user);
+	if(user_load_by_name($new_user['name'])) {
+	   drupal_json_output(array(
+	    'status' => 'error',
+	    'message' => t('User with username @uname already exists', array('@uname' => $new_user['name']))
+	    ));
+	    drupal_exit(); 
+	} 
+	if(user_load_by_mail($new_user['mail'])){
+	    drupal_json_output(array(
+	    'status' => 'error',
+	    'message' => t('User with email @umail already exists', array('@umail' => $new_user['mail']))
+	    ));
+	    drupal_exit();
+	}
+	$account= user_save(NULL, $new_user);
 	    drupal_json_output(array(
 	    'status' => 'success',
 	    'created_user' => $account->uid,
 	    'message' => t('Thank you for registering on mermix.gr')
 	    ));
 	    drupal_exit();
-	} else {
-	    drupal_json_output(array(
-	    'status' => 'error',
-	    'message' => t('User with username @uname already exists', array('@uname' => $new_user['name']))
-	    ));
-	    drupal_exit();
-	}
+	
 }
 
 function _restws_load_multi_price($nid){
