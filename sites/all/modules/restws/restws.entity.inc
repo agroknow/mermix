@@ -146,7 +146,8 @@ class RestWSEntityResourceController implements RestWSQueryResourceControllerInt
   }
 
   public function wrapper($id) {
-    return entity_metadata_wrapper($this->entityType, $id);
+    global $language;
+    return entity_metadata_wrapper($this->entityType, $id)->language($language->language);
   }
 
   public function read($id) {
