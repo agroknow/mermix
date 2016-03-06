@@ -283,6 +283,9 @@ function restws_page_callback($resource, $page_callback = NULL) {
   elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && ($pos = strrpos($resource_arg, '.')) && $format_name = substr($resource_arg, $pos + 1)) {
     $format = restws_format($format_name);
   }
+  elseif ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    return;
+  }
   else {
     $id = $id_arg;
     switch ($_SERVER['REQUEST_METHOD']) {
@@ -478,19 +481,31 @@ function restws_menu() {
   $items['restws/session/token'] = array(
     'page callback' => 'restws_session_token',
     // Only authenticated users are allowed to retrieve a session token.
-    'access callback' => 'user_is_logged_in',
+    'access callback' => 'restws_user_is_logged_in_or_options',
     'type' => MENU_CALLBACK,
   );
   return $items;
 }
 
 /**
+ * Returns true when a user is logged in order request method is OPTIONS
+ */
+function restws_user_is_logged_in_or_options() {
+  if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    return true;
+  }
+  return user_is_logged_in();
+}
+
+/**
  * Page callback: returns a session token for the currently active user.
  */
 function restws_session_token() {
-  drupal_add_http_header('Content-Type', 'text/plain');
-  print drupal_get_token('restws');
-  drupal_exit();
+  if(user_is_logged_in()) {
+    drupal_add_http_header('Content-Type', 'text/plain');
+    print drupal_get_token('restws');
+    drupal_exit();
+  }
 }
 
 /**
