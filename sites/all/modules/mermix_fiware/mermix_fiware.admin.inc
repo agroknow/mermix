@@ -35,7 +35,7 @@ function mermix_fiware_admin_settings() {
     '#title'         => t('Enable mail notifications'),
     '#default_value' => variable_get('mermix_fiware_notifs_enabled', 0),
     '#options'       => array(0 => t('No'), 1 => t('Log only'), 2 => t('Send and log'), 3 => t('Send only')),
-    '#description'   => t('To uninstall this module you must turn it off here first.'),
+    '#description'   => t('Select if new machine notifications are sent to users'),
     );
     $form['mermix_fiware_settings']['mermix_fiware_notify_msg_subj'] = array(
 	'#type' => 'textfield',

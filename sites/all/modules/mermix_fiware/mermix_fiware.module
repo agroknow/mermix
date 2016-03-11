@@ -59,6 +59,30 @@ function mermix_fiware_variable_info($options) {
     return $variables;
 }
 
+/** 
+ * Introduce a bulk operation
+ * https://www.drupal.org/node/2052067
+ * Implements hook_action_info
+ */
+function mermix_fiware_action_info() {
+  return array(
+    'mermix_fiware_cep_unotified' => array(
+      'type' => 'user',
+      'label' => t('Send cep UNotified event'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
+  );
+}
+
+/** 
+ * The bulk operation action
+ */
+function mermix_fiware_cep_unotified(&$user, $context) {
+  _mermix_fiware_push_event('U' . $user->uid);
+}
+
 function mermix_cep_process() {
     /*
      * First post all user ids as events.
@@ -97,6 +121,7 @@ function _mermix_fiware_push_event($id) {
 	    'max_redirects' => 0,
 	    'headers' => array('Content-Type' => 'application/json', 'Accept' => 'application/json'))
 	);
+	watchdog('mermix_fiware', 'Sent event to @url with data : @data', array('@url' => $url, '@data' => json_encode($data)), WATCHDOG_INFO);
 	//return json_decode($response->data);
 }
 
