@@ -46,8 +46,10 @@ function ak_mermix_tools_translated_menu_link_alter(&$item, $map) {
 function ak_mermix_tools_preprocess_menu_local_task(&$variables) {
     $link = &$variables['element']['#link'];
     // check for $_GET['destination'] because drupal_get_destination() always contains at least the current page
-    if ($link['tab_root'] === 'user' && !empty($_GET['destination'])) {
-      $link['localized_options']['query'] = drupal_get_destination();
+    if(isset($link['tab_root'])) {
+	if ($link['tab_root'] === 'user' && !empty($_GET['destination'])) {
+	  $link['localized_options']['query'] = drupal_get_destination();
+	}
     }
 }
 

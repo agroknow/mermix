@@ -59,6 +59,30 @@ function mermix_fiware_variable_info($options) {
     return $variables;
 }
 
+/** 
+ * Introduce a bulk operation
+ * https://www.drupal.org/node/2052067
+ * Implements hook_action_info
+ */
+function mermix_fiware_action_info() {
+  return array(
+    'mermix_fiware_cep_unotified' => array(
+      'type' => 'user',
+      'label' => t('Send cep UNotified event'),
+      'configurable' => FALSE,
+      'vbo_configurable' => FALSE,
+      'triggers' => array('any'),
+    ),
+  );
+}
+
+/** 
+ * The bulk operation action
+ */
+function mermix_fiware_cep_unotified(&$user, $context) {
+  _mermix_fiware_push_event('U' . $user->uid);
+}
+
 function mermix_cep_process() {
     /*
      * First post all user ids as events.
@@ -76,11 +100,14 @@ function mermix_cep_process() {
     $userid = substr($event_data['userId'],1);
     $machineid = $event_data['machineId'];
     $userObj = user_load($userid);
+    $log = (int) variable_get('mermix_fiware_notifs_enabled', 0);
+    
+    if($log > 0) {
     //Send email
-    _mermix_fiware_send_notification($userObj,$machineid);
+    _mermix_fiware_send_notification($userObj, $machineid, $log);
+    }
     //Post event to Cep
-    //_mermix_fiware_push_event($event_data['userId']);
-
+    _mermix_fiware_push_event($event_data['userId']);
 }
 
 function _mermix_fiware_push_event($id) {
@@ -94,11 +121,12 @@ function _mermix_fiware_push_event($id) {
 	    'max_redirects' => 0,
 	    'headers' => array('Content-Type' => 'application/json', 'Accept' => 'application/json'))
 	);
+	watchdog('mermix_fiware', 'Sent event to @url with data : @data', array('@url' => $url, '@data' => json_encode($data)), WATCHDOG_INFO);
 	//return json_decode($response->data);
 }
 
-function _mermix_fiware_send_notification($user,$machineid,$log = true) {
-    
+function _mermix_fiware_send_notification($user, $machineid, $log) {
+    if($log >= 2) {
     $machine = node_load($machineid);
     $variables = array(
 	'@user-id' => $user->uid,
@@ -125,8 +153,8 @@ function _mermix_fiware_send_notification($user,$machineid,$log = true) {
     $from = NULL;
     
     drupal_mail('mimemail', $key, $user->mail, $language, $params, $from);
-    
-    if($log){
+    }
+    if($log != 3){
 	watchdog('mermix_fiware', 'Sent email to user id @uid for machine @machineid', array('@uid' => $user->uid, '@machineid' => $machineid), WATCHDOG_INFO);
     }
     
