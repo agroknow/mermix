@@ -76,11 +76,14 @@ function mermix_cep_process() {
     $userid = substr($event_data['userId'],1);
     $machineid = $event_data['machineId'];
     $userObj = user_load($userid);
+    $log = (int) variable_get('mermix_fiware_notifs_enabled', 0);
+    
+    if($log > 0) {
     //Send email
-    _mermix_fiware_send_notification($userObj,$machineid);
+    _mermix_fiware_send_notification($userObj, $machineid, $log);
+    }
     //Post event to Cep
-    //_mermix_fiware_push_event($event_data['userId']);
-
+    _mermix_fiware_push_event($event_data['userId']);
 }
 
 function _mermix_fiware_push_event($id) {
@@ -97,8 +100,8 @@ function _mermix_fiware_push_event($id) {
 	//return json_decode($response->data);
 }
 
-function _mermix_fiware_send_notification($user,$machineid,$log = true) {
-    
+function _mermix_fiware_send_notification($user, $machineid, $log) {
+    if($log >= 2) {
     $machine = node_load($machineid);
     $variables = array(
 	'@user-id' => $user->uid,
@@ -125,8 +128,8 @@ function _mermix_fiware_send_notification($user,$machineid,$log = true) {
     $from = NULL;
     
     drupal_mail('mimemail', $key, $user->mail, $language, $params, $from);
-    
-    if($log){
+    }
+    if($log != 3){
 	watchdog('mermix_fiware', 'Sent email to user id @uid for machine @machineid', array('@uid' => $user->uid, '@machineid' => $machineid), WATCHDOG_INFO);
     }
     

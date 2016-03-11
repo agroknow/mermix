@@ -30,6 +30,13 @@ function mermix_fiware_admin_settings() {
 	'#default_value' => variable_get('cep_endpoint', 'http://185.23.171.92:30022'),
 	
     );
+    $form['mermix_fiware_settings']['mermix_fiware_notifs_enabled'] = array(
+    '#type'          => 'radios',
+    '#title'         => t('Enable mail notifications'),
+    '#default_value' => variable_get('mermix_fiware_notifs_enabled', 0),
+    '#options'       => array(0 => t('No'), 1 => t('Log only'), 2 => t('Send and log'), 3 => t('Send only')),
+    '#description'   => t('To uninstall this module you must turn it off here first.'),
+    );
     $form['mermix_fiware_settings']['mermix_fiware_notify_msg_subj'] = array(
 	'#type' => 'textfield',
 	'#title' => t('Notification msg subject'),
