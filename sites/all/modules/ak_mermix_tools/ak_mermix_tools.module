@@ -881,9 +881,6 @@ function add_machinery() {
 }
 
 function ak_mermix_tools_user_login(&$edit, $account) {
-    //ignore this hook for restws users
-    $user_regex = variable_get('restws_basic_auth_user_regex', '/^restws.*/');
-    if (!preg_match($user_regex, $account->name)) {
 	if (isset($_SESSION['webform_submission_sub'])) {
 	    $submission = $_SESSION['webform_submission_sub'];
 	    module_load_include('inc', 'webform', 'includes/webform.submissions');
@@ -898,7 +895,6 @@ function ak_mermix_tools_user_login(&$edit, $account) {
 	    unset($_SESSION['user_add_data']);
 	    drupal_goto('node/' . $nid . '/edit');
 	}
-    }
 }
 
 function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
