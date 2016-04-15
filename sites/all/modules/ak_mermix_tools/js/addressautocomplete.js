@@ -47,10 +47,14 @@ jQuery(function(){
    var autocomplete = pacSelectFirst(document.getElementById('edit-place'));
    autocomplete.addListener('place_changed', fillInAddress);
   }
-  if(document.getElementById('edit-submitted-location'))
+  if(document.getElementById('edit-submitted-location')){
    var autocomplete2 = pacSelectFirst(document.getElementById('edit-submitted-location'));
-  if(document.getElementById('edit-submitted-location-en'))
+   autocomplete2.addListener('place_changed', fillInAddressNew);
+  }
+  if(document.getElementById('edit-submitted-location-en')){
    var autocomplete3 = pacSelectFirst(document.getElementById('edit-submitted-location-en'));
+   autocomplete3.addListener('place_changed', fillInAddressNew);
+  }
 
    function fillInAddress() {
 	 var place = autocomplete.getPlace();
@@ -60,6 +64,24 @@ jQuery(function(){
     coords.value = place.geometry.location.lat() + ',' + place.geometry.location.lng();
     var km = getDistanceFromLatLonInKm(place.geometry.location.lat(),place.geometry.location.lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng());
     distance.value = Math.round(km);
+  }
+  
+  function fillInAddressNew() {
+     if(typeof autocomplete2 !== 'undefined'){
+	 var place1 = autocomplete2.getPlace();
+     }
+     if(typeof autocomplete3 !== 'undefined'){
+	 var place2 = autocomplete3.getPlace();
+     }
+    // Get the place details from the autocomplete object.
+    //lat,lon
+    //place.geometry.viewport.getNorthEast().lng();
+    if(typeof place1 !== 'undefined')
+	jQuery('.webform-component--coords input').val(place1.geometry.location.lat() + ',' + place1.geometry.location.lng());
+    if(typeof place2 !== 'undefined')
+	jQuery('.webform-component--coords input').val(place2.geometry.location.lat() + ',' + place2.geometry.location.lng());
+//    var km = getDistanceFromLatLonInKm(place.geometry.location.lat(),place.geometry.location.lng(),place.geometry.viewport.getNorthEast().lat(),place.geometry.viewport.getNorthEast().lng());
+//    distance.value = Math.round(km);
   }
 
   jQuery("#edit-place").keyup(function(){
