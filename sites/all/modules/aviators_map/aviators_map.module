@@ -63,7 +63,7 @@ function template_preprocess_aviators_map_view(&$variables) {
 
   $markers = array();
   foreach ($field_renders as $delta => $field_render) {
-    $latlon = str_replace(' ', '', $field_render['field_address']);
+    $latlon = str_replace(' ', '', $field_render[$options['map_field']]);
     list($latitude,$longitude) = explode(',', $latlon);
     //list($latitude, $longitude) = explode(":", $field_render[$options['map_field']]);
 
