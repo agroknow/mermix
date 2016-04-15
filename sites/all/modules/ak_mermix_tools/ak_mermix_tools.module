@@ -299,7 +299,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	    $form['submitted'][$key]['#access'] = (!path_is_admin(current_path())) ? false : true;
 	    $form['submitted'][$key]['#required'] = false;
 	    }
-	    if(is_array($value)) {
+	    if(is_array($value) && $value['#type'] != 'hidden') {
 	    $form['submitted'][$key]['#attributes']['placeholder'] = t($form['submitted'][$key]['#title']);
 	    $form['submitted'][$key]['#title_display'] = 'invisible';
 		}
