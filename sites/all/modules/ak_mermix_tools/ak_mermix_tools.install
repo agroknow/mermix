@@ -1030,3 +1030,38 @@ function ak_mermix_tools_update_7012(&$sandbox) {
 
   return 'ak_mermix_tools_search_log table created.';
 }*/
+
+/**
+ * Populate looking for submissions coord field
+ */
+function ak_mermix_tools_update_7013(&$sandbox) {
+    
+    $node = node_load(298);
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $total_subs = webform_get_submissions(array('nid' => 298));
+    
+    if (!isset($sandbox['total'])) {
+        $sandbox['total'] = count($total_subs);
+        $sandbox['current'] = 0;
+    }
+    $subs_per_pass = 25;
+    $subs_to_process = array_slice($total_subs, $sandbox['current'], $subs_per_pass);
+    foreach ($subs_to_process as $sub) {
+	$url = 'https://maps.google.com/maps/api/geocode/json?&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&address=';
+	$url .= urlencode($sub->data[2][0]);
+	$geocode_result = file_get_contents($url);
+	$results = json_decode($geocode_result, TRUE);
+	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
+	    $sub->data[13][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
+	}
+	webform_submission_update($node,$sub);
+	$sandbox['current'] ++;
+	sleep(0.5);
+  }
+    // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+
+    if ($sandbox['#finished'] === 1) {
+        drupal_set_message(t('@subs Submissions Updated.', array('@subs' => $sandbox['total'])));
+    }  
+}
