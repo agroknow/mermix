@@ -94,7 +94,7 @@
             oms.addMarker(marker); 
             // infobox
             var boxText = document.createElement("div");
-            boxText.innerHTML = markerData.content;
+            boxText.innerHTML = markerData.content; 
             $(boxText).addClass("infobox");
             var myOptions = {
                 content: boxText,
@@ -123,6 +123,9 @@
 		markerMark = '<div class="marker">' + index + '</div>';
 	    } else {
 		markerMark = '<div class="marker"><div class="marker-inner"></div></div>';
+	    }
+	    if(mapOptions.contentInsideMarker) {
+		markerMark = '<div class="marker ' + markerData.markerOptions.class + '"><div class="marker-inner"><a href="'+markerData.markerOptions.link+'">'+ markerData.content +'</a></div></div>';
 	    }
 	   
             var extendMarkerOptions = {

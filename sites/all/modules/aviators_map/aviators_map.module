@@ -91,11 +91,19 @@ function template_preprocess_aviators_map_view(&$variables) {
     }
 
     $attributes['icon'] = $base_url . '/' . drupal_get_path('module', 'aviators_map') . '/marker-transparent.png';
-    $attributes['class'] = implode(' ', array_merge(array('term-' . strip_tags($field_render[$options['class_field']])), array($options['class'])));
+    //$attributes['class'] = implode(' ', array_merge(array('term-' . strip_tags($field_render[$options['class_field']])), array($options['class'])));
     $total[$field_render['value_4']] = isset($total[$field_render['value_4']]) ? $total[$field_render['value_4']] + $field_render['value_2'] : 0 + $field_render['value_2'];
-
+    if($total[$field_render['value_4']] < 50) {
+	$class = 'small';
+    } elseif ($total[$field_render['value_4']] < 100) {
+	$class = 'medium';
+    } else {
+	$class = 'large';
+    }
+    $attributes['class'] = $class;
+    $attributes['link'] = isset($field_render[$options['marker_link']]) ? $field_render[$options['marker_link']] : '#' ;
     // create marker as we have data about position, icon, and 'content' of marker (rendered row)
-    $markers[$field_render['value_4']] = gmap3_tools_create_marker($latitude, $longitude, 'NULL', $total[$field_render['value_4']], $attributes);
+    $markers[$field_render['value_4']] = gmap3_tools_create_marker($latitude, $longitude, 'NULL', $total[$field_render['value_4']] . ' ' . $field_render['value_4'], $attributes);
   } 
   }
   $markers = array_values($markers);
@@ -130,6 +138,7 @@ function template_preprocess_aviators_map_view(&$variables) {
       'disableInfobox' => $options['disable_infobox'],
       'hideInfobox' => $options['hide_infobox'],
       'zoomOnClick' => $options['cluster_zoomonclick'],
+      'contentInsideMarker' => $options['content_insidemarker'],
     ),
     $controls
   );

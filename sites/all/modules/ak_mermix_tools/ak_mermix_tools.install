@@ -1053,11 +1053,12 @@ function ak_mermix_tools_update_7013(&$sandbox) {
 	$results = json_decode($geocode_result, TRUE);
 	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
 	    $sub->data[13][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
+	    $sub->data[12][0] = rand (6*10, 20*10) / 10;
 	}
 	if(isset($results['results'][0]['address_components'])) {
 	    $address_components = $results['results'][0]['address_components'];
 	    foreach ($address_components as $key => $value) {
-	       if($value['types'][0] == 'administrative_area_level_3') {
+	       if($value['types'][0] == 'administrative_area_level_2') {
 		  $sub->data[14][0] = $value['short_name'];
 	       } 
 	    }

@@ -24,6 +24,7 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
     $options['map_field'] = array('default' => NULL);
     $options['hide_infobox'] = array('default' => FALSE);
     $options['disable_infobox'] = array('default' => FALSE);
+    $options['content_insidemarker'] = array('default' => FALSE);
     $options['enable_cluster'] = array('default' => TRUE);
     $options['cluster_zoomonclick'] = array('default' => TRUE);
     $options['clustering_size'] = array('default' => 60);
@@ -96,6 +97,13 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
       '#options' => $field_names,
       '#default_value' => $this->options['map_field']
     );
+    
+    $form['marker_link'] = array(
+      '#type' => 'select',
+      '#title' => t('Marker link'),
+      '#options' => $field_names,
+      '#default_value' => $this->options['marker_link']
+    );
 
     $form['class'] = array(
       '#type' => 'textfield',
@@ -144,6 +152,12 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
       '#type' => 'checkbox',
       '#title' => t('Disable infobox'),
       '#default_value' => $this->options['disable_infobox'],
+    );
+    
+    $form['content_insidemarker'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show content inside marker'),
+      '#default_value' => $this->options['content_insidemarker'],
     );
     
     $form['enable_cluster'] = array(
