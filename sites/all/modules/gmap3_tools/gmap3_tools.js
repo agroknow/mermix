@@ -108,7 +108,7 @@
                 closeBoxMargin: "0px 0px 0px 0px",
                 closeBoxURL: '/sites/default/themes/realia/img/icons/cross.png',
                 infoBoxClearance: new google.maps.Size(1, 1),
-                isHidden: false,
+                isHidden: mapOptions.hideInfobox,
                 pane: "floatPane",
                 enableEventPropagation: false
             };
@@ -216,7 +216,7 @@
         }
 
         var markerCluster = new MarkerClusterer(gmap, markers, {
-            //zoomOnClick:false,
+            zoomOnClick:mapOptions.zoomOnClick,
             maxZoom:17,
             gridSize: parseInt(map.clustering.gridSize),
             styles: [

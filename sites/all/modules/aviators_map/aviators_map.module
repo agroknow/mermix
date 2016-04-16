@@ -99,24 +99,19 @@ function template_preprocess_aviators_map_view(&$variables) {
       $controls[$controlName] = TRUE;
     };
   }
-  if($view->name == 'machine_results') {
-      $resultOptions = array(
-	  'disableInfobox' => true,
-	  );
-  } else {
-      $resultOptions = array();
-  }
   $mapOptions = array_merge(
-    array(
+    array( 
       'centerX' => $options['map_latitude'],
       'centerY' => $options['map_longitude'],
       'center' => $options['default_position'],
       'zoom' => (int) $options['zoom'],
       'mapTypeId' => GMAP3_TOOLS_MAP_TYPE_ID_ROADMAP,
       'scrollwheel' => FALSE,
+      'disableInfobox' => $options['disable_infobox'],
+      'hideInfobox' => $options['hide_infobox'],
+      'zoomOnClick' => $options['cluster_zoomonclick'],
     ),
-    $controls,
-    $resultOptions
+    $controls
   );
 
 

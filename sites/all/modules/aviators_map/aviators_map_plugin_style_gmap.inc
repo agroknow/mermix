@@ -22,7 +22,10 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
     $options['class_field'] = array('default' => NULL);
 
     $options['map_field'] = array('default' => NULL);
+    $options['hide_infobox'] = array('default' => FALSE);
+    $options['disable_infobox'] = array('default' => FALSE);
     $options['enable_cluster'] = array('default' => TRUE);
+    $options['cluster_zoomonclick'] = array('default' => TRUE);
     $options['clustering_size'] = array('default' => 60);
 
     $options['zoom'] = array('default' => 12);
@@ -130,11 +133,29 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
       '#title' => t('Map center - longitude'),
       '#default_value' => $this->options['map_longitude'],
     );
-
+    
+    $form['hide_infobox'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Hide infobox'),
+      '#default_value' => $this->options['hide_infobox'],
+    );
+    
+    $form['disable_infobox'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Disable infobox'),
+      '#default_value' => $this->options['disable_infobox'],
+    );
+    
     $form['enable_cluster'] = array(
       '#type' => 'checkbox',
       '#title' => t('Enable clustering'),
       '#default_value' => $this->options['enable_cluster'],
+    );
+    
+    $form['cluster_zoomonclick'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Clustering zoom on click'),
+      '#default_value' => $this->options['cluster_zoomonclick'],
     );
 
     $form['clustering_size'] = array(
