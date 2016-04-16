@@ -1047,12 +1047,20 @@ function ak_mermix_tools_update_7013(&$sandbox) {
     $subs_per_pass = 25;
     $subs_to_process = array_slice($total_subs, $sandbox['current'], $subs_per_pass);
     foreach ($subs_to_process as $sub) {
-	$url = 'https://maps.google.com/maps/api/geocode/json?&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&address=';
+	$url = 'https://maps.google.com/maps/api/geocode/json?language=el&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&address=';
 	$url .= urlencode($sub->data[2][0]);
 	$geocode_result = file_get_contents($url);
 	$results = json_decode($geocode_result, TRUE);
 	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
 	    $sub->data[13][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
+	}
+	if(isset($results['results'][0]['address_components'])) {
+	    $address_components = $results['results'][0]['address_components'];
+	    foreach ($address_components as $key => $value) {
+	       if($value['types'][0] == 'administrative_area_level_3') {
+		  $sub->data[14][0] = $value['short_name'];
+	       } 
+	    }
 	}
 	webform_submission_update($node,$sub);
 	$sandbox['current'] ++;

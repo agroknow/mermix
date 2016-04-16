@@ -69,9 +69,19 @@ jQuery(function(){
   function fillInAddressNew() {
      if(typeof autocomplete2 !== 'undefined'){
 	 var place1 = autocomplete2.getPlace();
+	 jQuery.each(place1.address_components, function(key, value) {
+	    if(value.types[0] == 'administrative_area_level_3') {
+		jQuery('.webform-component--area input').val(value.short_name);
+	    }
+	});
      }
      if(typeof autocomplete3 !== 'undefined'){
 	 var place2 = autocomplete3.getPlace();
+	 jQuery.each(place2.address_components, function(key, value) {
+	    if(value.types[0] == 'administrative_area_level_3') {
+		jQuery('.webform-component--area input').val(value.short_name);
+	    }
+	});
      }
     // Get the place details from the autocomplete object.
     //lat,lon
