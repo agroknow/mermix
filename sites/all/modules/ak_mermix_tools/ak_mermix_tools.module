@@ -184,9 +184,9 @@ function ak_mermix_tools_field_access($op, $field, $entity_type, $entity, $accou
 function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     global $user;
     global $language;
-
-    if ($form_id == 'apartment_node_form') {
-	$is_admin = user_access('administer nodes', $user);
+    
+    $is_admin = user_access('administer nodes', $user);
+    if ($form_id == 'apartment_node_form') {	
 	$add = !isset($form_state['node']->nid) || isset($form_state['node']->is_new);
 	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
 	if ($node_edit) {
@@ -278,6 +278,11 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    '#options' => module_exists('i18n_taxonomy') ? i18n_taxonomy_allowed_values(field_info_field('field_type')) : taxonomy_allowed_values(field_info_field('field_type')),
 		    '#empty_option' => t('Select category'),
 		    '#default_value' => (isset($_SESSION['search_criteria']['machine_type']) && is_numeric($_SESSION['search_criteria']['machine_type'])) ? $_SESSION['search_criteria']['machine_type'] : $form['submitted'][$key]['#default_value'],
+		));
+	    }
+	    if ($key == 'price') {
+		$form['submitted'][$key] = array_merge($value, array(
+		    '#access' => $is_admin,  
 		));
 	    }
 	    if (strpos($key, 'date_') !== false) {
