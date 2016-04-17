@@ -787,10 +787,27 @@ function ak_mermix_tools_menu() {
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
+    $items['requests-map'] = array(
+	//'title' => 'Add your machine',
+	'page callback' => 'empty_page',
+	'access callback' => TRUE,
+	//'menu_name' => 'main-menu',
+	'type' => MENU_NORMAL_ITEM,
+    );
+    $items['requests-for'] = array(
+	//'title' => 'Add your machine',
+	'page callback' => 'empty_page',
+	'access callback' => TRUE,
+	//'menu_name' => 'main-menu',
+	'type' => MENU_NORMAL_ITEM,
+    );
     
     return $items;
 }
 
+function empty_page() {
+    return '';
+}
 /**
  * A modal login callback.
  */

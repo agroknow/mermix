@@ -1048,7 +1048,7 @@ function ak_mermix_tools_update_7013(&$sandbox) {
     $subs_to_process = array_slice($total_subs, $sandbox['current'], $subs_per_pass);
     foreach ($subs_to_process as $sub) {
 	$url = 'https://maps.google.com/maps/api/geocode/json?language=el&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&address=';
-	$url .= urlencode($sub->data[2][0]);
+	$url .= isset($sub->data[2][0]) ? urlencode($sub->data[2][0]) : urlencode($sub->data[10][0]) ;
 	$geocode_result = file_get_contents($url);
 	$results = json_decode($geocode_result, TRUE);
 	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {

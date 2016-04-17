@@ -125,7 +125,7 @@
 		markerMark = '<div class="marker"><div class="marker-inner"></div></div>';
 	    }
 	    if(mapOptions.contentInsideMarker) {
-		markerMark = '<div class="marker ' + markerData.markerOptions.class + '"><div class="marker-inner"><a href="'+markerData.markerOptions.link+'">'+ markerData.content +'</a></div></div>';
+		markerMark = '<div class="marker euro-mark no-bg no-hover ' + markerData.markerOptions.class + '"><div class="marker-inner-noimage"><a href="'+markerData.markerOptions.link+'"><span class="amount">'+ markerData.content +'</span><span class="fa fa-eur euro-sign"></span></a></div></div>';
 	    }
 	   
             var extendMarkerOptions = {
