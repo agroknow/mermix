@@ -163,15 +163,16 @@
                         marker.infobox.isOpen = false;
                     }
                 });
-
-                if (curMarker.infobox.isOpen === false) {
-                    curMarker.infobox.open(gmap, this);
-                    curMarker.infobox.isOpen = true;
-                    gmap.panTo(curMarker.getPosition());
-                } else {
-                    curMarker.infobox.close();
-                    curMarker.infobox.isOpen = false;
-                }
+		if(mapOptions.hideInfobox == false) {
+		    if (curMarker.infobox.isOpen === false) {
+			curMarker.infobox.open(gmap, this);
+			curMarker.infobox.isOpen = true;
+			gmap.panTo(curMarker.getPosition());
+		    } else {
+			curMarker.infobox.close();
+			curMarker.infobox.isOpen = false;
+		    }
+		}
 
             });
 
