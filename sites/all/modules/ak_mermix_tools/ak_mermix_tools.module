@@ -7,6 +7,7 @@
 function ak_mermix_tools_init(){
     if(drupal_is_front_page()){
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_banner.js');
+    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js', array('scope' => 'footer'));
     }
     drupal_add_library('system', 'jquery.cookie');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/user_location.js');
@@ -280,7 +281,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    '#default_value' => (isset($_SESSION['search_criteria']['machine_type']) && is_numeric($_SESSION['search_criteria']['machine_type'])) ? $_SESSION['search_criteria']['machine_type'] : $form['submitted'][$key]['#default_value'],
 		));
 	    }
-	    if ($key == 'price') {
+	    if ($key == 'price' || $key == 'coords_region' || $key == 'area' ) {
 		$form['submitted'][$key] = array_merge($value, array(
 		    '#access' => $is_admin,  
 		));
@@ -792,13 +793,13 @@ function ak_mermix_tools_menu() {
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
-    $items['requests-map'] = array(
-	//'title' => 'Add your machine',
-	'page callback' => 'empty_page',
-	'access callback' => TRUE,
-	//'menu_name' => 'main-menu',
-	'type' => MENU_NORMAL_ITEM,
-    );
+//    $items['requests-map'] = array(
+//	//'title' => 'Add your machine',
+//	'page callback' => 'empty_page',
+//	'access callback' => TRUE,
+//	//'menu_name' => 'main-menu',
+//	'type' => MENU_NORMAL_ITEM,
+//    );
     $items['requests-for'] = array(
 	//'title' => 'Add your machine',
 	'page callback' => 'empty_page',
@@ -811,6 +812,7 @@ function ak_mermix_tools_menu() {
 }
 
 function empty_page() {
+    //drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js');
     return '';
 }
 /**
