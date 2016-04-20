@@ -33,7 +33,9 @@ $nameAddUrl = user_is_logged_in() ? url('node/add/apartment/' . $termObj->tid) :
 $fields['value']->content = '<div class="category"  style="background: url(\'' .$backgroundUrl. '\') no-repeat"><span class="title">'. $termObjLocalized->name .'</span></div>';
 $fields['value']->wrapper_prefix = '';
 $fields['value']->wrapper_suffix = '';
-$fields['value_1']->wrapper_suffix = $fields['value_1']->wrapper_suffix . '<a class="add-it btn btn-primary" href="'. $nameAddUrl .'"><span class="name">'. t('Meet the demand') .'</span></a>';
+$fields['value_1']->wrapper_suffix = $fields['value_1']->wrapper_suffix . '<a class="add-it btn btn-primary large-btn" href="'. $nameAddUrl .'"><span class="name">'. t('Meet the demand') .'</span></a>';
+$fields['value_1']->content = $fields['value_1']->content . $fields['value_4']->content;
+unset($fields['value_4']);
 ?>
 <?php foreach ($fields as $id => $field): ?>
   <?php if (!empty($field->separator)): ?>
