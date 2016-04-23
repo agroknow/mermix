@@ -5,10 +5,25 @@
  * Implements hook_init
  */
 function ak_mermix_tools_init(){
+    global $base_url;
     if(drupal_is_front_page()){
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_banner.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js', array('scope' => 'footer'));
     }
+    
+    $custom_settings = array('popup_phone_url' => $base_url . '/ak_mermix_tools/nojs/addphone');
+    drupal_add_js(array(
+    'mermix-modal' => array(
+      'modalSize' => array(
+        'type' => 'fixed',
+        'width' => 850,
+        'height' => 550,
+      ),
+     //Animation mode
+     'animation' => 'fadeIn',
+    ),
+  ), 'setting');
+    drupal_add_js(array('ak_mermix_tools' => $custom_settings), 'setting');
     drupal_add_library('system', 'jquery.cookie');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/user_location.js');
     drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/jquery.validate.min.js');
@@ -192,6 +207,11 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
 	if ($node_edit) {
 	    $user_data = user_load($user->uid);
+	    if(!isset($user_data->field_phone_number['und'][0]['value']) || empty($user_data->field_phone_number['und'][0]['value'])) {
+	    ctools_include('modal');
+	    ctools_modal_add_js();
+	    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/openpopup.js', array('scope' => 'footer'));
+	    }
 	    $lat = isset($user_data->field_place['und']['0']['lat']) ? $user_data->field_place['und']['0']['lat'] : '';
 	    $lon = isset($user_data->field_place['und']['0']['lon']) ? $user_data->field_place['und']['0']['lon'] : '';
 	    $defaultlat = $form['field_address']['und'][0]['geom']['#default_value']['lat'];
@@ -566,6 +586,35 @@ function ak_mermix_tools_block_content_banner() {
 }
 
 /*
+ * Create custom form to get phone number
+ */
+
+function user_phone_form($form, &$form_state) {
+    $form['phonenum'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Phone number'),
+	'#required' => TRUE,
+	'#default_value' => '',
+	'#attributes' => array('placeholder' => t('Enter your phone number')),
+    );
+    $form['submit_button'] = array(
+	'#type' => 'submit',
+	'#value' => t('Save'),
+    );
+    return $form;
+    
+}
+
+function user_phone_form_submit($form, &$form_state) {
+    global $user;
+    $userwrapper = entity_metadata_wrapper('user', user_load($user->uid));
+    $userwrapper->field_phone_number->set($form_state['values']['phonenum']);
+    $userwrapper->save();
+     // Tell the browser to close the modal.
+    $form_state['ajax_commands'][] = ctools_modal_command_dismiss();
+}
+
+/*
  * Create the custom form
  */
 
@@ -793,6 +842,12 @@ function ak_mermix_tools_menu() {
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
+    $items['ak_mermix_tools/%ctools_js/addphone'] = array(
+    'page callback' => 'ak_mermix_tools_add_phone_callback',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
 //    $items['requests-map'] = array(
 //	//'title' => 'Add your machine',
 //	'page callback' => 'empty_page',
@@ -810,6 +865,39 @@ function ak_mermix_tools_menu() {
     
     return $items;
 }
+
+
+/**
+ * Ajax menu callback.
+ */
+function ak_mermix_tools_add_phone_callback($ajax) {
+  if ($ajax) {
+    ctools_include('ajax');
+    ctools_include('modal');
+
+    $form_state = array(
+      'ajax' => TRUE,
+      'title' => t('MyModule Modal Form'),
+    );
+
+    // Use ctools to generate ajax instructions for the browser to create
+    // a form in a modal popup.
+    $output = ctools_modal_form_wrapper('user_phone_form', $form_state);
+
+    // If the form has been submitted, there may be additional instructions
+    // such as dismissing the modal popup.
+    if (!empty($form_state['ajax_commands'])) {
+      $output = $form_state['ajax_commands'];
+    }
+
+    // Return the ajax instructions to the browser via ajax_render().
+    print ajax_render($output);
+    drupal_exit();
+  }
+  else {
+    return drupal_get_form('user_phone_form');
+  }
+}   
 
 function empty_page() {
     //drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js');
