@@ -43,6 +43,8 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
     $options['rotate_control_position'] = array('default' => 1);
     $options['zoom_control_position'] = array('default' => 1);
     $options['streetview_control_position'] = array('default' => 1);
+    $options['map_style'] = array('default' => '');
+    $options['custom_style'] = array('default' => FALSE);
 
     return $options;
   }
@@ -236,6 +238,18 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
       '#title' => t('StreetView controls position'),
       '#options' => $controls_position_options,
       '#default_value' => $this->options['streetview_control_position']
+    );
+    
+    $form['custom_style'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Enable custom style'),
+      '#default_value' => $this->options['custom_style'],
+    );
+    
+    $form['map_style'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Style for map'),
+      '#default_value' => $this->options['map_style']
     );
 
     $form['control_position_desc']['#markup'] = "

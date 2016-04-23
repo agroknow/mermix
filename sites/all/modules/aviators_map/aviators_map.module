@@ -140,7 +140,9 @@ function template_preprocess_aviators_map_view(&$variables) {
       'hideInfobox' => $options['hide_infobox'],
       'zoomOnClick' => $options['cluster_zoomonclick'],
       'contentInsideMarker' => $options['content_insidemarker'],
-      'mapTypeControl' => $options['overview_map_control']
+      'mapTypeControl' => $options['overview_map_control'],
+      'mapStyle' => $options['map_style'],
+      'enableStyle' => $options['custom_style'],
     ),
     $controls
   );
