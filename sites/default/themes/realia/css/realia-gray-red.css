@@ -4828,42 +4828,48 @@ ul.pager li:first-child a,ul.pager li:last-child a {
     width: 42px
 }
 .marker.euro-mark{
-    height: 40px;
-    width: 40px;
-    border-radius: 100%;
-    border: 5px solid;
+    height: 45px;
+    width: 35px;
+/*    border-radius: 100%;*/
+/*    border: 5px solid;*/
     padding: 5px;
     opacity: 0.9;
 }
 .marker.euro-mark.small{
-    background: #FFA500;
+/*    background: #FFA500;*/
+    background:url("../img/money.png") no-repeat center top;
     border-color: #EA9800;
 }
 .marker.euro-mark.medium{
     height: 50px;
-    width: 50px;
-    background: #FF5E00;
+    width: 60px;
+/*    background: #FF5E00;*/
+     background:url("../img/money_m1.png") no-repeat center top;
     border-color: #DC5100;
 }
 .marker.euro-mark.large{
-    height: 60px;
-    width: 60px;
-    background: #e63434;
+    height: 70px;
+    width: 65px;
+/*    background: #e63434;*/
+     background:url("../img/money_l1.png") no-repeat center top;
     border-color: #ce1919;
 }
 .marker-inner-noimage {
     width: 100%;
     height: 100%;
+    display: table;
 }
 .marker-inner-noimage a:hover{
     color: #fff;
     text-decoration: none;
 }
 .marker-inner-noimage a {
-    display: block;
+    display: table-cell;
     text-align: center;
     color: #fff;
     font-weight: bold;
+    vertical-align: bottom;
+    text-shadow: 0px 0px 8px #000;
 }
 /*.marker-inner-noimage a:hover .amount{
     display: block;
@@ -4878,9 +4884,18 @@ ul.pager li:first-child a,ul.pager li:last-child a {
 .marker.medium a .euro-sign {font-size: 40px; margin-left: -5px }
 .marker.large a .euro-sign {font-size: 50px; margin-left: -7px}*/
 
-.marker.small a { font-size: 14px;line-height: 40px}
-.marker.medium a {font-size: 16px;line-height: 50px}
-.marker.large a {font-size: 18px;line-height: 60px}
+.marker.small a { 
+    font-size: 14px;
+/*    line-height: 40px*/
+}
+.marker.medium a {
+    font-size: 16px;
+/*    line-height: 50px*/
+}
+.marker.large a {
+    font-size: 18px;
+    /*line-height: 60px*/
+}
 /*
 .marker.small a .amount,.marker.small a .euro-sign{line-height: 30px}
 .marker.medium a .amount,.marker.medium a .euro-sign{line-height: 40px}
@@ -5069,7 +5084,7 @@ body.red .marker {
     background-image: url("../img/markers/marker-red.png")
 }
 body.red .marker.no-bg{
-    background-image: none
+/*    background-image: none*/
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
@@ -7580,17 +7595,45 @@ span.or-separator{
     }
 }
 .opentip-container.style-info{
-    max-width: 370px;
+    max-width: 450px;
 }
 .opentip-container.style-marker-small .opentip,
-.opentip-container.style-marker-medium .opentip,
-.opentip-container.style-marker-large .opentip{
+.opentip-container.style-marker-medium .opentip
+{
     color: #fff;
     text-shadow: none;
     font-weight: bold
 }
+.opentip-container.style-marker-large .opentip{
+    color: #555;
+    text-shadow: none;
+    font-weight: bold
+}
+.opentip-container.style-info .opentip .ot-header h1{
+    font-size: 20px;
+    text-align: center
+}
 .opentip-container.style-info .opentip .ot-content{
     font-size: 15px;
-    text-align: right;
-    margin: 20px;
+}
+.opentip-container.style-info .opentip .ot-content p{
+    display: inline
+}
+.opentip-container.style-info .opentip .ot-content img.small{
+    padding-right: 35px;
+}
+.opentip-container.style-info .opentip .ot-content img.medium{
+    padding-right: 10px;
+}
+.opentip-container.style-info .opentip .ot-content img.large{
+    padding-right: 5px;
+}
+.tip-toggle{
+    cursor: pointer;
+    position: relative;
+    left: 20px;
+    top: 80px;
+    z-index: 1;
+    color: #fff;
+    display: inline-block
 }
