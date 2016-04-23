@@ -19,11 +19,11 @@ Opentip.styles.marker_large = {
   extends: "alert",
   className: 'marker-large',
   // Tells the tooltip to be fixed and be attached to the trigger, which is the default target
-  background:[ [ 0, "rgba(230, 52, 52, 0.7)" ], [ 1, "rgba(206, 25, 25, 0.9)" ] ],
-  borderColor:"#ce1919",
+  background:"rgba(240, 240, 240, 0.9)",
+  borderColor:"#ccc",
 //  shadowBlur:,
 //  shadow:
-removeElementsOnHide:true
+//removeElementsOnHide:true
 
 };
 Opentip.styles.marker_medium = {
@@ -57,44 +57,59 @@ Opentip.styles.info = {
   // Make it look like the alert style. If you omit this, it will default to "standard"
   extends: "standard",
   className: 'info',
-  tipJoint:"bottom right",
-  stemLength:100,
-  stemBase:40
-  // Tells the tooltip to be fixed and be attached to the trigger, which is the default target
-//  background:,
+  stem:false,
+//  stemLength:100,
+//  stemBase:40
+// Tells the tooltip to be fixed and be attached to the trigger, which is the default target
+   background: "rgba(255, 255, 255, 0.94)",
 //  borderRadius:,
 //  borderWidth:,
-//  borderColor:,
+  borderColor:"#fff"
 //  shadowBlur:,
 //  shadow:
 
 };
 var title = {'el':'Χάρτης ζήτησης' , 'en':'Requests map'};
-var content = {'el':'Κάνε κλίκ στην περιοχή που σε ενδιαφέρει και δες την ζήτηση!' , 'en':'Click any region to see the demand'};
+var content = {'el':'<img class="small" src="/sites/default/themes/realia/img/money.png" /><p> Συνολική ζήτηση < 50€ </p><br /> \
+<img class="medium" src="/sites/default/themes/realia/img/money_m1.png" /><p> Συνολική ζήτηση > 50€ </p><br /> \
+<img class="large" src="/sites/default/themes/realia/img/money_l1.png" /><p> Συνολική ζήτηση > 100€ </p>' ,
+    'en':'<img class="small" src="/sites/default/themes/realia/img/money.png" /><p> Total requests < 50€ </p><br /> \
+<img class="medium" src="/sites/default/themes/realia/img/money_m1.png" /><p> Total requests > 50€ </p><br /> \
+<img class="large" src="/sites/default/themes/realia/img/money_l1.png" /><p> Total requests > 100€ </p>'};
+
 var content_marker = {'el':' ευρώ σε περιμένουν στην ' , 'en':' euros are waiting for you at '};
 var current_lang = jQuery('html').attr('lang');
 jQuery(document).ready(function(){
    
-   new Opentip("#gmap-looking-for-map", content[current_lang], title[current_lang], 
-   { showOn: 'creation',
-     target: '#gmap-looking-for-map',
-     targetJoint:'top left',
-     offset:[650,400], 
+   var element = jQuery("#gmap-looking-for-map");
+   var infotoggle = jQuery('<div class="tip-toggle"><i class="fa fa-info-circle fa-3x" aria-hidden="true"></i></div>');
+   element.prepend(infotoggle);
+   var tip = new Opentip(infotoggle, '',title[current_lang], 
+   { showOn: 'click',
+     target: infotoggle,
+     targetJoint:'top right',
+     //offset:[50,100], 
      style: 'info',
-     hideOn:'remove',
+     //hideTrigger: 'closeButton',
+     hideOn:'click',
      containInViewport: false,
     }); 
+    var tipcontent = jQuery(content[current_lang]);
+    tipcontent.load(function(){
+	tip.setContent(content[current_lang]);
+	tip.show();
+    });
 });
 
 jQuery(window).load(function(){
     jQuery('.marker.euro-mark').each(function(){
-	var $this = jQuery(this);
+	   var $this = jQuery(this);
 	   var amount = $this.find('.amount').text();
 	   var region = $this.data('region');
-	   var classname = $this.attr('class').replace('marker euro-mark no-bg no-hover ','');
+	   //var classname = $this.attr('class').replace('marker euro-mark no-bg no-hover ','');
 	   new Opentip(jQuery(this), amount + content_marker[current_lang] + region, '', 
 	   { 
-	       style: 'marker_' + classname
+	       style: 'marker_large'
 	   });
 	});
 });
