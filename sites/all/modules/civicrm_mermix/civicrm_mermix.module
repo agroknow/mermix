@@ -1,0 +1,127 @@
+<?php
+// Inspired by https://www.drupal.org/project/civicrm_commons
+/**
+ * Implements CiviCRM hook_civicrm_pre()
+ */
+function civicrm_mermix_civicrm_pre($op, $object_name, $object_id, &$object_ref) {
+  if ($op == 'create' && $object_name == 'UFMatch') {
+    // initial user creation and user->contact sync.
+    $cid = $object_ref['contact_id'];
+    $uid = $object_ref['uf_id'];
+    if ($uid && $cid) {
+      $user_obj = user_load($uid);
+      _civicrm_mermix_update('pre_UFMatch', $uid, $cid, $user_obj);
+    }
+  }
+}
+
+/**
+ * Implements Drupal hook_user_update()
+ * This is invoked when a user updates their profile.
+ */
+function civicrm_mermix_user_update(&$edit, $account, $category) {
+  civicrm_initialize();
+  $uid = $account->uid;
+  $params = array('version'    => 3,
+                  'sequential' => 1,
+                  'uf_id'      => $uid,
+                  );
+  $result = civicrm_api('UFMatch', 'Get', $params);
+  if ($result['is_error']) {
+    watchdog('civicrm_mermix', "user_update: can't get contact_id for uid = @uid",
+             array('@uid' => $uid), WATCHDOG_WARNING);
+    return;
+  }
+  $cid = $result['values'][0]['contact_id'];
+  if ($cid) {
+      //Change to FALSE and uncomment the next code block to update only when one value changes
+      //instead of always
+      $changed = TRUE;
+      /*$check_for_changed = array('field_first_name_','field_last_name','field_phone_number');
+      foreach ($check_for_changed as $fieldname) {
+	if($account->original->{$fieldname}['und'][0]['value'] != $account->{$fieldname}['und'][0]['value']){
+	    $changed = TRUE;
+	    break;
+	}  
+      }
+      if($account->field_place['und'][0]['lat'] != $account->original->field_place['und'][0]['lat'] || $account->field_place['und'][0]['lon'] != $account->original->field_place['und'][0]['lon']) {
+	  $changed = TRUE;
+      }*/
+    if($changed) {  
+    _civicrm_mermix_update('user_update', $uid, $cid, $account);
+    }
+  }
+}
+
+/**
+ * Sync first, last name, address and phone number.
+ * Note that syncing is one way: fields changed in CiviCRM do not sync back to Commons.
+ */
+function _civicrm_mermix_update($op, $uid, $cid, $user_obj) {
+  $params = array(
+                  'version'      => 3,
+                  'contact_type' => 'Individual',
+                  'contact_id'   => $cid,
+                  );
+  $data = 0;
+  
+  // Get first and last names
+  $first_name = $last_name = $phone = $lat = $lon = '';
+  if(isset($user_obj->field_first_name_['und'][0]['value'])){
+    $first_name = $user_obj->field_first_name_['und'][0]['value'];
+  }
+  if(isset($user_obj->field_last_name['und'][0]['value'])){
+    $last_name  = $user_obj->field_last_name['und'][0]['value'];
+  }
+  if(isset($user_obj->field_phone_number['und'][0]['value'])){
+    $phone  = $user_obj->field_phone_number['und'][0]['value'];
+  }
+  if(isset($user_obj->field_place['und'][0]['lat']) && isset($user_obj->field_place['und'][0]['lon'])){
+    $lat  = $user_obj->field_place['und'][0]['lat'];
+    $lon  = $user_obj->field_place['und'][0]['lon'];
+  }
+  
+  if ($first_name) {
+    $params['first_name'] = $first_name;
+    $data++;
+  }
+  if ($last_name) {
+    $params['last_name'] = $last_name;
+    $data++;
+  }
+  if ($phone) {
+    $params['api.phone.create'] = array('phone' => $phone,'location_type_id' => 'Home');
+    if($phoneid = _civicrm_mermix_getPrimary('Phone',$cid)) {
+	$params['api.phone.create']['id'] = $phoneid;
+    }
+    $data++;
+  }
+  if ($lat && $lon) {
+    $params['api.address.create'] = array('geo_code_1' => $lat, 'geo_code_2' => $lon, 'location_type_id' => 'Home');
+    if($addressid = _civicrm_mermix_getPrimary('Address',$cid)) {
+	$params['api.address.create']['id'] = $addressid;
+    }
+    $data++;
+  }
+
+  if ($data) {
+    $result = civicrm_api('Contact', 'create', $params);
+    if($result['is_error']){
+    watchdog('civicrm_mermix', $op . ': uid=@uid, cid=@cid, params=<pre>@params</pre>',
+             array('@uid'    => $uid,
+                   '@cid'    => $cid,
+                   '@params' => print_r($params, TRUE),
+                   ), WATCHDOG_ERROR);
+    }
+  }
+}
+
+function _civicrm_mermix_getPrimary($crm_entity, $cid) {
+    civicrm_initialize();
+    $params = array('version'  => 3,
+                  'contact_id' => $cid,
+                  'is_primary' => 1,
+                  );
+    $result = civicrm_api($crm_entity, 'get', $params);
+    return isset($result['id']) ? $result['id'] : FALSE;
+}
