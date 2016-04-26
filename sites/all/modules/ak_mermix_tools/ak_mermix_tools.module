@@ -207,11 +207,11 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 	$node_edit = isset($form['#node_edit_form']) && $form['#node_edit_form'] ? TRUE : FALSE;
 	if ($node_edit) {
 	    $user_data = user_load($user->uid);
-	    if(!isset($user_data->field_phone_number['und'][0]['value']) || empty($user_data->field_phone_number['und'][0]['value'])) {
-	    ctools_include('modal');
-	    ctools_modal_add_js();
-	    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/openpopup.js', array('scope' => 'footer'));
-	    }
+//	    if(!isset($user_data->field_phone_number['und'][0]['value']) || empty($user_data->field_phone_number['und'][0]['value'])) {
+//	    ctools_include('modal');
+//	    ctools_modal_add_js();
+//	    drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/openpopup.js', array('scope' => 'footer'));
+//	    }
 	    $lat = isset($user_data->field_place['und']['0']['lat']) ? $user_data->field_place['und']['0']['lat'] : '';
 	    $lon = isset($user_data->field_place['und']['0']['lon']) ? $user_data->field_place['und']['0']['lon'] : '';
 	    $defaultlat = $form['field_address']['und'][0]['geom']['#default_value']['lat'];
