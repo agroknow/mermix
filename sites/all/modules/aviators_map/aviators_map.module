@@ -62,8 +62,9 @@ function template_preprocess_aviators_map_view(&$variables) {
   $variables['height'] = $options['height'];
 
   $markers = array();
+  if($view->name != 'looking_for_map') {
   foreach ($field_renders as $delta => $field_render) {
-    $latlon = str_replace(' ', '', $field_render['field_address']);
+    $latlon = str_replace(' ', '', $field_render[$options['map_field']]);
     list($latitude,$longitude) = explode(',', $latlon);
     //list($latitude, $longitude) = explode(":", $field_render[$options['map_field']]);
 
@@ -78,7 +79,35 @@ function template_preprocess_aviators_map_view(&$variables) {
     // create marker as we have data about position, icon, and 'content' of marker (rendered row)
     $markers[$delta] = gmap3_tools_create_marker($latitude, $longitude, NULL, $rows[$delta], $attributes);
   }
+  } else {
+    $total = array();
+    foreach ($field_renders as $delta => $field_render) {
+    $latlon = str_replace(' ', '', $field_render[$options['map_field']]);
+    list($latitude,$longitude) = explode(',', $latlon);
+    //list($latitude, $longitude) = explode(":", $field_render[$options['map_field']]);
 
+    if (empty($latitude) || empty($longitude)) {
+      continue;
+    }
+
+    $attributes['icon'] = $base_url . '/' . drupal_get_path('module', 'aviators_map') . '/marker-transparent.png';
+    //$attributes['class'] = implode(' ', array_merge(array('term-' . strip_tags($field_render[$options['class_field']])), array($options['class'])));
+    $total[$field_render['value_4']] = isset($total[$field_render['value_4']]) ? $total[$field_render['value_4']] + $field_render['value_2'] : 0 + $field_render['value_2'];
+    if($total[$field_render['value_4']] < 50) {
+	$class = 'small';
+    } elseif ($total[$field_render['value_4']] < 100) {
+	$class = 'medium';
+    } else {
+	$class = 'large';
+    }
+    $attributes['class'] = $class;
+    $attributes['region'] = $field_render['value_4'];
+    $attributes['link'] = isset($field_render[$options['marker_link']]) ? $field_render[$options['marker_link']] : '#' ;
+    // create marker as we have data about position, icon, and 'content' of marker (rendered row)
+    $markers[$field_render['value_4']] = gmap3_tools_create_marker($latitude, $longitude, NULL, $total[$field_render['value_4']], $attributes);
+  } 
+  }
+  $markers = array_values($markers);
 
   // unique identifier
   $variables['view_id'] = 'gmap-' . str_replace('_', '-', $view->name);
@@ -99,24 +128,23 @@ function template_preprocess_aviators_map_view(&$variables) {
       $controls[$controlName] = TRUE;
     };
   }
-  if($view->name == 'machine_results') {
-      $resultOptions = array(
-	  'disableInfobox' => true,
-	  );
-  } else {
-      $resultOptions = array();
-  }
   $mapOptions = array_merge(
-    array(
+    array( 
       'centerX' => $options['map_latitude'],
       'centerY' => $options['map_longitude'],
       'center' => $options['default_position'],
       'zoom' => (int) $options['zoom'],
       'mapTypeId' => GMAP3_TOOLS_MAP_TYPE_ID_ROADMAP,
       'scrollwheel' => FALSE,
+      'disableInfobox' => $options['disable_infobox'],
+      'hideInfobox' => $options['hide_infobox'],
+      'zoomOnClick' => $options['cluster_zoomonclick'],
+      'contentInsideMarker' => $options['content_insidemarker'],
+      'mapTypeControl' => $options['overview_map_control'],
+      'mapStyle' => $options['map_style'],
+      'enableStyle' => $options['custom_style'],
     ),
-    $controls,
-    $resultOptions
+    $controls
   );
 
 

@@ -79,7 +79,10 @@
         var mapOptions = map.mapOptions;
         mapOptions.center = new google.maps.LatLng(map.mapOptions.centerX, map.mapOptions.centerY);
         var gmap = new google.maps.Map(document.getElementById(map.mapId), mapOptions);
-        var oms = new OverlappingMarkerSpiderfier(gmap, {markersWontMove: true, keepSpiderfied: true, nearbyDistance:10, legWeight:2.5});
+        if(map.mapOptions.mapStyle && map.mapOptions.enableStyle) {
+	gmap.setOptions({styles: JSON.parse(map.mapOptions.mapStyle)});
+	}
+	var oms = new OverlappingMarkerSpiderfier(gmap, {markersWontMove: true, keepSpiderfied: true, nearbyDistance:10, legWeight:2.5});
         // Array for storing all markers that are on this map.
         var gmapMarkers = [];
         var markersNum = 0;
@@ -94,7 +97,7 @@
             oms.addMarker(marker); 
             // infobox
             var boxText = document.createElement("div");
-            boxText.innerHTML = markerData.content;
+            boxText.innerHTML = markerData.content; 
             $(boxText).addClass("infobox");
             var myOptions = {
                 content: boxText,
@@ -108,7 +111,7 @@
                 closeBoxMargin: "0px 0px 0px 0px",
                 closeBoxURL: '/sites/default/themes/realia/img/icons/cross.png',
                 infoBoxClearance: new google.maps.Size(1, 1),
-                isHidden: false,
+                isHidden: mapOptions.hideInfobox,
                 pane: "floatPane",
                 enableEventPropagation: false
             };
@@ -123,6 +126,9 @@
 		markerMark = '<div class="marker">' + index + '</div>';
 	    } else {
 		markerMark = '<div class="marker"><div class="marker-inner"></div></div>';
+	    }
+	    if(mapOptions.contentInsideMarker) {
+		markerMark = '<div data-region="'+markerData.markerOptions.region+'" class="marker euro-mark no-bg no-hover ' + markerData.markerOptions.class + '"><div class="marker-inner-noimage"><a href="'+markerData.markerOptions.link+'/' + markerData.content +'"><span class="amount">'+ markerData.content +'</span><span class="fa fa-eur euro-sign"></span></a></div></div>';
 	    }
 	   
             var extendMarkerOptions = {
@@ -160,15 +166,16 @@
                         marker.infobox.isOpen = false;
                     }
                 });
-
-                if (curMarker.infobox.isOpen === false) {
-                    curMarker.infobox.open(gmap, this);
-                    curMarker.infobox.isOpen = true;
-                    gmap.panTo(curMarker.getPosition());
-                } else {
-                    curMarker.infobox.close();
-                    curMarker.infobox.isOpen = false;
-                }
+		if(mapOptions.hideInfobox == false) {
+		    if (curMarker.infobox.isOpen === false) {
+			curMarker.infobox.open(gmap, this);
+			curMarker.infobox.isOpen = true;
+			gmap.panTo(curMarker.getPosition());
+		    } else {
+			curMarker.infobox.close();
+			curMarker.infobox.isOpen = false;
+		    }
+		}
 
             });
 
@@ -216,7 +223,7 @@
         }
 
         var markerCluster = new MarkerClusterer(gmap, markers, {
-            //zoomOnClick:false,
+            zoomOnClick:mapOptions.zoomOnClick,
             maxZoom:17,
             gridSize: parseInt(map.clustering.gridSize),
             styles: [

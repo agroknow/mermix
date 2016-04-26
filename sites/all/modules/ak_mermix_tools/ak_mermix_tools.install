@@ -1030,3 +1030,96 @@ function ak_mermix_tools_update_7012(&$sandbox) {
 
   return 'ak_mermix_tools_search_log table created.';
 }*/
+
+/**
+ * Populate looking for submissions coord field
+ */
+function ak_mermix_tools_update_7013(&$sandbox) {
+    
+    $node = node_load(298);
+    $components = $node->webform['components'];
+    $components_map_array = array();
+    foreach ($components as $id => $value) {
+	$components_map_array[$value['form_key']] = $id;
+    }
+    extract($components_map_array);
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $total_subs = webform_get_submissions(array('nid' => 298));
+    
+    if (!isset($sandbox['total'])) {
+        $sandbox['total'] = count($total_subs);
+        $sandbox['current'] = 0;
+    }
+    $subs_per_pass = 25;
+    $subs_to_process = array_slice($total_subs, $sandbox['current'], $subs_per_pass);
+    foreach ($subs_to_process as $sub) {
+	$url = 'https://maps.google.com/maps/api/geocode/json?language=el&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&address=';
+	$url .= isset($sub->data[$location][0]) ? urlencode($sub->data[$location][0]) : urlencode($sub->data[$location_en][0]) ;
+	$geocode_result = file_get_contents($url);
+	$results = json_decode($geocode_result, TRUE);
+	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
+	    $sub->data[$coords][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
+	    $sub->data[$price][0] = rand (6*10, 20*10) / 10;
+	}
+	if(isset($results['results'][0]['address_components'])) {
+	    $address_components = $results['results'][0]['address_components'];
+	    foreach ($address_components as $key => $value) {
+	       if($value['types'][0] == 'administrative_area_level_2') {
+		  $sub->data[$area][0] = $value['short_name'];
+	       } 
+	    }
+	}
+	webform_submission_update($node,$sub);
+	$sandbox['current'] ++;
+	sleep(0.5);
+  }
+    // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+
+    if ($sandbox['#finished'] === 1) {
+        drupal_set_message(t('@subs Submissions Updated.', array('@subs' => $sandbox['total'])));
+    }  
+}
+
+/**
+ * Add area coordinations for looking for submissions
+ */
+function ak_mermix_tools_update_7014(&$sandbox) {
+    
+    $node = node_load(298);
+    $components = $node->webform['components'];
+    $components_map_array = array();
+    foreach ($components as $id => $value) {
+	$components_map_array[$value['form_key']] = $id;
+    }
+    extract($components_map_array);
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $total_subs = webform_get_submissions(array('nid' => 298));
+    
+    if (!isset($sandbox['total'])) {
+        $sandbox['total'] = count($total_subs);
+        $sandbox['current'] = 0;
+    }
+    $subs_per_pass = 25;
+    $subs_to_process = array_slice($total_subs, $sandbox['current'], $subs_per_pass);
+    foreach ($subs_to_process as $sub) {
+    if(!empty($sub->data[$area][0])){
+	$url = 'https://maps.google.com/maps/api/geocode/json?language=el&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&address=';
+	$url .= urlencode($sub->data[$area][0]);
+	$geocode_result = file_get_contents($url);
+	$results = json_decode($geocode_result, TRUE);
+	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
+	    $sub->data[$coords_region][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
+	}
+	webform_submission_update($node,$sub);
+	$sandbox['current'] ++;
+	sleep(0.5);
+    }
+  }
+    // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+
+    if ($sandbox['#finished'] === 1) {
+        drupal_set_message(t('@subs Submissions Updated.', array('@subs' => $sandbox['total'])));
+    }  
+}
