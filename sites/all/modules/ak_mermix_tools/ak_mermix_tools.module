@@ -631,7 +631,7 @@ function user_phone_form_submit($form, &$form_state) {
     // $userwrapper->field_phone_number->set($form_state['values']['phonenum']);
     // $userwrapper->save();
     // Tell the browser to close the modal.
-    $form_state['ajax_commands'][] = ctools_modal_command_dismiss();
+    $form_state['ajax_commands'][] = ctools_modal_command_display(t('Thank you'),'<div class="success-msg">' . t('Your submission was successful! A team member will contact you within 24 hours.') . '</div>');
 }
 
 function _ak_mermix_tools_create_webform_submission ($nid, $data) {
