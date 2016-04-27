@@ -45,6 +45,7 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
     $options['streetview_control_position'] = array('default' => 1);
     $options['map_style'] = array('default' => '');
     $options['custom_style'] = array('default' => FALSE);
+    $options['draggable_disabled'] = array('default' => FALSE);
 
     return $options;
   }
@@ -238,6 +239,12 @@ class aviators_map_plugin_style_gmap extends views_plugin_style {
       '#title' => t('StreetView controls position'),
       '#options' => $controls_position_options,
       '#default_value' => $this->options['streetview_control_position']
+    );
+    
+    $form['draggable_disabled'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Disable Dragging'),
+      '#default_value' => $this->options['draggable_disabled'],
     );
     
     $form['custom_style'] = array(

@@ -82,6 +82,9 @@
         if(map.mapOptions.mapStyle && map.mapOptions.enableStyle) {
 	gmap.setOptions({styles: JSON.parse(map.mapOptions.mapStyle)});
 	}
+	if(map.mapOptions.disableDragging) {
+	gmap.setOptions({draggable: false});
+	}
 	var oms = new OverlappingMarkerSpiderfier(gmap, {markersWontMove: true, keepSpiderfied: true, nearbyDistance:10, legWeight:2.5});
         // Array for storing all markers that are on this map.
         var gmapMarkers = [];

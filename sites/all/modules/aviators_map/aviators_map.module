@@ -143,6 +143,7 @@ function template_preprocess_aviators_map_view(&$variables) {
       'mapTypeControl' => $options['overview_map_control'],
       'mapStyle' => $options['map_style'],
       'enableStyle' => $options['custom_style'],
+      'disableDragging' => $options['draggable_disabled'],
     ),
     $controls
   );
