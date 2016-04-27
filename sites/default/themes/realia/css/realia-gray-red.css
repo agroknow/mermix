@@ -708,7 +708,7 @@ body.front #header-wrapper{
     position: fixed;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 999;
 }
 #superfish-3 li.menuparent ul.sf-hidden{
     display: none !important;
@@ -4828,30 +4828,31 @@ ul.pager li:first-child a,ul.pager li:last-child a {
     width: 42px
 }
 .marker.euro-mark{
-    height: 45px;
-    width: 35px;
-/*    border-radius: 100%;*/
+    height: 48px;
+    width: 48px;
+    border-radius: 100%;
 /*    border: 5px solid;*/
     padding: 5px;
-    opacity: 0.9;
+    opacity: 1;
+    margin-left: -10px;
 }
 .marker.euro-mark.small{
 /*    background: #FFA500;*/
-    background:url("../img/money.png") no-repeat center top;
+    background:url("../img/money.png") no-repeat center rgba(0, 0, 0, 0.4);
     border-color: #EA9800;
 }
 .marker.euro-mark.medium{
     height: 50px;
-    width: 60px;
+    width: 50px;
 /*    background: #FF5E00;*/
-     background:url("../img/money_m1.png") no-repeat center top;
+     background:url("../img/money_m1.png") no-repeat center rgba(0, 0, 0, 0.4);
     border-color: #DC5100;
 }
 .marker.euro-mark.large{
-    height: 70px;
+    height: 65px;
     width: 65px;
 /*    background: #e63434;*/
-     background:url("../img/money_l1.png") no-repeat center top;
+     background:url("../img/money_l1.png") no-repeat center rgba(0, 0, 0, 0.4);
     border-color: #ce1919;
 }
 .marker-inner-noimage {
@@ -7642,8 +7643,19 @@ span.or-separator{
 }
 /* Modal styles */
 #modalContent .modal-header{
-    display: none;
+    /*display: none;*/
 }
 #modalBackdrop {
     background: #222 !important;
+}
+div.ctools-modal-content .modal-header{
+    padding: 10px;
+    background: #e63434;
+}
+div.ctools-modal-content .modal-header .close{
+    opacity: 1;
+    outline: none;
+}
+div.ctools-modal-content{
+    border : none;
 }
