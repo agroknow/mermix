@@ -57,7 +57,7 @@ Opentip.styles.info = {
   // Make it look like the alert style. If you omit this, it will default to "standard"
   extends: "standard",
   className: 'info',
-  stem:"bottom right",
+  stem:(jQuery(document).width() < 500) ? false : "bottom right",
   stemLength:50,
   stemBase:20,
 // Tells the tooltip to be fixed and be attached to the trigger, which is the default target
@@ -88,7 +88,7 @@ jQuery(document).ready(function(){
    { showOn: 'click',
      target: infotoggle,
      targetJoint:'top right',
-     offset:[60,60], 
+     offset:(jQuery(document).width() < 500) ? [0,0]:[60,60], 
      style: 'info',
      //hideTrigger: 'closeButton',
      hideOn:'click',
