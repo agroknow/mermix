@@ -7652,7 +7652,7 @@ div.ctools-modal-content .modal-header{
     padding: 10px;
     background: #e63434;
 }
-div.ctools-modal-content .modal-header .close{
+div.ctools-modal-content.mermix_modal .close{
     opacity: 1;
     outline: none;
 }
