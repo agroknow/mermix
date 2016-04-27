@@ -21,6 +21,7 @@ function ak_mermix_tools_init(){
       ),
      //Animation mode
      'animation' => 'fadeIn',
+     'modalTheme' => 'mermix_modal',
     ),
     'mermix-modal-res' => array(
       'modalSize' => array(
@@ -28,6 +29,7 @@ function ak_mermix_tools_init(){
       ),
      //Animation mode
      'animation' => 'fadeIn',
+     'modalTheme' => 'mermix_modal',
     )
   ), 'setting');
     drupal_add_js(array('ak_mermix_tools' => $custom_settings), 'setting');
@@ -919,7 +921,7 @@ function ak_mermix_tools_add_phone_callback($ajax,$price) {
 
     $form_state = array(
       'ajax' => TRUE,
-      //'title' => $price,
+      'title' => t('Please enter your phone'),
     );
 
     // Use ctools to generate ajax instructions for the browser to create
@@ -944,6 +946,7 @@ function ak_mermix_tools_add_phone_callback($ajax,$price) {
 function empty_page() {
     ctools_include('modal');
     ctools_modal_add_js();
+    ctools_add_js('mermix_modal', 'ak_mermix_tools');
     //drupal_add_js('jQuery(document).ready(function () {jQuery(document).unbind("keydown", modalEventEscapeCloseHandler);jQuery(".modal-header .close").unbind("click");});', array('type' => 'inline', 'scope' => 'footer'));
     drupal_add_js('jQuery(document).ready(function () { if(jQuery(document).width() < 400) { jQuery("a.add-it").addClass("ctools-modal-mermix-modal-res");}else{jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");}});', array('type' => 'inline', 'scope' => 'footer'));
     //drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js');
