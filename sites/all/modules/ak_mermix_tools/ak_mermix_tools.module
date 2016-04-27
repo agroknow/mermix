@@ -13,15 +13,22 @@ function ak_mermix_tools_init(){
     
     $custom_settings = array('popup_phone_url' => $base_url . '/ak_mermix_tools/nojs/addphone');
     drupal_add_js(array(
-    'mermix-modal' => array(
+    'mermix-modal-fix' => array(
       'modalSize' => array(
         'type' => 'fixed',
-        'width' => 850,
-        'height' => 550,
+        'width' => 500,
+        'height' => 400,
       ),
      //Animation mode
      'animation' => 'fadeIn',
     ),
+    'mermix-modal-res' => array(
+      'modalSize' => array(
+        'type' => 'scale',
+      ),
+     //Animation mode
+     'animation' => 'fadeIn',
+    )
   ), 'setting');
     drupal_add_js(array('ak_mermix_tools' => $custom_settings), 'setting');
     drupal_add_library('system', 'jquery.cookie');
@@ -590,9 +597,10 @@ function ak_mermix_tools_block_content_banner() {
  */
 
 function user_phone_form($form, &$form_state) {
+    $form['#prefix'] = '<div class="phone-form-desc"><p>' . t('Θες να μάθεις περισσότερα για το πως θα βγάλεις <span class="price">@price ευρώ</span> από το συγκεκριμένο μηχάνημα; Συμπλήρωσε το τηλέφωνο σου και θα επικοινωνήσουμε μαζί σου!', array('@price' => arg(3))) . '</p></div>';
     $form['phonenum'] = array(
 	'#type' => 'textfield',
-	'#title' => t('Phone number'),
+	//'#title' => t('Phone number'),
 	'#required' => TRUE,
 	'#default_value' => '',
 	'#attributes' => array('placeholder' => t('Enter your phone number')),
@@ -604,15 +612,49 @@ function user_phone_form($form, &$form_state) {
     return $form;
     
 }
+function user_phone_form_validate($form, &$form_state) {
+    $phone = $form_state['values']['phonenum'];
+    if(!preg_match("/^[[:digit:]]{10,12}$/",$phone)) {
+	form_set_error('phonenum', t('Please enter a valid phone number'));
+    }
+}
 
 function user_phone_form_submit($form, &$form_state) {
-    global $user;
-    $userwrapper = entity_metadata_wrapper('user', user_load($user->uid));
-    $userwrapper->field_phone_number->set($form_state['values']['phonenum']);
-    $userwrapper->save();
-     // Tell the browser to close the modal.
+    //global $user;
+    
+    $query_params = drupal_get_query_parameters();
+    $data = array('phone' => $form_state['values']['phonenum'], 'related_sid' =>  $query_params['sid']);
+    _ak_mermix_tools_create_webform_submission (variable_get('meet_demand_webform_id', '363'), $data);
+    // $userwrapper = entity_metadata_wrapper('user', user_load($user->uid));
+    // $userwrapper->field_phone_number->set($form_state['values']['phonenum']);
+    // $userwrapper->save();
+    // Tell the browser to close the modal.
     $form_state['ajax_commands'][] = ctools_modal_command_dismiss();
 }
+
+function _ak_mermix_tools_create_webform_submission ($nid, $data) {
+    
+    global $user;
+    $node = node_load($nid);
+    
+    module_load_include('inc', 'webform', 'webform.module');
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $data = _webform_client_form_submit_flatten($node, $data);
+    $data = webform_submission_data($node, $data);
+    
+    $submission = (object) array(
+    'nid' => $webform_nid,
+    'uid' => $user->uid,
+    'sid' => NULL,
+    'submitted' => REQUEST_TIME,
+    'completed' => REQUEST_TIME,
+    'remote_addr' => ip_address(),
+    'is_draft' => FALSE,
+    'data' => $data,
+  );
+
+  $sid = webform_submission_insert($node, $submission);
+} 
 
 /*
  * Create the custom form
@@ -842,9 +884,9 @@ function ak_mermix_tools_menu() {
 	'access callback' => TRUE,
 	'type' => MENU_CALLBACK,
     );
-    $items['ak_mermix_tools/%ctools_js/addphone'] = array(
+    $items['ak_mermix_tools/%ctools_js/addphone/%'] = array(
     'page callback' => 'ak_mermix_tools_add_phone_callback',
-    'page arguments' => array(1),
+    'page arguments' => array(1,3),
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
@@ -870,14 +912,14 @@ function ak_mermix_tools_menu() {
 /**
  * Ajax menu callback.
  */
-function ak_mermix_tools_add_phone_callback($ajax) {
+function ak_mermix_tools_add_phone_callback($ajax,$price) {
   if ($ajax) {
     ctools_include('ajax');
     ctools_include('modal');
 
     $form_state = array(
       'ajax' => TRUE,
-      'title' => t('MyModule Modal Form'),
+      //'title' => $price,
     );
 
     // Use ctools to generate ajax instructions for the browser to create
@@ -900,6 +942,10 @@ function ak_mermix_tools_add_phone_callback($ajax) {
 }   
 
 function empty_page() {
+    ctools_include('modal');
+    ctools_modal_add_js();
+    //drupal_add_js('jQuery(document).ready(function () {jQuery(document).unbind("keydown", modalEventEscapeCloseHandler);jQuery(".modal-header .close").unbind("click");});', array('type' => 'inline', 'scope' => 'footer'));
+    drupal_add_js('jQuery(document).ready(function () { if(jQuery(document).width() < 400) { jQuery("a.add-it").addClass("ctools-modal-mermix-modal-res");}else{jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");}});', array('type' => 'inline', 'scope' => 'footer'));
     //drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js');
     return '';
 }

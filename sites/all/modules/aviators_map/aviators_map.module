@@ -93,9 +93,9 @@ function template_preprocess_aviators_map_view(&$variables) {
     $attributes['icon'] = $base_url . '/' . drupal_get_path('module', 'aviators_map') . '/marker-transparent.png';
     //$attributes['class'] = implode(' ', array_merge(array('term-' . strip_tags($field_render[$options['class_field']])), array($options['class'])));
     $total[$field_render['value_4']] = isset($total[$field_render['value_4']]) ? $total[$field_render['value_4']] + $field_render['value_2'] : 0 + $field_render['value_2'];
-    if($total[$field_render['value_4']] < 50) {
+    if($total[$field_render['value_4']] < 1000) {
 	$class = 'small';
-    } elseif ($total[$field_render['value_4']] < 100) {
+    } elseif ($total[$field_render['value_4']] < 2000) {
 	$class = 'medium';
     } else {
 	$class = 'large';

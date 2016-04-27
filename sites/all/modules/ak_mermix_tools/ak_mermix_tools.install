@@ -1035,7 +1035,38 @@ function ak_mermix_tools_update_7012(&$sandbox) {
  * Populate looking for submissions coord field
  */
 function ak_mermix_tools_update_7013(&$sandbox) {
-    
+    $pricesall = array(
+'100' => '180-330',
+'160' => '85-125',
+'229' => '200-300',
+'73' => '180-280',
+'4' => '150-280',
+'77' => '180-280',
+'71' => '220-330',
+'67' => '180-280',
+'88' => '250-330',
+'103' => '220-270',
+'99' => '180-220',
+'93' => '180-220',
+'90' => '180-220',
+'143' => '210-290',
+'97' => '150-200',
+'149' => '200-400',
+'98' => '150-270',
+'91' => '110-180',
+'102' => '130-190',
+'96' => '150-230',
+'95' => '150-230',
+'144' => '280-450',
+'94' => '220-280',
+'92' => '180-250',
+'3' => '120-190',
+'101' => '300-480',
+'153' => '85-170',
+'148' => '180-220',
+'89' => '220-350',
+'7' => '150-350'
+    );
     $node = node_load(298);
     $components = $node->webform['components'];
     $components_map_array = array();
@@ -1057,9 +1088,13 @@ function ak_mermix_tools_update_7013(&$sandbox) {
 	$url .= isset($sub->data[$location][0]) ? urlencode($sub->data[$location][0]) : urlencode($sub->data[$location_en][0]) ;
 	$geocode_result = file_get_contents($url);
 	$results = json_decode($geocode_result, TRUE);
+	$prices = $pricesall[$sub->data[$type][0]];
+	$prices = explode('-', $prices);
+	$min = $prices[0];
+	$max = $prices[1];
 	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
 	    $sub->data[$coords][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
-	    $sub->data[$price][0] = rand (6*10, 20*10) / 10;
+	    $sub->data[$price][0] = rand ($min, $max);
 	}
 	if(isset($results['results'][0]['address_components'])) {
 	    $address_components = $results['results'][0]['address_components'];

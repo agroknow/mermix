@@ -23,6 +23,13 @@ function mermixtools_admin_settings() {
 	'#default_value' => variable_get('check_availability_webform_id', '299'),
 	
     );
+    $form['mermix_tools_settings']['meet_demand_webform_id'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Meet demand webform id'),
+	'#required' => true,
+	'#default_value' => variable_get('meet_demand_webform_id', '363'),
+	
+    );
     $form['mermix_tools_settings']['looking_for_webform_key'] = array(
 	'#type' => 'textfield',
 	'#title' => t('Looking for webform key of machine type'),

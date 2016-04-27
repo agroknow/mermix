@@ -57,19 +57,19 @@ Opentip.styles.info = {
   // Make it look like the alert style. If you omit this, it will default to "standard"
   extends: "standard",
   className: 'info',
-  stem:false,
-//  stemLength:100,
-//  stemBase:40
+  stem:"bottom right",
+  stemLength:50,
+  stemBase:20,
 // Tells the tooltip to be fixed and be attached to the trigger, which is the default target
-   background: "rgba(255, 255, 255, 0.94)",
+   background: "#df5946",
 //  borderRadius:,
 //  borderWidth:,
-  borderColor:"#fff"
+  borderColor:"#df5946"
 //  shadowBlur:,
 //  shadow:
 
 };
-var title = {'el':'Χάρτης ζήτησης' , 'en':'Requests map'};
+var title = {'el':'Δες στο χάρτη πόσα ευρώ σε περιμένουν' , 'en':'Requests map'};
 var content = {'el':'<img class="small" src="/sites/default/themes/realia/img/money.png" /><p> Συνολική ζήτηση < 50€ </p><br /> \
 <img class="medium" src="/sites/default/themes/realia/img/money_m1.png" /><p> Συνολική ζήτηση > 50€ </p><br /> \
 <img class="large" src="/sites/default/themes/realia/img/money_l1.png" /><p> Συνολική ζήτηση > 100€ </p>' ,
@@ -88,17 +88,18 @@ jQuery(document).ready(function(){
    { showOn: 'click',
      target: infotoggle,
      targetJoint:'top right',
-     //offset:[50,100], 
+     offset:[60,60], 
      style: 'info',
      //hideTrigger: 'closeButton',
      hideOn:'click',
      containInViewport: false,
     }); 
-    var tipcontent = jQuery(content[current_lang]);
-    tipcontent.load(function(){
-	tip.setContent(content[current_lang]);
-	tip.show();
-    });
+    tip.show();
+//    var tipcontent = jQuery(content[current_lang]);
+//    tipcontent.load(function(){
+//	tip.setContent(content[current_lang]);
+//	tip.show();
+//    });
 });
 
 jQuery(window).load(function(){
