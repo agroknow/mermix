@@ -7659,3 +7659,74 @@ div.ctools-modal-content.mermix_modal .close{
 div.ctools-modal-content{
     border : none;
 }
+/* Responsive video */
+.video-wrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.video-wrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+/* How it works */
+.how-it-works-block-home{
+    margin-top: 20px;
+    padding: 10px;
+}
+.how-it-works-block-home h2,.how-it-works-block-home h4{
+    text-align: center;
+}
+.iconbg {
+    text-align: center;
+/*    height: 345px;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;*/
+}
+.iconbg h3{
+    border-bottom: 2px dashed #e63434;
+    font-weight: lighter;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.tractor {
+/*    background-image: url('../img/tractor_hiw.png');
+    background-position: left;*/
+}
+.farmer {
+/*    background-image: url('../img/farmer_hiw.png');
+    background-position: right;*/
+}
+ul.benefits{
+    list-style-type: none;
+    text-align: left;
+    display: inline-block;
+    margin: 30px 0 0 0;
+}
+ul.benefits li{
+    position: relative;
+    font-size: 16px;
+    margin-bottom: 18px;
+    
+}
+ul.benefits li:before{
+    content: "\f00c";
+    font-family: FontAwesome;
+    position: absolute;
+    left: -40px;
+    font-size: 30px;
+    color: #e63434;
+}
+.how-it-works-block-home .img-wrapper{
+    text-align: center;
+}
+.how-it-works-block-home .img-wrapper img{
+    border: 2px solid #e63434;
+    border-radius: 100%;
+    padding: 8px;
+}
