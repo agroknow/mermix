@@ -7641,6 +7641,31 @@ span.or-separator{
     color: #df5946;
     display: inline-block
 }
+@media (max-width: 1024px) {
+   .tip-toggle{
+    left: 10px;
+    top: 10px;
+    } 
+}
+.scroll-down-map span{
+    display: block;
+}
+.scroll-down-map {
+    cursor: pointer;
+    position: fixed;
+    z-index: 1;
+    color: #df5946;
+    display: inline-block;
+    text-align: center;
+    bottom: 0;
+    left: 50%;
+    margin-left: -50px;
+    padding: 6px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.51);
+    height: 55px;
+    font-weight: bold;
+}
 /* Modal styles */
 #modalContent .modal-header{
     /*display: none;*/
@@ -7712,13 +7737,14 @@ ul.benefits li{
     position: relative;
     font-size: 16px;
     margin-bottom: 18px;
+    padding-left: 40px;
     
 }
 ul.benefits li:before{
     content: "\f00c";
     font-family: FontAwesome;
     position: absolute;
-    left: -40px;
+    left: 0px;
     font-size: 30px;
     color: #e63434;
 }
