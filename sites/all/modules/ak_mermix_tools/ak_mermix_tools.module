@@ -599,7 +599,7 @@ function ak_mermix_tools_block_content_banner() {
  */
 
 function user_phone_form($form, &$form_state) {
-    $form['#prefix'] = '<div class="phone-form-desc"><p>' . t('Θες να μάθεις περισσότερα για το πως θα βγάλεις <span class="price">@price ευρώ</span> από το συγκεκριμένο μηχάνημα; Συμπλήρωσε το τηλέφωνο σου και θα επικοινωνήσουμε μαζί σου!', array('@price' => arg(3))) . '</p></div>';
+    $form['#prefix'] = '<div class="phone-form-desc"><p>' . t('Do you own this machinery? Learn how you can earn <span class="price">@price euros!</span> Fill in your phone number and we will contact you as soon as possible!', array('@price' => arg(3))) . '</p></div>';
     $form['phonenum'] = array(
 	'#type' => 'textfield',
 	//'#title' => t('Phone number'),
@@ -948,7 +948,7 @@ function empty_page() {
     ctools_modal_add_js();
     ctools_add_js('mermix_modal', 'ak_mermix_tools');
     //drupal_add_js('jQuery(document).ready(function () {jQuery(document).unbind("keydown", modalEventEscapeCloseHandler);jQuery(".modal-header .close").unbind("click");});', array('type' => 'inline', 'scope' => 'footer'));
-    drupal_add_js('jQuery(document).ready(function () { if(jQuery(document).width() < 500) { jQuery("a.add-it").addClass("ctools-modal-mermix-modal-res");}else{jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");}});', array('type' => 'inline', 'scope' => 'footer'));
+    //drupal_add_js('jQuery(document).ready(function () { if(jQuery(document).width() < 500) { jQuery("a.add-it").addClass("ctools-modal-mermix-modal-res");}else{jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");}});', array('type' => 'inline', 'scope' => 'footer'));
     //drupal_add_js(drupal_get_path('module', 'ak_mermix_tools') . '/js/request_map_tips.js');
     return '';
 }

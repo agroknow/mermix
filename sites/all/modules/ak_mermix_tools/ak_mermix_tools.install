@@ -1094,7 +1094,7 @@ function ak_mermix_tools_update_7013(&$sandbox) {
 	$max = $prices[1];
 	if(isset($results['results'][0]['geometry']['location']['lat']) && isset($results['results'][0]['geometry']['location']['lng'])) {
 	    $sub->data[$coords][0] = $results['results'][0]['geometry']['location']['lat'] . ',' . $results['results'][0]['geometry']['location']['lng'];
-	    $sub->data[$price][0] = rand ($min, $max);
+	    $sub->data[$price][0] = ceil(rand($min, $max) / 10) * 10;
 	}
 	if(isset($results['results'][0]['address_components'])) {
 	    $address_components = $results['results'][0]['address_components'];
