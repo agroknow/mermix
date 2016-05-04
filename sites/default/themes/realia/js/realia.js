@@ -93,11 +93,6 @@ jQuery(document).ready(function(){
     if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
         jQuery("#dragger").css("top",jQuery(window).scrollTop());
         //jQuery("#dragger").animate({top: jQuery(window).scrollTop()}, 200);
-    if (jQuery(window).scrollTop() > 300) {
-	jQuery(".scroll-down-map").hide();
-    }else {
-	jQuery(".scroll-down-map").show();
-    }
     });
 jQuery('.form-item').each(function(){
 	var $description = jQuery(this).find('div.description');
@@ -113,15 +108,17 @@ jQuery('.form-item').each(function(){
 	}else{
 	    jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");
 	}
-	if(jQuery(document).width() <= 768) {
-	    var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
-	    jQuery("body").append(scrolldown);
-	}
-	jQuery(".scroll-down-map").click(function(){
+	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
+	//if(jQuery(window).height() <= 700) {
+	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
+	//}
+	jQuery("body").on('click', '.scroll-down-map',function(){
 	    jQuery('html, body').animate({
-		scrollTop: 750
+		scrollTop: jQuery(this).offset().top + 15
 	    }, 800);
 	});
+	var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
+	jQuery("#gmap-looking-for-map").append(scrolldown);
 });
 
 jQuery( window ).resize(function() {
@@ -144,9 +141,9 @@ jQuery( window ).resize(function() {
 	}else{
 	    jQuery("a.add-it").removeClass("ctools-modal-mermix-modal-res").addClass("ctools-modal-mermix-modal-fix");
 	}
-	if(jQuery(document).width() <= 768) {
-	    var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
-	    jQuery("body").append(scrolldown);
-	}
+	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
+	//if(jQuery(window).height() <= 700) {
+	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
+	//}
 	
     });

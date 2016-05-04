@@ -7652,18 +7652,19 @@ span.or-separator{
 }
 .scroll-down-map {
     cursor: pointer;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     color: #df5946;
-    display: inline-block;
+/*    display: inline-block;*/
     text-align: center;
-    bottom: 0;
+    bottom: 10px;
     left: 50%;
-    margin-left: -50px;
+    margin-left: -60px;
     padding: 6px;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.51);
+    background: rgba(255,255,255,0.85);
     height: 55px;
+    width: 120px;
     font-weight: bold;
 }
 /* Modal styles */
