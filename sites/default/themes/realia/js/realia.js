@@ -93,7 +93,12 @@ jQuery(document).ready(function(){
     if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
         jQuery("#dragger").css("top",jQuery(window).scrollTop());
         //jQuery("#dragger").animate({top: jQuery(window).scrollTop()}, 200);
-});
+    if (jQuery(window).scrollTop() > 300) {
+	jQuery(".scroll-down-map").hide();
+    }else {
+	jQuery(".scroll-down-map").show();
+    }
+    });
 jQuery('.form-item').each(function(){
 	var $description = jQuery(this).find('div.description');
 	
@@ -101,6 +106,21 @@ jQuery('.form-item').each(function(){
 	$description.hide();
 	new Opentip(jQuery(this), $description.text(),'',{target:true,tipJoint:'right'});
 	}
+	});
+	
+	if(jQuery(document).width() < 500) {
+	    jQuery("a.add-it").addClass("ctools-modal-mermix-modal-res");
+	}else{
+	    jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");
+	}
+	if(jQuery(document).width() <= 768) {
+	    var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
+	    jQuery("body").append(scrolldown);
+	}
+	jQuery(".scroll-down-map").click(function(){
+	    jQuery('html, body').animate({
+		scrollTop: 750
+	    }, 800);
 	});
 });
 
@@ -119,4 +139,14 @@ jQuery( window ).resize(function() {
 	} else {
 	logocontainer.find('a.highlighted').remove();   
 	}
+    if(jQuery(document).width() < 500) {
+	    jQuery("a.add-it").removeClass("ctools-modal-mermix-modal-fix").addClass("ctools-modal-mermix-modal-res");
+	}else{
+	    jQuery("a.add-it").removeClass("ctools-modal-mermix-modal-res").addClass("ctools-modal-mermix-modal-fix");
+	}
+	if(jQuery(document).width() <= 768) {
+	    var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
+	    jQuery("body").append(scrolldown);
+	}
+	
     });

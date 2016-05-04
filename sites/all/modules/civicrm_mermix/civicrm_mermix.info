@@ -1,0 +1,4 @@
+name = Mermix civicrm
+description = Mermix civicrm contact - drupal users synchronization
+core = 7.x
+package = Agro Know
