@@ -73,7 +73,7 @@ jQuery(document).ready(function(){
 	var promobtn = jQuery('.navigation-wrapper').find('a.highlighted').clone();
 	jQuery('div.logo').parent().append( promobtn );
     }
-    
+    jQuery('#header-wrapper').addClass('white');
     var scrollHeight = 50;
     var scrollHeight2 = 50;
     if(jQuery('#map .banner').length == 1) {
@@ -85,11 +85,11 @@ jQuery(document).ready(function(){
 	} else {
 	    jQuery('#header-wrapper').removeClass('fixed');
 	}
-	if (jQuery(window).scrollTop() > scrollHeight2) {
-	    jQuery('#header-wrapper').addClass('white');
-	} else {
-	    jQuery('#header-wrapper').removeClass('white');
-	}
+//	if (jQuery(window).scrollTop() > scrollHeight2) {
+//	    jQuery('#header-wrapper').addClass('white');
+//	} else {
+//	    jQuery('#header-wrapper').removeClass('white');
+//	}
     if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
         jQuery("#dragger").css("top",jQuery(window).scrollTop());
         //jQuery("#dragger").animate({top: jQuery(window).scrollTop()}, 200);
