@@ -108,10 +108,12 @@ jQuery('.form-item').each(function(){
 	}else{
 	    jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");
 	}
+	if(jQuery('#gmap-looking-for-map').length) {
 	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
 	//if(jQuery(window).height() <= 700) {
 	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
 	//}
+	}
 	jQuery("body").on('click', '.scroll-down-map',function(){
 	    jQuery('html, body').animate({
 		scrollTop: jQuery(this).offset().top + 15
@@ -141,9 +143,10 @@ jQuery( window ).resize(function() {
 	}else{
 	    jQuery("a.add-it").removeClass("ctools-modal-mermix-modal-res").addClass("ctools-modal-mermix-modal-fix");
 	}
+	if(jQuery('#gmap-looking-for-map').length) {
 	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
 	//if(jQuery(window).height() <= 700) {
 	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
 	//}
-	
+	}
     });
