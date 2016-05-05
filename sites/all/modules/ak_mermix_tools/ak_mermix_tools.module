@@ -645,7 +645,7 @@ function _ak_mermix_tools_create_webform_submission ($nid, $data) {
     $data = webform_submission_data($node, $data);
     
     $submission = (object) array(
-    'nid' => $webform_nid,
+    'nid' => $nid,
     'uid' => $user->uid,
     'sid' => NULL,
     'submitted' => REQUEST_TIME,
@@ -656,6 +656,10 @@ function _ak_mermix_tools_create_webform_submission ($nid, $data) {
   );
 
   $sid = webform_submission_insert($node, $submission);
+  if($sid) {
+      //send the configured emails
+      webform_submission_send_mail($node, $submission);
+  }
 } 
 
 /*
