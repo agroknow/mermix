@@ -7615,7 +7615,9 @@ span.or-separator{
 }
 .opentip-container.style-info .opentip .ot-header h1{
     font-size: 20px;
-    text-align: center
+    text-align: center;
+    line-height: 28px;
+    text-shadow: none;
 }
 .opentip-container.style-info .opentip .ot-content{
     font-size: 15px;
@@ -7634,8 +7636,8 @@ span.or-separator{
 }
 .tip-toggle{
     cursor: pointer;
-    position: relative;
-    left: 20px;
+    position: absolute;
+    right: 20px;
     top: 80px;
     z-index: 1;
     color: #df5946;
@@ -7643,7 +7645,7 @@ span.or-separator{
 }
 @media (max-width: 1024px) {
    .tip-toggle{
-    left: 10px;
+    right: 10px;
     top: 10px;
     } 
 }
@@ -7666,6 +7668,17 @@ span.or-separator{
     height: 55px;
     width: 120px;
     font-weight: bold;
+    border-radius: 5px;
+    transition: all ease-in .2s;
+}
+.scroll-down-map .fa{
+    transition: all linear .3s;
+}
+.scroll-down-map:hover {
+    background: #fff
+}
+.scroll-down-map:hover .fa {
+    margin-top: -5px;
 }
 /* Modal styles */
 #modalContent .modal-header{
