@@ -6760,6 +6760,11 @@ form.webform-client-form .container-inline-date{
 width: 90%;
 max-width: 980px;
 }
+.region-map .banner-block{
+    display: block;
+    margin: auto;
+    max-width: 80%;
+}
 .block-holder{
     display: block;
     position: absolute;
@@ -6784,11 +6789,17 @@ max-width: 980px;
     letter-spacing: normal;
     font-weight: bold;
 }
+.region-map .subtext{
+    color: #444;
+}
 span.or-separator{
     font-size: 45px;
     text-transform: lowercase;
     color: #fff;
     font-weight: bold;
+}
+.region-map span.or-separator{
+    color: #444;
 }
 .btntext .btn{
     font-weight: bold;
@@ -7044,6 +7055,14 @@ body.front .block-views,body.front .view-id-equipment{
     .banner-block {
     display: inline-block;
     max-width: 750px;
+    }
+    .region-map .banner-block{
+	max-width: 60%;
+    }
+    .region-map .btns-2 .btntext{
+	display: block;
+	margin-bottom: 20px;
+	text-align: center;
     }
     .btntext .large-btn{
     min-width: 225px;
