@@ -6850,7 +6850,7 @@ span.or-separator{
     display: none !important;
 }
 /* Front page titles */
-body.front #map h2.block-title,body.front #content h2.block-title, body.front h1.page-header {
+body.front #map h2.block-title,body.front #content h2.block-title, body.front h1.page-header,#block-views-looking-for-type-block-1 .block-title {
     font-size: 30px;
     font-weight: 700;
     text-transform: uppercase;
@@ -6858,7 +6858,10 @@ body.front #map h2.block-title,body.front #content h2.block-title, body.front h1
     color: #444;
     padding-top: 20px;
 }
-body.front #map h2.block-title:after,body.front #content h2.block-title:after, body.front h1.page-header:after{
+body.front #map h2.block-title:after,
+body.front #content h2.block-title:after,
+body.front h1.page-header:after,
+#block-views-looking-for-type-block-1 .block-title:after{
     content: " ";
     width: 150px;
     display: block;
