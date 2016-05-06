@@ -7567,8 +7567,10 @@ body.front .block-views,body.front .view-id-equipment{
         transform: rotate(-90deg);
         position: absolute;
         top: 65px;
-        left: -47px;
+        left: -53px;
         color: #fff;
+	display: block;
+	font-weight: bold;
     }
     .chzn-container-single,.chzn-container-single .chzn-drop{
 	width: 100% !important;
