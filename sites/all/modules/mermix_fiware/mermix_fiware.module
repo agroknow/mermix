@@ -293,9 +293,11 @@ function mermix_fiware_node_view($node, $view_mode, $langcode) {
 	unset($attrs['searches']);
 
 	$cultivations = field_get_items('node', $node, 'field_cultivation');
-	foreach ($cultivations as $key => $cultivation) {
-	    $index = $cultivation['tid'];
-	    $attrs['cultivations'][$index] = isset($attrs['cultivations'][$index]) ? (int) $attrs['cultivations'][$index] + 1 : 1;
+	if(is_array($cultivations)) {
+	    foreach ($cultivations as $key => $cultivation) {
+		$index = $cultivation['tid'];
+		$attrs['cultivations'][$index] = isset($attrs['cultivations'][$index]) ? (int) $attrs['cultivations'][$index] + 1 : 1;
+	    }
 	}
 	$categories = field_get_items('node', $node, 'field_type');
 	foreach ($categories as $key => $category) {
