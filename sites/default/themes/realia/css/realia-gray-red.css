@@ -40,7 +40,7 @@ textarea,input[type=text],input[type=password],input[type=email] {
     box-sizing: border-box;
     width: 100%;
     font-size: 16px;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Open Sans', 'Arial', sans-serif;
     font-weight: lighter;
 }
 
@@ -181,7 +181,7 @@ button.form-submit{
     padding-top: 15px;
     margin-top: 20px;
     padding-bottom: 15px;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Open Sans', 'Arial', sans-serif;
     font-size: 16px;
 }
 button.form-submit.btn-primary{
@@ -461,7 +461,7 @@ body.front #header,body.front .navigation-wrapper .navigation .block-superfish .
     background: rgba(0, 0, 0, 0.48);
 }
 
-body.front #header-wrapper.fixed.white #header,body.front #header-wrapper.fixed.white .navigation-wrapper .navigation .block-superfish .content ul li ul {
+body.front #header-wrapper.white #header,body.front #header-wrapper.white .navigation-wrapper .navigation .block-superfish .content ul li ul {
     background: #fff;
 }
 body #header{
@@ -699,7 +699,7 @@ body #header{
 body.front #header-wrapper{
     position: absolute;
     width: 100%;
-    z-index: 10;
+    z-index: 101;
 }
 body.front #header-wrapper{
     background: none;
@@ -3347,7 +3347,7 @@ body.node-type-apartment section .block-views {
     }
 }
 
-#header-wrapper,body.front #header-wrapper.fixed.white {
+#header-wrapper,body.front #header-wrapper.white {
     background-color: #fff
 }
 
@@ -3778,7 +3778,8 @@ body.node-type-apartment section .block-views {
 
 .triptych-wrapper {
     background-color: #ffffff;
-    padding: 50px 0px
+    padding: 50px 0px;
+    margin-top: 30px;
 }
 .region-triptych-bottom{
     padding-left: 30px;
@@ -4121,7 +4122,7 @@ body {
     -webkit-font-smoothing: antialiased;
     background-color: #f0f0f0;
     color: #707070;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Open Sans', 'Arial', sans-serif;
     font-size: 14px;
     height: 100%;
     margin: 0px;
@@ -5248,15 +5249,15 @@ body.header-light .breadcrumb-wrapper span {
 body.header-light #navigation {
     background-color: #313131
 }
-body.header-light #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light #header-wrapper.fixed #navigation .block-superfish a,
-body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish a,
-body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
-    color: #333 !important
-}
 body.header-light.front #navigation .block-superfish .nolink,body.header-light.front #navigation .block-superfish a,
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed #navigation .block-superfish a,
 body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish a{
     color: #fff !important
+}
+body.header-light #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light #header-wrapper.fixed #navigation .block-superfish a,
+body.header-light.front #header-wrapper.white #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.white #navigation .block-superfish a,
+body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
+    color: #333 !important
 }
 body.header-light.front #header-wrapper #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper #navigation .block-superfish a.highlighted{
     padding: 10px;
@@ -5277,7 +5278,7 @@ body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.hig
     transition: background 0.2s ease-in;
 /*    background: #e63434;*/
 }
-body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.fixed.white #navigation .block-superfish a.highlighted{
+body.header-light.front #header-wrapper.white #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.white #navigation .block-superfish a.highlighted{
     color: #333 !important;
 }
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted:hover,body.header-light.not-front #header-wrapper #navigation .block-superfish a.highlighted:hover{
@@ -5299,7 +5300,7 @@ body.header-light.front #navigation .block-superfish .menuparent .menuparent>.no
         background-image: url("../img/arrow-right-white@2x.png") !important
     }
 }
-body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .menuparent>.nolink,body.header-light.front #header-wrapper.fixed.white #navigation .block-superfish .menuparent>a,
+body.header-light.front #header-wrapper.white #navigation .block-superfish .menuparent>.nolink,body.header-light.front #header-wrapper.white #navigation .block-superfish .menuparent>a,
 body.header-light.not-front #navigation .block-superfish .menuparent>.nolink,body.header-light.not-front #navigation .block-superfish .menuparent>a {
     background-image: url("../img/arrow-bottom-black.png") !important
 }
@@ -5967,7 +5968,7 @@ body.front #block-realia-blocks-realia-language .content ul li a{
 body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a,body.not-front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
     padding: 15px 8px;
 }
-body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a{
+body.front #header-wrapper.white #block-realia-blocks-realia-language .content ul li a{
     color: #333;
 }
 body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a{ color: #ddd; }
@@ -5996,9 +5997,9 @@ body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a,bo
     color: #fff;
 }
 body.not-front #block-realia-blocks-realia-language .content ul li a:hover,
-body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a:hover,
+body.front #header-wrapper.white #block-realia-blocks-realia-language .content ul li a:hover,
 body.not-front #block-realia-blocks-realia-language .content ul li.active a,#block-realia-blocks-realia-language .content ul li a:hover,
-body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li.active a,body.front #header-wrapper.fixed.white #block-realia-blocks-realia-language .content ul li a:hover{
+body.front #header-wrapper.white #block-realia-blocks-realia-language .content ul li.active a,body.front #header-wrapper.white #block-realia-blocks-realia-language .content ul li a:hover{
     color: #000;
     font-weight: normal;
 }
@@ -6714,7 +6715,7 @@ form.webform-client-form .container-inline-date{
     padding: 20px;
     display: block;
     font-size: 20px;
-    font-family: 'Roboto', 'Arial', sans-serif;
+    font-family: 'Open Sans', 'Arial', sans-serif;
     font-weight: lighter;
 }
 .btntext .large-btn{
@@ -6848,6 +6849,29 @@ span.or-separator{
 .element-invisible,button.element-invisible,.element-invisible.btn {
     display: none !important;
 }
+/* Front page titles */
+body.front #map h2.block-title,body.front #content h2.block-title, body.front h1.page-header,#block-views-looking-for-type-block-1 .block-title {
+    font-size: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    color: #444;
+    padding-top: 20px;
+}
+body.front #map h2.block-title:after,
+body.front #content h2.block-title:after,
+body.front h1.page-header:after,
+#block-views-looking-for-type-block-1 .block-title:after{
+    content: " ";
+    width: 150px;
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    border-bottom: 3px solid #e63434;
+}
+body.front .block-views,body.front .view-id-equipment{
+    margin: 30px 0;
+}
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{
@@ -6883,7 +6907,7 @@ span.or-separator{
     body.front #header{
         background: none;
     }
-    body.front #header-wrapper,body.nav-open #header-wrapper.fixed.white{
+    body.front #header-wrapper,body.nav-open #header-wrapper.white{
     position: static;
     background: #fff;
     }
@@ -7615,7 +7639,9 @@ span.or-separator{
 }
 .opentip-container.style-info .opentip .ot-header h1{
     font-size: 20px;
-    text-align: center
+    text-align: center;
+    line-height: 28px;
+    text-shadow: none;
 }
 .opentip-container.style-info .opentip .ot-content{
     font-size: 15px;
@@ -7634,8 +7660,8 @@ span.or-separator{
 }
 .tip-toggle{
     cursor: pointer;
-    position: relative;
-    left: 20px;
+    position: absolute;
+    right: 20px;
     top: 80px;
     z-index: 1;
     color: #df5946;
@@ -7643,7 +7669,7 @@ span.or-separator{
 }
 @media (max-width: 1024px) {
    .tip-toggle{
-    left: 10px;
+    right: 10px;
     top: 10px;
     } 
 }
@@ -7666,6 +7692,17 @@ span.or-separator{
     height: 55px;
     width: 120px;
     font-weight: bold;
+    border-radius: 5px;
+    transition: all ease-in .2s;
+}
+.scroll-down-map .fa{
+    transition: all linear .3s;
+}
+.scroll-down-map:hover {
+    background: #fff
+}
+.scroll-down-map:hover .fa {
+    margin-top: -5px;
 }
 /* Modal styles */
 #modalContent .modal-header{
@@ -7716,9 +7753,10 @@ div.ctools-modal-content{
 }
 .iconbg h3{
     border-bottom: 2px dashed #e63434;
-    font-weight: lighter;
+    font-weight: 700;
     padding-bottom: 10px;
     margin-bottom: 20px;
+    text-transform: uppercase;
 }
 .tractor {
 /*    background-image: url('../img/tractor_hiw.png');
