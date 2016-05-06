@@ -38,6 +38,15 @@ Drupal.behaviors.languageSwitch = {
 
         jQuery('#btn-nav', context).click(function (e) {
             jQuery('body').toggleClass('nav-open');
+	    if(jQuery('#header-wrapper').hasClass('white'))
+		jQuery('#header-wrapper').removeClass('white');
+	    if(jQuery('#header-wrapper').hasClass('fixed'))
+		jQuery('#header-wrapper').removeClass('fixed');
+	    for(var i = 0; i < Opentip.tips.length; i ++) { 
+		if(Opentip.tips[i].options.style == 'info') {
+		    Opentip.tips[i].hide();
+		} 
+	    }
             e.preventDefault();
         });
 
@@ -81,7 +90,10 @@ jQuery(document).ready(function(){
     }
     jQuery(window).bind('scroll', function () {
 	if (jQuery(window).scrollTop() > scrollHeight) {
-	    jQuery('#header-wrapper').addClass('fixed');
+	    if(!jQuery('body').hasClass('nav-open'))
+	    {
+		jQuery('#header-wrapper').addClass('fixed');
+	    }
 	} else {
 	    jQuery('#header-wrapper').removeClass('fixed');
 	}
