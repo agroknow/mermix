@@ -1084,6 +1084,24 @@ function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
 	} 
 	$args = array(implode(',', $ids));
     }
+    if ($view->name == 'book_requests' && $display_id == 'block') {
+	module_load_include('inc', 'webform', 'includes/webform.submissions');
+	
+	$webformId = (int)variable_get('check_availability_webform_id', '299');
+	$webformCompId = 1;
+	
+	if ( arg(0) == 'user' && is_numeric(arg(1)) ) {
+	  $uid = arg(1);
+	
+	    $submissions = webform_get_submissions(array('nid'=> $webformId, 'uid' => $uid));
+	    $ids = array();
+	    foreach ( $submissions as $submission){
+		$ids[] = $submission->data[$webformCompId][0];
+	    }
+	    $ids = array_unique($ids);
+	    $args = array(implode(',', $ids));
+	}
+    }
     
 }
 
