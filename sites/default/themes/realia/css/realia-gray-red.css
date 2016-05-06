@@ -7758,6 +7758,15 @@ div.ctools-modal-content{
 	height: 100%;
 }
 /* How it works */
+.how-it-works-block-home .cta{
+    margin: 5px 35px;
+}
+.how-it-works-block-home .cta .btn.large-btn{
+    font-weight: bold;
+}
+.how-it-works-block-home .cta .subtext{
+    font-size: 14px;
+}
 .how-it-works-block-home{
     margin-top: 20px;
     padding: 10px;
