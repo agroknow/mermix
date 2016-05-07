@@ -153,7 +153,7 @@
                     <?php if ($action_links): ?>
                     <ul class="action-links"><?php print render($action_links); ?></ul>
                     <?php endif; ?>
-		    <?php if($columns != 1 && arg(2) != 'edit') { ?>
+		    <?php if($columns != 1 && arg(2) != 'edit' && user_is_anonymous()) { ?>
                     <div class="row facebookbtn-page">
 		    <div class="span5 right-separator">
                     <?php print render($page['content']); ?>

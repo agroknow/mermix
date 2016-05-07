@@ -362,10 +362,10 @@ function ak_mermix_tools_user_profile_validate($form, &$form_state) {
 }
 
 function ak_mermix_tools_webform_submission_presave($node, &$submission) {
-    if($node->nid == variable_get('check_availability_webform_id', '299') || ($islooking = $node->nid == variable_get('looking_for_webform_id', '298') ) ) {    
+    if($node->nid == variable_get('check_availability_webform_id', '299') || ( $node->nid == variable_get('looking_for_webform_id', '298') ) ) {    
 	if(!user_is_logged_in()) {
 	    $_SESSION['webform_submission_sub'] = $submission;
-	    if($islooking) {
+	    if($node->nid == variable_get('looking_for_webform_id', '298')) {
 		$data_key = variable_get('looking_for_webform_key', 1);	    
 		$destination = array('destination' => 'machine-results/all/' . $submission->data[$data_key][0]);
 	    } else {
@@ -1083,6 +1083,42 @@ function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
 	    }
 	} 
 	$args = array(implode(',', $ids));
+    }
+    if ($view->name == 'book_requests' && $display_id == 'block') {
+	module_load_include('inc', 'webform', 'includes/webform.submissions');
+	
+	$webformId = (int)variable_get('check_availability_webform_id', '299');
+	$webformCompId = 1;
+	
+	if ( arg(0) == 'user' && is_numeric(arg(1)) ) {
+	  $uid = arg(1);
+	
+	    $submissions = webform_get_submissions(array('nid'=> $webformId, 'uid' => $uid));
+	    $ids = array();
+	    foreach ( $submissions as $submission){
+		$ids[] = $submission->data[$webformCompId][0];
+	    }
+	    $ids = array_unique($ids);
+	    $args = array(implode(',', $ids));
+	}
+    }
+    if ($view->name == 'looking_for_slider' && ($display_id == 'block_5' || $display_id == 'block_6')) {
+	module_load_include('inc', 'webform', 'includes/webform.submissions');
+	
+	$webformId = (int)variable_get('meet_demand_webform_id', '363');
+	$webformCompId = 2;
+	
+	if ( arg(0) == 'user' && is_numeric(arg(1)) ) {
+	  $uid = arg(1);
+	
+	    $submissions = webform_get_submissions(array('nid'=> $webformId, 'uid' => $uid));
+	    $ids = array();
+	    foreach ( $submissions as $submission){
+		$ids[] = $submission->data[$webformCompId][0];
+	    }
+	    $ids = array_unique($ids);
+	    $args = array(implode(',', $ids));
+	}
     }
     
 }

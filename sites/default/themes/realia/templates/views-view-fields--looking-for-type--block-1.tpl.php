@@ -25,13 +25,24 @@
  */
 ?>
 <?php
+$link = FALSE;
+$anchor = strip_tags($fields['view_submission']->content,'<a>');
+if(!empty($anchor)) {
+$a = new SimpleXMLElement($anchor);
+$link = $a['href'];
+}
+
 $price = strip_tags($fields['value_5']->content);
 $termObj = taxonomy_term_load(strip_tags($fields['value']->content));
 $termObjLocalized = i18n_taxonomy_localize_terms($termObj);
 $icon_uri = isset($termObj->field_map_icon['und'][0]['uri']) ? $termObj->field_map_icon['und'][0]['uri'] : 'public://default_images/unnamed.png'; 
 $backgroundUrl = image_style_url('medium',$icon_uri);
 $nameAddUrl = url('ak_mermix_tools/nojs/addphone/' . $price, array('query' => array('sid' => $fields['sid']->raw)));
+if($link) {
+$fields['value']->content = '<div class="category"  style="background: url(\'' .$backgroundUrl. '\') no-repeat"><a class="title" href="' . $link . '">'. $termObjLocalized->name .'</a></div>';
+} else {
 $fields['value']->content = '<div class="category"  style="background: url(\'' .$backgroundUrl. '\') no-repeat"><span class="title">'. $termObjLocalized->name .'</span></div>';
+}
 $fields['value']->wrapper_prefix = '';
 $fields['value']->wrapper_suffix = '';
 $fields['value_1']->wrapper_suffix = $fields['value_1']->wrapper_suffix . '<a class="add-it btn btn-primary large-btn ctools-use-modal" href="'. $nameAddUrl .'"><span class="name">'. t('More information') .'</span></a>';
@@ -39,6 +50,7 @@ $fields['value_1']->content = $fields['value_1']->content . $fields['value_4']->
 unset($fields['value_4']); 
 unset($fields['value_5']); 
 unset($fields['sid']); 
+unset($fields['view_submission']); 
 ?>
 <?php foreach ($fields as $id => $field): ?>
   <?php if (!empty($field->separator)): ?>
