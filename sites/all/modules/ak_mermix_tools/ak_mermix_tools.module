@@ -1102,6 +1102,24 @@ function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
 	    $args = array(implode(',', $ids));
 	}
     }
+    if ($view->name == 'looking_for_slider' && $display_id == 'block_5') {
+	module_load_include('inc', 'webform', 'includes/webform.submissions');
+	
+	$webformId = (int)variable_get('meet_demand_webform_id', '363');
+	$webformCompId = 2;
+	
+	if ( arg(0) == 'user' && is_numeric(arg(1)) ) {
+	  $uid = arg(1);
+	
+	    $submissions = webform_get_submissions(array('nid'=> $webformId, 'uid' => $uid));
+	    $ids = array();
+	    foreach ( $submissions as $submission){
+		$ids[] = $submission->data[$webformCompId][0];
+	    }
+	    $ids = array_unique($ids);
+	    $args = array(implode(',', $ids));
+	}
+    }
     
 }
 
