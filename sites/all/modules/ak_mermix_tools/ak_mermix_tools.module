@@ -1102,7 +1102,7 @@ function ak_mermix_tools_views_pre_view(&$view, &$display_id, &$args){
 	    $args = array(implode(',', $ids));
 	}
     }
-    if ($view->name == 'looking_for_slider' && $display_id == 'block_5') {
+    if ($view->name == 'looking_for_slider' && ($display_id == 'block_5' || $display_id == 'block_6')) {
 	module_load_include('inc', 'webform', 'includes/webform.submissions');
 	
 	$webformId = (int)variable_get('meet_demand_webform_id', '363');
