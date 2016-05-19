@@ -330,7 +330,7 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
 		    //'#attach' => $attach,
 		));
 	    }
-	    if($key == 'email_or_phone' || $key == 'admin_comments') {
+	    if(/*$key == 'email_or_phone' ||*/ $key == 'admin_comments') {
 	    $form['submitted'][$key]['#access'] = (!path_is_admin(current_path())) ? false : true;
 	    $form['submitted'][$key]['#required'] = false;
 	    }
