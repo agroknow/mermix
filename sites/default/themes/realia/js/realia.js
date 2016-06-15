@@ -49,7 +49,11 @@ Drupal.behaviors.languageSwitch = {
 	    }
             e.preventDefault();
         });
-
+	if(jQuery(window).width() <= 979 ) {
+	    jQuery('div.inline-form').removeClass("container");
+	} else {
+	    jQuery('div.inline-form').addClass("container");
+	}
         jQuery('input[type="checkbox"]', context).ezMark();
         jQuery('input[type="radio"]', context).ezMark();
         jQuery('select:visible', context).chosen({disable_search_threshold: 10});
@@ -136,6 +140,12 @@ jQuery('.form-item').each(function(){
 });
 
 jQuery( window ).resize(function() {
+    if(jQuery(window).width() <= 979 ) {
+	    jQuery('div.inline-form').removeClass("container");
+	} else {
+	    jQuery('div.inline-form').addClass("container");
+	}
+    
     jQuery('.chzn-container-single').each(function(){
     var width = jQuery(this).prev().parent().width();
     jQuery(this).css("width", width);

@@ -72,6 +72,9 @@ input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, 
 .inline-form .container-inline-date .date-padding,.inline-form .container-inline-date .form-item .form-item{
     float: left;
 }
+.inline-form.container .container-inline-date .date-padding{
+    float: none;
+}
 .inline-form .chzn-container .chzn-single{
     padding: 0;
 }
@@ -5578,16 +5581,26 @@ html.js input.ui-autocomplete-loading {
     margin-top: 0;
 }
 .region-map .inline-form button.form-submit{
-    background: none;
-    color: #333;
+    background: #e63434;
+    color: #fff;
     border-bottom: none;
-    border: 1px solid;
+    border: 1px solid #e63434;
+}
+.inline-form.container button.form-submit{
+    width: 12%;
 }
 .inline-form{
     display: inline-block;
 }
 .inline-form > div{
     display: inline-block;
+}
+.inline-form.container > div{
+    width: 22%;
+}
+.inline-form.container > div .chzn-container,
+.inline-form.container > div input[type=text]{
+    width: 100% !important;
 }
 .inline-form label,.inline-form .description{
     display: none;
