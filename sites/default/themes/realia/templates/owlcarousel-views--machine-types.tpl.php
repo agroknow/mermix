@@ -6,12 +6,12 @@
  */
 $final = array();
 if ($view->current_display == 'block_promo') {
-    $groupedItems = array_chunk($items, 2);
+    $groupedItems = array_chunk($items, 4);
     foreach ($groupedItems as $key => $item) {
-	$colClass = ($key % 2 == 0) ? 'odd' : 'even';
-	$final[]['row'] = isset($item[1]) ?
-		'<div class="sub-item after ' . $colClass . ' odd">' . $item[0]['row'] . '</div><div class="sub-item after ' . $colClass . ' even">' . $item[1]['row'] . '</div>' :
-		'<div class="sub-item after ' . $colClass . ' odd">' . $item[0]['row'] . '</div>';
+	$final[$key]['row'] = '';
+	foreach ($item as $k => $v) {
+	$final[$key]['row'] .= '<div class="sub-item itm' . $k . '">' . $v['row'] . '</div>';
+	}
     }
     print theme('owlcarousel', array('items' => $final, 'settings' => $settings));
 } else {
