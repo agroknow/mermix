@@ -7114,7 +7114,112 @@ ul.benefits li:before{
 .mtop60 {
     margin-top: 60px;
 }
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form{
+    position: relative;
+}
 
+.node-type-apartment #machinery-search-form{
+    margin-top: 100px;
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block{
+    position: relative;
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block:before{
+    content: " ";
+    position: absolute;
+    height: 2px;
+    left: 0;
+    right: 0;
+    background: #ce1919;
+    top: 50%;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form:before{
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 128px;
+    height: 128px;
+    background: url('../img/tractor_search.png') no-repeat center #f0f0f0;
+    margin-top: -41px;
+    left: 4%;
+    padding: 5px;
+    
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form:after{
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 128px;
+    height: 128px;
+    background: url('../img/map_search.png') no-repeat center #f0f0f0;
+    margin-top: -87px;
+    right: 4%;
+    padding: 5px;
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div{
+    position: relative;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div:before{
+    content: "Βάλε τα κριτήρια σου";
+    width: 250px;
+    position: absolute;
+    display: block;
+    top: -70px;
+    left: 4%;
+    color: #333;
+    font-weight: bold;
+    margin-left: -54px;
+    
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div:after{
+    content: "Δες τις επιλογές σου στον χάρτη";
+    width: 250px;
+    position: absolute;
+    display: block;
+    top: -70px;
+    right: 4%;
+    color: #333;
+    font-weight: bold;
+    margin-right: -54px;
+}
+@media (max-width: 1600px) {
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form{
+    position: relative;
+}
+
+.node-type-apartment #machinery-search-form{
+    margin-top: 200px;
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block{
+    position: relative;
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block:before{
+    top: -100px;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form:before{
+    left: 10%;
+    margin-top: -169px;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form:after{
+    right: 10%;
+    margin-top: -215px;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div:before{
+    left: 10%;
+    top: -30px;
+    
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div:after{
+    right: 10%;
+    top: -30px;
+}
+}
 @media (max-width: 1199px) {
     
      #header .row-fluid .span4{
@@ -7284,6 +7389,34 @@ ul.benefits li:before{
 }
 
 @media (max-width: 979px) {
+    .node-type-apartment #block-ak-mermix-tools-machinery-search-block form{
+    position: relative;
+}
+
+.node-type-apartment #machinery-search-form{
+    margin-top: 20px;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form:before{
+    display: none;
+    
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form:after{
+    display: none;
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div{
+    position: relative;
+}
+
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div:before{
+
+    display: none;
+    
+}
+.node-type-apartment #block-ak-mermix-tools-machinery-search-block form > div:after{
+    display: none;
+}
     .owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm1,.owl-carousel .sub-item.itm2,.owl-carousel .sub-item.itm3 {
     width: 49%;
     }
