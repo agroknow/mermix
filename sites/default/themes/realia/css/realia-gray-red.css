@@ -7285,8 +7285,7 @@ ul.benefits li:before{
 
 @media (max-width: 979px) {
     .owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm1,.owl-carousel .sub-item.itm2,.owl-carousel .sub-item.itm3 {
-    
-    width: 50%;
+    width: 49%;
     }
     .banner-block {
     display: inline-block;
