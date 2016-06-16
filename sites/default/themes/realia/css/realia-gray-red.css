@@ -7285,8 +7285,8 @@ ul.benefits li:before{
 
 @media (max-width: 979px) {
     .owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm1,.owl-carousel .sub-item.itm2,.owl-carousel .sub-item.itm3 {
-    float: none;
-    width: 100%;
+    
+    width: 50%;
     }
     .banner-block {
     display: inline-block;
@@ -7512,6 +7512,10 @@ ul.benefits li:before{
 }
 
 @media (max-width: 767px) {
+    .owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm1,.owl-carousel .sub-item.itm2,.owl-carousel .sub-item.itm3 {
+    float: none;
+    width: 100%;
+    }
     .banner-block {
     display: inline-block;
     width: 92%;
