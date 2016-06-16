@@ -72,6 +72,9 @@ input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, 
 .inline-form .container-inline-date .date-padding,.inline-form .container-inline-date .form-item .form-item{
     float: left;
 }
+.inline-form.container .container-inline-date .date-padding{
+    float: none;
+}
 .inline-form .chzn-container .chzn-single{
     padding: 0;
 }
@@ -82,7 +85,7 @@ input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, 
 .inline-form textarea,.inline-form input[type=text],.inline-form input[type=password],.inline-form input[type=email] {
     font-size: 14px;
     padding: 10px;
-    border: 1px solid #f0f0f0;
+    border: none;
 }
 .container-inline-date .form-item, .container-inline-date .form-item input{
     width: 100%;
@@ -5542,7 +5545,7 @@ html.js input.ui-autocomplete-loading {
 .region-map .banner form{
     top: 100%;
     position: absolute;
-    margin: -130px auto 0;
+    margin: -20px auto 0;
     width: 100%;
 }
 /* Search form display */
@@ -5571,23 +5574,47 @@ html.js input.ui-autocomplete-loading {
 .inline-form button.form-submit{
     padding-top: 11px;
     padding-bottom: 9px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+/*    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;*/
     display: inline-block;
     width: auto;
     margin-top: 0;
 }
+#block-ak-mermix-tools-machinery-search-block-banner{
+    z-index: 5;
+    border-bottom: 5px solid #ce1919;
+    
+}
 .region-map .inline-form button.form-submit{
-    background: none;
-    color: #333;
+    background: #e63434;
+    color: #fff;
     border-bottom: none;
-    border: 1px solid;
+/*    border: 1px solid #e63434;*/
+}
+.inline-form.container button.form-submit{
+    width: 12%;
+}
+.inline-form.container{
+    background: #ce1919;
+    padding: 3px;
+}
+.inline-form > div.form-type-select {
+    height: 40px;
 }
 .inline-form{
     display: inline-block;
 }
 .inline-form > div{
     display: inline-block;
+}
+.inline-form.container > div{
+    width: 22%;
+    padding-right: 3px;
+    box-sizing: border-box;
+}
+.inline-form.container > div .chzn-container,
+.inline-form.container > div input[type=text]{
+    width: 100% !important;
 }
 .inline-form label,.inline-form .description{
     display: none;
@@ -5602,9 +5629,9 @@ html.js input.ui-autocomplete-loading {
     background: url('../img/tractor-small.png') no-repeat 5px center;
 }
 .inline-form .chzn-container{
-    border: 1px solid #f0f0f0;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+/*    border: 1px solid #f0f0f0;*/
+/*    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;*/
     background: #fff;
 }
 .inline-form .chzn-container .chzn-single{
@@ -6188,6 +6215,12 @@ article.node-apartment footer .links.inline{
     opacity: 0.4;
     transition: opacity 0.4s;
 }
+.owl-dots .owl-dot.active span, .owl-dots .owl-dot:hover span{
+    background: #ce1919;
+}
+.owl-dots .owl-dot span{
+    background: #e63434;
+}
 .owl-carousel .sub-item.after:hover:after{
     opacity: 0;
 }
@@ -6232,6 +6265,22 @@ article.node-apartment footer .links.inline{
 }
 .owl-carousel .sub-item.odd.even .fields-wrapper.large{
     height: 330px;
+}
+.owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm2{
+    margin-right: 1.5%;
+}
+.owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm1,.owl-carousel .sub-item.itm2,.owl-carousel .sub-item.itm3 {
+    margin-bottom: 15px;
+}
+.owl-carousel .sub-item.itm0,.owl-carousel .sub-item.itm3{
+    width: 63%;
+    float: left;
+    height: 300px;
+}
+.owl-carousel .sub-item.itm1,.owl-carousel .sub-item.itm2{
+    width: 35%;
+    float: left;
+    height: 300px;
 }
 /* New block users looking for (slider)*/
 .owl-carousel .sub-item .fields-wrapper .category{
@@ -6421,7 +6470,13 @@ article.node-apartment footer .links.inline{
 #block-block-8 .span4{
     text-align: center;
     height: 169px;
+    display: table;
 }
+#block-block-8 .span4 a{
+    display: table-cell;
+    vertical-align: middle;
+}
+
 #block-block-8 h4{
     font-weight: normal;
     text-align: center;
@@ -7032,6 +7087,33 @@ ul.benefits li:before{
     border-radius: 100%;
     padding: 8px;
 }
+.page-machine-results .inline-form.container {
+    padding-bottom: 1px;
+}
+.btn.btn-cta {
+    background: #ffaf50;    
+}
+.btn.btn-cta:hover{
+    background: #ff981d;
+}
+.btn.btn-big {
+    padding: 17px 25px 17px 25px;
+}
+.mtop20 {
+    margin-top: 20px;
+}
+.mtop30 {
+    margin-top: 20px;
+}
+.mtop40 {
+    margin-top: 20px;
+}
+.mtop50 {
+    margin-top: 50px;
+}
+.mtop60 {
+    margin-top: 60px;
+}
 
 @media (max-width: 1199px) {
     
@@ -7246,7 +7328,7 @@ ul.benefits li:before{
 	margin: 0;
     }
     .region-map .banner form{
-	margin: -205px auto 0
+	margin: -115px auto 0
     }
     .inline-form > div, .inline-form form.webform-client-form > div .webform-component,.inline-form form.webform-client-form > div .container-inline-date{
 	float: left;
@@ -7255,6 +7337,9 @@ ul.benefits li:before{
     .inline-form > div.form-item:first-child, .inline-form > div.form-item + div.container-inline-date,
     .inline-form form.webform-client-form > div .webform-component:first-child,.inline-form form.webform-client-form > div .form-item + div.container-inline-date{
 	margin-right: 2%;
+    }
+    .inline-form > div.form-item,.inline-form > div.container-inline-date{
+	margin-bottom: 5px;
     }
     .inline-form .form-item div{
 	display: inline-block;
@@ -7292,7 +7377,7 @@ ul.benefits li:before{
     }
     .inline-form .chzn-container{
 	border: none;
-	padding: 1px;
+/*	padding: 1px;*/
 	border-radius: 0;
     }
     .inline-form button.form-submit{
