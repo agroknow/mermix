@@ -82,20 +82,20 @@ var current_lang = jQuery('html').attr('lang');
 jQuery(document).ready(function(){
    
    var element = jQuery("#gmap-looking-for-map");
-   var infotoggle = jQuery('<div class="tip-toggle"><i class="fa fa-info-circle fa-3x" aria-hidden="true"></i></div>');
-   element.prepend(infotoggle);
-   var tip = new Opentip(infotoggle, '',title[current_lang], 
-   { showOn: 'click',
-     target: infotoggle,
-     targetJoint:'top left',
-     tipJoint: 'top right',
-     offset:[0,0], 
-     style: 'info',
-     //hideTrigger: 'closeButton',
-     hideOn:'click',
-     containInViewport: false,
-    }); 
-    tip.show();
+//   var infotoggle = jQuery('<div class="tip-toggle"><i class="fa fa-info-circle fa-3x" aria-hidden="true"></i></div>');
+//   element.prepend(infotoggle);
+//   var tip = new Opentip(infotoggle, '',title[current_lang], 
+//   { showOn: 'click',
+//     target: infotoggle,
+//     targetJoint:'top left',
+//     tipJoint: 'top right',
+//     offset:[0,0], 
+//     style: 'info',
+//     //hideTrigger: 'closeButton',
+//     hideOn:'click',
+//     containInViewport: false,
+//    }); 
+//    tip.show();
 //    var tipcontent = jQuery(content[current_lang]);
 //    tipcontent.load(function(){
 //	tip.setContent(content[current_lang]);
