@@ -87,7 +87,7 @@ jQuery(document).ready(function(){
 	    }, 800);
 	});
     
-    jQuery('#header-wrapper').addClass('light');
+    jQuery('#header-wrapper').addClass('dark');
     jQuery('#toggle-filters').click(function() {
         jQuery(this).next().slideToggle();
     });
@@ -116,9 +116,9 @@ jQuery(document).ready(function(){
 	    jQuery('#header-wrapper').removeClass('fixed');
 	}
 	if (jQuery(window).scrollTop() > scrollHeight2) {
-	    jQuery('#header-wrapper').addClass('white');
+	    jQuery('#header-wrapper').addClass('white').removeClass('dark');
 	} else {
-	    jQuery('#header-wrapper').removeClass('white');
+	    jQuery('#header-wrapper').removeClass('white').addClass('dark');
 	}
     if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
         jQuery("#dragger").css("top",jQuery(window).scrollTop());
@@ -138,10 +138,11 @@ jQuery('.form-item').each(function(){
 	}else{
 	    jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");
 	}
-	if(/*jQuery('#gmap-looking-for-map').length*/ false) {
+	if(jQuery('#gmap-looking-for-map').length && jQuery(window).width() <= 979) {
 	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
+	var header_height = jQuery('#header-wrapper').height();
 	//if(jQuery(window).height() <= 700) {
-	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
+	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - header_height);
 	//}
 	}
 	jQuery("body").on('click', '.scroll-down-map',function(){
@@ -152,7 +153,7 @@ jQuery('.form-item').each(function(){
 	
 	jQuery("body").on('click', '.scroll-to-map',function(){
 	    jQuery('html, body').animate({
-		scrollTop: jQuery('#block-views-looking-for-map-block').offset().top -25
+		scrollTop: jQuery('#block-views-looking-for-map-block').offset().top 
 	    }, 800);
 	});
 	
@@ -186,10 +187,11 @@ jQuery( window ).resize(function() {
 	}else{
 	    jQuery("a.add-it").removeClass("ctools-modal-mermix-modal-res").addClass("ctools-modal-mermix-modal-fix");
 	}
-	if(/*jQuery('#gmap-looking-for-map').length*/false) {
+	if(jQuery('#gmap-looking-for-map').length && jQuery(window).width() <= 979) {
 	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
+	var header_height = jQuery('#header-wrapper').height();
 	//if(jQuery(window).height() <= 700) {
-	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
+	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - header_height );
 	//}
 	}
     });

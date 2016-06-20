@@ -7217,14 +7217,15 @@ ul.benefits li:before{
     cursor: pointer;
     position: fixed;
     display: none;
-    bottom: 30px;
-    right: 30px;
-    width: 35px;
-    padding: 10px;
+    bottom: 20px;
+    right: 20px;
+    width: 30px;
+    padding: 5px;
     background: #e63434;
     color: #fff;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
+    z-index: 10;
 }
 
 @media (max-width: 1600px) {
