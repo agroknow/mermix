@@ -79,7 +79,7 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
-    jQuery('#header-wrapper').addClass('dark');
+    jQuery('#header-wrapper').addClass('light');
     jQuery('#toggle-filters').click(function() {
         jQuery(this).next().slideToggle();
     });
