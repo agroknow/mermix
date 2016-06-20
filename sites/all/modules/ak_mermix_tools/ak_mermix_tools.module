@@ -587,7 +587,7 @@ function ak_mermix_tools_block_content_banner() {
     } else {
 	$search_form = drupal_get_form('machinery_search_form');
     }
-    $out = '<div class="banner" style="background-image:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .')">';
+    $out = '<div class="banner">';
     $out .= '<div class="banner-text"><div class="text-inner">' . variable_get('mtools_banner_text') . '</div></div>';
     $out .= drupal_render($search_form);
     $out .= '</div>';
