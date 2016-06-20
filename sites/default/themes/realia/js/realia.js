@@ -79,6 +79,7 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
+    jQuery('#header-wrapper').addClass('dark');
     jQuery('#toggle-filters').click(function() {
         jQuery(this).next().slideToggle();
     });
@@ -135,6 +136,13 @@ jQuery('.form-item').each(function(){
 		scrollTop: jQuery(this).offset().top + 15
 	    }, 800);
 	});
+	
+	jQuery("body").on('click', '.scroll-to-map',function(){
+	    jQuery('html, body').animate({
+		scrollTop: jQuery('#block-views-looking-for-map-block').offset().top -25
+	    }, 800);
+	});
+	
 	var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
 	jQuery("#gmap-looking-for-map").append(scrolldown);
 });

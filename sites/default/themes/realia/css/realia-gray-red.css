@@ -461,7 +461,7 @@ button.form-submit:active,button.form-submit:focus,button.form-submit:hover {
 }
 
 body.front #header,body.front .navigation-wrapper .navigation .block-superfish .content ul li ul {
-    background: rgba(0, 0, 0, 0.48);
+/*    background: rgba(0, 0, 0, 0.48);*/
 }
 
 body.front #header-wrapper.white #header,body.front #header-wrapper.white .navigation-wrapper .navigation .block-superfish .content ul li ul {
@@ -485,6 +485,11 @@ body #header{
     padding: 0px !important;
     width: 220px !important
 }
+
+body.front #header-wrapper .navigation-wrapper .navigation .block-superfish .content ul li ul{
+    background: none;
+}
+
 #header-wrapper.fixed .navigation-wrapper .navigation .block-superfish .content ul li ul {
     margin: 15px 0px 0px 0px;
 }
@@ -719,6 +724,12 @@ body.front #header-wrapper{
 
 body.header-light.front #navigation .block-superfish .menuparent>.nolink,body.header-light.front #navigation .block-superfish .menuparent>a {
     background-image: url("../img/arrow-bottom-white.png") !important
+}
+body.header-light.front #header-wrapper.light #navigation .block-superfish .menuparent>.nolink {
+    background-image: url("../img/arrow-bottom-white.png") !important
+}
+body.header-light.front #header-wrapper.dark #navigation .block-superfish .menuparent>.nolink {
+    background-image: url("../img/arrow-bottom-black.png") !important
 }
 
 #navigation span.fa.notitle{
@@ -5259,12 +5270,16 @@ body.header-light #navigation {
 }
 body.header-light.front #navigation .block-superfish .nolink,body.header-light.front #navigation .block-superfish a,
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.fixed #navigation .block-superfish a,
-body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish a{
+body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light.nav-open #header-wrapper.fixed #navigation .block-superfish a,
+body.header-light.front #header-wrapper.light #navigation .block-superfish a,
+body.header-light.front #header-wrapper.light #navigation .block-superfish .nolink{
     color: #fff !important
 }
 body.header-light #header-wrapper.fixed #navigation .block-superfish .nolink,body.header-light #header-wrapper.fixed #navigation .block-superfish a,
 body.header-light.front #header-wrapper.white #navigation .block-superfish .nolink,body.header-light.front #header-wrapper.white #navigation .block-superfish a,
-body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a {
+body.header-light #navigation .block-superfish .nolink,body.header-light #navigation .block-superfish a,
+body.header-light.front #header-wrapper.dark #navigation .block-superfish a,
+body.header-light.front #header-wrapper.dark #navigation .block-superfish .nolink{
     color: #333 !important
 }
 body.header-light.front #header-wrapper #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper #navigation .block-superfish a.highlighted{
@@ -5278,7 +5293,9 @@ body.header-light.front #header-wrapper #navigation .block-superfish a.highlight
 body.header-light.front #header-wrapper #navigation .block-superfish a.highlighted:hover{
 /*    background: #ce1919; */
 }
-body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.fixed #navigation .block-superfish a.highlighted{
+body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted,
+body.header-light.not-front #header-wrapper.fixed #navigation .block-superfish a.highlighted,
+body.header-light.front #header-wrapper.fixed.light #navigation .block-superfish a.highlighted{
     padding: 10px;
     top: 6px;
     border: 1px solid;
@@ -5286,7 +5303,9 @@ body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.hig
     transition: background 0.2s ease-in;
 /*    background: #e63434;*/
 }
-body.header-light.front #header-wrapper.white #navigation .block-superfish a.highlighted,body.header-light.not-front #header-wrapper.white #navigation .block-superfish a.highlighted{
+body.header-light.front #header-wrapper.white #navigation .block-superfish a.highlighted,
+body.header-light.not-front #header-wrapper.white #navigation .block-superfish a.highlighted,
+body.header-light.front #header-wrapper.fixed.dark #navigation .block-superfish a.highlighted{
     color: #333 !important;
 }
 body.header-light.front #header-wrapper.fixed #navigation .block-superfish a.highlighted:hover,body.header-light.not-front #header-wrapper #navigation .block-superfish a.highlighted:hover{
@@ -6000,7 +6019,8 @@ body.front #block-realia-blocks-realia-language .content ul li a{
 body.front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a,body.not-front #header-wrapper.fixed #block-realia-blocks-realia-language .content ul li a{
     padding: 15px 8px;
 }
-body.front #header-wrapper.white #block-realia-blocks-realia-language .content ul li a{
+body.front #header-wrapper.white #block-realia-blocks-realia-language .content ul li a,
+body.front #header-wrapper.dark #block-realia-blocks-realia-language .content ul li a{
     color: #333;
 }
 body.not-front.nav-open #block-realia-blocks-realia-language .content ul li a{ color: #ddd; }
@@ -6010,6 +6030,7 @@ body.not-front.nav-open #block-realia-blocks-realia-language .content ul li.acti
     color: #fff;
     font-weight: normal;
 }
+
 
 body.not-front #block-realia-blocks-realia-language .content ul li a{
     float: none;
