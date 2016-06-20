@@ -5556,10 +5556,10 @@ html.js input.ui-autocomplete-loading {
 /*Front banner search*/
 .region-map .banner{
     background-size: cover; 
-    height: 700px;
+    height: 580px;
     position: relative;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center bottom;
 }
 .region-map .banner form{
     top: 100%;
@@ -7206,6 +7206,14 @@ ul.benefits li:before{
     font-weight: bold;
     margin-right: -54px;
 }
+
+.view-looking-for-map .view-header{
+    padding: 25px;
+    text-align: center;
+    background: #e63434;
+    color: #fff;
+}
+
 @media (max-width: 1600px) {
 .node-type-apartment #block-ak-mermix-tools-machinery-search-block form{
     position: relative;
