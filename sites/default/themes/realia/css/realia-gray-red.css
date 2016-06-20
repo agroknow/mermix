@@ -7213,6 +7213,19 @@ ul.benefits li:before{
     background: #e63434;
     color: #fff;
 }
+#backToTop {
+    cursor: pointer;
+    position: fixed;
+    display: none;
+    bottom: 30px;
+    right: 30px;
+    width: 35px;
+    padding: 10px;
+    background: #e63434;
+    color: #fff;
+    text-align: center;
+    font-size: 40px;
+}
 
 @media (max-width: 1600px) {
 .node-type-apartment #block-ak-mermix-tools-machinery-search-block form{

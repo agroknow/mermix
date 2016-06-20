@@ -79,6 +79,14 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
+    var backToTop = jQuery('<i id="backToTop" class="fa fa-angle-up fa-2x" aria-hidden="true"></i>')
+    jQuery('body').append(backToTop);
+    jQuery("body").on('click', '#backToTop',function(){
+	    jQuery('html, body').animate({
+		scrollTop: 0
+	    }, 800);
+	});
+    
     jQuery('#header-wrapper').addClass('light');
     jQuery('#toggle-filters').click(function() {
         jQuery(this).next().slideToggle();
@@ -94,6 +102,11 @@ jQuery(document).ready(function(){
 	scrollHeight2 = jQuery('#map .banner').offset().top + 600;
     }
     jQuery(window).bind('scroll', function () {
+	if (jQuery(window).scrollTop() > 200) {
+	    jQuery('#backToTop').fadeIn('600');
+	} else {
+	    jQuery('#backToTop').fadeOut('600');
+	}
 	if (jQuery(window).scrollTop() > scrollHeight) {
 	    if(!jQuery('body').hasClass('nav-open'))
 	    {
