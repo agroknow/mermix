@@ -6241,7 +6241,13 @@ article.node-apartment footer .links.inline{
     background: #ce1919;
 }
 .owl-dots .owl-dot span{
-    background: #e63434;
+    background: #ccc;
+}
+.owl-dots .owl-dot span{
+    width: 50px;
+    height: 7px;
+    margin: 3px;
+    border-radius: 0;
 }
 .owl-carousel .sub-item.after:hover:after{
     opacity: 0;
