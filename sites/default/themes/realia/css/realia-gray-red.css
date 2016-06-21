@@ -5568,7 +5568,7 @@ html.js input.ui-autocomplete-loading {
     height: 580px;
     position: relative;
     background-repeat: no-repeat;
-    background-position: center bottom;
+    background-position: left bottom;
 }
 .region-map .banner form{
     top: 100%;
