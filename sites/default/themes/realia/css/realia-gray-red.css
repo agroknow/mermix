@@ -4858,30 +4858,22 @@ ul.pager li:first-child a,ul.pager li:last-child a {
 }
 .marker.euro-mark.small{
 /*    background: #FFA500;*/
-    background-image:url("../img/eur_g.png") ;
+    background:url("../img/money.png") no-repeat center rgba(0, 0, 0, 0.4);
     border-color: #EA9800;
 }
 .marker.euro-mark.medium{
     height: 50px;
     width: 50px;
 /*    background: #FF5E00;*/
-     background-image:url("../img/eur_b.png") ;
+     background:url("../img/money_m1.png") no-repeat center rgba(0, 0, 0, 0.4);
     border-color: #DC5100;
 }
 .marker.euro-mark.large{
     height: 65px;
     width: 65px;
 /*    background: #e63434;*/
-     background-image:url("../img/eur_r.png") ;
+     background:url("../img/money_l1.png") no-repeat center rgba(0, 0, 0, 0.4);
     border-color: #ce1919;
-}
-.marker.euro-mark .euro-sign{
-    display: none;
-}
-.marker.euro-mark{
-    background-size: cover; 
-    background-repeat: no-repeat;
-    background-position: center;
 }
 .marker-inner-noimage {
     width: 100%;
