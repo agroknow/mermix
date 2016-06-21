@@ -5555,6 +5555,7 @@ html.js input.ui-autocomplete-loading {
 }
 /*Front banner search*/
 .region-map .banner{
+    background-image: url('../img/banners/bannerbg.jpg');
     background-size: cover; 
     height: 580px;
     position: relative;
@@ -7262,6 +7263,22 @@ ul.benefits li:before{
     right: 10%;
     top: -30px;
 }
+}
+@media (max-width: 1280px) {
+    .iconbg{
+	margin-top: -50px;
+    }
+    .how-it-works-block-home .video{
+	margin-top: 65px;
+    }
+}
+@media (max-width: 1190px) {
+    .row-fluid .span3.iconbg,.how-it-works-block-home .video{
+	float: none;
+	display: block;
+	width: 100%;
+	margin: 35px 0;
+    }
 }
 @media (max-width: 1199px) {
     
