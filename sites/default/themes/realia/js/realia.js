@@ -99,7 +99,7 @@ jQuery(document).ready(function(){
     var scrollHeight = 50;
     var scrollHeight2 = 50;
     if(jQuery('#map .banner').length == 1) {
-	scrollHeight2 = jQuery('#map .banner').offset().top + 600;
+	scrollHeight2 = jQuery('#map .banner').offset().top + 500;
     }
     jQuery(window).bind('scroll', function () {
 	if (jQuery(window).scrollTop() > 200) {
