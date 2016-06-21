@@ -7219,6 +7219,7 @@ ul.benefits li:before{
     text-align: center;
     background: #e63434;
     color: #fff;
+    font-size: 17px;
 }
 #backToTop {
     cursor: pointer;
