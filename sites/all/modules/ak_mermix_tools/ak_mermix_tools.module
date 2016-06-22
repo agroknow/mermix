@@ -279,8 +279,8 @@ function ak_mermix_tools_form_alter(&$form, &$form_state, $form_id) {
     	$form['actions']['submit']['#value'] = t('Book it');
     	$form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
     }
-    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
-	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
+    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
+	//$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
     }
     foreach ($form['submitted'] as $key => $value) {
 		if (in_array($key, array('location', 'comments'))) {
@@ -587,7 +587,7 @@ function ak_mermix_tools_block_content_banner() {
     } else {
 	$search_form = drupal_get_form('machinery_search_form');
     }
-    $out = '<div class="banner" style="background-image:url(/sites/default/themes/realia/img/banners/'. variable_get('mtools_banner_image', '') .')">';
+    $out = '<div class="banner">';
     $out .= '<div class="banner-text"><div class="text-inner">' . variable_get('mtools_banner_text') . '</div></div>';
     $out .= drupal_render($search_form);
     $out .= '</div>';
@@ -672,8 +672,8 @@ function machinery_search_form($form, &$form_state) {
 	    drupal_get_path('module', 'ak_mermix_tools') . '/js/addressautocomplete.js' => array('scope' => 'footer','weight' => 200),
 	    drupal_get_path('module', 'ak_mermix_tools') . '/js/mermix_tools_validation.js' => array('scope' => 'footer'),
     ));
-    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?&key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
-	$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
+    if (!isset($all_scripts['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'])) {
+	//$attach['js']['https://maps.googleapis.com/maps/api/js?key=AIzaSyC-MmVaJu3PMimL9iYQDzPaYFJ9ShvGcDI&libraries=places'] = array('type' => 'external', 'scope' => 'footer');
     }
     $form['wrapper_start'] = array(
 	'#type' => 'markup',
@@ -896,13 +896,13 @@ function ak_mermix_tools_menu() {
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
-//    $items['requests-map'] = array(
-//	//'title' => 'Add your machine',
-//	'page callback' => 'empty_page',
-//	'access callback' => TRUE,
-//	//'menu_name' => 'main-menu',
-//	'type' => MENU_NORMAL_ITEM,
-//    );
+    $items['requests-map'] = array(
+	//'title' => 'Add your machine',
+	'page callback' => 'empty_page',
+	'access callback' => TRUE,
+	//'menu_name' => 'main-menu',
+	'type' => MENU_NORMAL_ITEM,
+    );
     $items['requests-for'] = array(
 	//'title' => 'Add your machine',
 	'page callback' => 'empty_page',

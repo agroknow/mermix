@@ -49,7 +49,11 @@ Drupal.behaviors.languageSwitch = {
 	    }
             e.preventDefault();
         });
-
+	if(jQuery(window).width() <= 979 ) {
+	    jQuery('div.inline-form').removeClass("container");
+	} else {
+	    jQuery('div.inline-form').addClass("container");
+	}
         jQuery('input[type="checkbox"]', context).ezMark();
         jQuery('input[type="radio"]', context).ezMark();
         jQuery('select:visible', context).chosen({disable_search_threshold: 10});
@@ -75,6 +79,15 @@ Drupal.behaviors.languageSwitch = {
     }
 }
 jQuery(document).ready(function(){
+    var backToTop = jQuery('<i id="backToTop" class="fa fa-angle-up fa-2x" aria-hidden="true"></i>')
+    jQuery('body').append(backToTop);
+    jQuery("body").on('click', '#backToTop',function(){
+	    jQuery('html, body').animate({
+		scrollTop: 0
+	    }, 800);
+	});
+    
+    //jQuery('#header-wrapper').addClass('dark');
     jQuery('#toggle-filters').click(function() {
         jQuery(this).next().slideToggle();
     });
@@ -86,9 +99,14 @@ jQuery(document).ready(function(){
     var scrollHeight = 50;
     var scrollHeight2 = 50;
     if(jQuery('#map .banner').length == 1) {
-	scrollHeight2 = jQuery('#map .banner').offset().top + 600;
+	scrollHeight2 = jQuery('#map .banner').offset().top /*+ 500*/;
     }
     jQuery(window).bind('scroll', function () {
+	if (jQuery(window).scrollTop() > 200) {
+	    jQuery('#backToTop').fadeIn('600');
+	} else {
+	    jQuery('#backToTop').fadeOut('600');
+	}
 	if (jQuery(window).scrollTop() > scrollHeight) {
 	    if(!jQuery('body').hasClass('nav-open'))
 	    {
@@ -98,9 +116,9 @@ jQuery(document).ready(function(){
 	    jQuery('#header-wrapper').removeClass('fixed');
 	}
 //	if (jQuery(window).scrollTop() > scrollHeight2) {
-//	    jQuery('#header-wrapper').addClass('white');
+//	    jQuery('#header-wrapper').addClass('white').removeClass('dark');
 //	} else {
-//	    jQuery('#header-wrapper').removeClass('white');
+//	    jQuery('#header-wrapper').removeClass('white').addClass('dark');
 //	}
     if(jQuery(window).scrollTop() < 580 && jQuery(window).scrollTop() > 60)
         jQuery("#dragger").css("top",jQuery(window).scrollTop());
@@ -120,10 +138,11 @@ jQuery('.form-item').each(function(){
 	}else{
 	    jQuery("a.add-it").addClass("ctools-modal-mermix-modal-fix");
 	}
-	if(jQuery('#gmap-looking-for-map').length) {
+	if(jQuery('#gmap-looking-for-map').length && jQuery(window).width() <= 979) {
 	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
+	var header_height = jQuery('#header-wrapper').height();
 	//if(jQuery(window).height() <= 700) {
-	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
+	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - header_height);
 	//}
 	}
 	jQuery("body").on('click', '.scroll-down-map',function(){
@@ -131,11 +150,24 @@ jQuery('.form-item').each(function(){
 		scrollTop: jQuery(this).offset().top + 15
 	    }, 800);
 	});
+	
+	jQuery("body").on('click', '.scroll-to-map',function(){
+	    jQuery('html, body').animate({
+		scrollTop: jQuery('#block-views-looking-for-map-block').offset().top 
+	    }, 800);
+	});
+	
 	var scrolldown = jQuery('<div class="scroll-down-map"><span>Scroll down</span><i class="fa fa-angle-down fa-2x" aria-hidden="true"></i></div>');
 	jQuery("#gmap-looking-for-map").append(scrolldown);
 });
 
 jQuery( window ).resize(function() {
+    if(jQuery(window).width() <= 979 ) {
+	    jQuery('div.inline-form').removeClass("container");
+	} else {
+	    jQuery('div.inline-form').addClass("container");
+	}
+    
     jQuery('.chzn-container-single').each(function(){
     var width = jQuery(this).prev().parent().width();
     jQuery(this).css("width", width);
@@ -155,10 +187,11 @@ jQuery( window ).resize(function() {
 	}else{
 	    jQuery("a.add-it").removeClass("ctools-modal-mermix-modal-res").addClass("ctools-modal-mermix-modal-fix");
 	}
-	if(jQuery('#gmap-looking-for-map').length) {
+	if(jQuery('#gmap-looking-for-map').length && jQuery(window).width() <= 979) {
 	var mapdivoffset = jQuery('#gmap-looking-for-map').offset().top;
+	var header_height = jQuery('#header-wrapper').height();
 	//if(jQuery(window).height() <= 700) {
-	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - mapdivoffset);
+	    jQuery('#gmap-looking-for-map').css('height',jQuery(window).height() - header_height );
 	//}
 	}
     });
