@@ -483,7 +483,7 @@ body #header{
     background: #fff;
     margin: 35px 0px 0px 0px;
     padding: 0px !important;
-    width: 220px !important
+    width: 180px !important
 }
 
 body.front #header-wrapper .navigation-wrapper .navigation .block-superfish .content ul li ul{
