@@ -267,7 +267,7 @@ watchdog('restws', 'property_name=%name', array("%name"=>$name));
           // Check if the field is a list or a single value field.
           if (entity_property_list_extract_type($info['type'])) {
             // Check if the list values consist of structure wrappers.
-             if (array_key_exists('property info', $info)) {
+            if (array_key_exists('property info', $info)) {
               foreach ($property_value as &$list_values) {
                 $this->getPropertyValues($list_values, $info['property info']);
               }
