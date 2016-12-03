@@ -8193,3 +8193,15 @@ ul.benefits li:before{
 	top: 10px;
     } 
 }
+.view-blog.view-display-id-page .row{
+    margin-bottom: 25px;
+}
+.view-blog .views-field-created{
+    margin-top: 8px;
+}
+.view-blog .views-field-title h3{
+    line-height: normal;
+}
+.view-blog .views-field-title h3 a:hover{
+    text-decoration: none;
+}
