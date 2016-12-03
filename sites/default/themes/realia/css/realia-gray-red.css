@@ -8202,6 +8202,6 @@ ul.benefits li:before{
 .view-blog .views-field-title h3{
     line-height: normal;
 }
-.view-blog .views-field-title h3 a:hover{
+.view-blog a:hover{
     text-decoration: none;
 }
