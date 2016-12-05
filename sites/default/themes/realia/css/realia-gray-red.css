@@ -8205,3 +8205,10 @@ ul.benefits li:before{
 .view-blog a:hover{
     text-decoration: none;
 }
+
+.alert-block em.placeholder {
+    word-break: break-all;
+}
+.block-owlcarousel {
+    margin: auto !important;
+}
